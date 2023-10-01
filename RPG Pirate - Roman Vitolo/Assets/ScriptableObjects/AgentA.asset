@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3db01252d58439db1c191636f4b4e52, type: 3}
+  m_Name: AgentA
+  m_EditorClassIdentifier: 
+  Name: 695996a6-668b-4a5e-be03-89d00f9597df
+  <IsLeader>k__BackingField: 0
+  <MaxAgentLife>k__BackingField: 10
+  <CurrentAgentLife>k__BackingField: 0
+  <Speed>k__BackingField: 0
+  <HasBullet>k__BackingField: 0
+  <InitialBullets>k__BackingField: 0
+  <AmountOfBullets>k__BackingField: 0
+  <FireRate>k__BackingField: 0
+  <ReloadSpeed>k__BackingField: 0
+  <WeaponType>k__BackingField: []

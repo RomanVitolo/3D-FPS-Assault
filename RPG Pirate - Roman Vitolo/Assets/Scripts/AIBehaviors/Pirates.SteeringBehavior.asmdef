@@ -1,0 +1,16 @@
+{
+    "name": "Pirates.SteeringBehavior",
+    "rootNamespace": "",
+    "references": [
+        "GUID:acd91900a306a964cb52e5df346d3148"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

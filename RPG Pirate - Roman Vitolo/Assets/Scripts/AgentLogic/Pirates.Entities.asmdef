@@ -1,0 +1,19 @@
+{
+    "name": "Pirates.Entities",
+    "rootNamespace": "",
+    "references": [
+        "GUID:169d895e2130a03499a6de74f33df624",
+        "GUID:dd5599c88c359154fb9eff2fce526b2d",
+        "GUID:acd91900a306a964cb52e5df346d3148",
+        "GUID:165d1bd84778c6249b0570b8e23610dd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
