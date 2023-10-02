@@ -14,7 +14,7 @@ namespace AgentLogic
 
         private void SetCurrentLife()
         {
-            _agentAttributes.MaxAgentLife += _agentAttributes.CurrentAgentLife;
+             _agentAttributes.CurrentAgentLife = _agentAttributes.MaxAgentLife;
         }
 
         public float GetCurrentLife()
@@ -30,7 +30,7 @@ namespace AgentLogic
 
         public bool IsAlive()
         {
-            if (_agentAttributes.CurrentAgentLife >= 0)
+            if (_agentAttributes.CurrentAgentLife > 0)
             {
                 return true;
             } 

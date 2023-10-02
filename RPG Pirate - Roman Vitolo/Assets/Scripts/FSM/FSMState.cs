@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 
 namespace FSM
-{  
+{
+    
     public class FSMState<T>
     {
-        private Dictionary<T, FSMState<T>> _states = new Dictionary<T, FSMState<T>>();
+        private Dictionary<T, FSMState<T>> _states = new Dictionary<T, FSMState<T>>();      
         
         public virtual void Enter() {}
         public virtual void Tick() {}
@@ -12,7 +13,7 @@ namespace FSM
 
         public void AddTransition(T input, FSMState<T> state)
         {
-            _states.TryAdd(input, state);
+            _states.TryAdd(input, state); 
         }
 
         public void RemoveTransition(T input, FSMState<T> state)

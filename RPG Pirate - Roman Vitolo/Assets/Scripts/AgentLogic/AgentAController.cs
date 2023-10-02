@@ -15,7 +15,10 @@ namespace AgentLogic
         private FSM<string> _fsm;
         private Rigidbody _rb;
         private ISteeringBehaviour _steeringBehaviour;
-        private bool _doTransition;
+        private bool _doTransition = true;
+
+        private QuestionNode hasLife;
+        private QuestionNode isInRange;
 
         private void Awake()
         {
@@ -31,19 +34,18 @@ namespace AgentLogic
             IdleState<string> idleState = new IdleState<string>();
             PatrolState<string> patrolState = new PatrolState<string>(_agentA);
             ChaseState<string> chaseState = new ChaseState<string>(_agentA);
-           
+
             _fsm.InitializeFSM(idleState);
-            
             
             idleState.AddTransition("ChaseState", chaseState);   
             chaseState.AddTransition("Idle", idleState);
             
-            ActionNode dead = new ActionNode(_agentA.Dead);
-            ActionNode getPower = new ActionNode(_agentA.GetPower);
-            ActionNode spin = new ActionNode(_agentA.Spin);
+            ActionNode dead = new ActionNode(ChaseEnemy);
+            ActionNode isEnemyInRange = new ActionNode(_agentA.GetPower);
+            ActionNode spin = new ActionNode(_agentA.Spin);          
 
-            QuestionNode hasPower = new QuestionNode(_agentA.CheckPower, idleState, chaseState);
-            QuestionNode hasLife = new QuestionNode(_agentA.CheckLife, chaseState, idleState);  
+            isInRange = new QuestionNode(_agentA.CheckPower, spin, isEnemyInRange);
+            hasLife = new QuestionNode(_agentA.CheckLife, isInRange, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();
@@ -59,8 +61,8 @@ namespace AgentLogic
              }
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                _initTree.Execute();
                 _doTransition = true;
-                ChaseEnemy(); 
                 //_fsm.Transition("Walk");
             }    
         } 
@@ -70,16 +72,22 @@ namespace AgentLogic
             _steeringBehaviour = steeringBehaviour;
         }
 
-        private void CheckForChasing()
-        {
-            _initTree.Execute();
+        private bool CheckForChasing()
+        {  
+            if (_agentA.CheckLife())
+            {
+                Debug.Log("Algo");
+                return true;
+                
+            } 
+            Debug.Log("Falso");
+            return false;
         }
 
         private void ChaseEnemy()
         {
             if (_doTransition)
-            {
-                _initTree.Execute();
+            {   
                 _fsm.Transition("ChaseState");
                 ChangeSteering(new PursuitSteering());
                 _doTransition = false;

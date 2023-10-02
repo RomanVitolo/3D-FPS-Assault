@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3db01252d58439db1c191636f4b4e52, type: 3}
   m_Name: AgentA
   m_EditorClassIdentifier: 
-  Name: 695996a6-668b-4a5e-be03-89d00f9597df
+  Name: a5c5cbdf-c6a7-4b87-92cb-29c8e2b5942e
   <IsLeader>k__BackingField: 0
-  <MaxAgentLife>k__BackingField: 10
+  <MaxAgentLife>k__BackingField: 100
   <CurrentAgentLife>k__BackingField: 0
   <Speed>k__BackingField: 0
   <HasBullet>k__BackingField: 0
