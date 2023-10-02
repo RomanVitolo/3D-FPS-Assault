@@ -1,23 +1,23 @@
 ﻿using AIBehaviours;
 using Interfaces;
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AgentLogic
 {
-    public class AgentA : MonoBehaviour, IMove, IAttack
+    public class Agent : MonoBehaviour, IMove, IAttack
     {
-       [field: SerializeField] public int Power { get; set; }
+        [field: SerializeField] public int Power { get; set; }
+        [field: SerializeField] public bool DoTransition { get; set; }
         
         [SerializeField] private Animator _animator;
         [SerializeField] private AgentAttributes _agentAttributes;
-        [SerializeField] private HealthController _healthController;
-         
-       
+        [SerializeField] private AgentHealth _agentHealth; 
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            _healthController = GetComponent<HealthController>();
+            _agentHealth = GetComponent<AgentHealth>();
         }
 
         public void Dead()
@@ -38,8 +38,19 @@ namespace AgentLogic
         
         public bool CheckLife()
         {
-            Debug.Log(_healthController.IsAlive());
-            return _healthController.IsAlive();
+            DoTransition = true;
+            Debug.Log(_agentHealth.IsAlive());
+            return _agentHealth.IsAlive();
+        }
+
+        public bool CheckLowLife()
+        {
+            DoTransition = true;
+            if (_agentHealth.GetCurrentLife() < 50 && _agentHealth.GetCurrentLife() > 0)
+            {
+                return true;
+            }            
+            return false;
         }
 
         public bool CheckPower()
@@ -47,9 +58,9 @@ namespace AgentLogic
             return Power >= 5;
         }
 
-        public void Move(Vector3 direction)
-        {
-            Debug.Log("WalkState");            
+        public void Move()
+        {  
+            Debug.Log("Moving");            
         }
 
         public void Shoot()
@@ -65,6 +76,11 @@ namespace AgentLogic
         public void Reload()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Hide()
+        {
+           Debug.Log("Hide Action");
         }
     }
 }

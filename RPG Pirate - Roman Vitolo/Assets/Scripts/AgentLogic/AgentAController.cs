@@ -1,28 +1,30 @@
-﻿using AIBehaviours;
+﻿using AIBehaviors;
+using AIBehaviours;
 using DecisionTree;
 using FSM;
 using Interfaces;
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AgentLogic
 {
     public class AgentAController : MonoBehaviour
     {
-        [SerializeField] private AgentA _agentA;
+        [SerializeField] private Agent _agent;
         [SerializeField] private AgentInput _agentInput;
 
         private INode _initTree;
         private FSM<string> _fsm;
         private Rigidbody _rb;
-        private ISteeringBehaviour _steeringBehaviour;
-        private bool _doTransition = true;
+        private ISteeringBehaviour _steeringBehaviour;  
 
         private QuestionNode hasLife;
         private QuestionNode isInRange;
+        private QuestionNode dieOrHide;
 
         private void Awake()
         {
-            _agentA = GetComponent<AgentA>();
+            _agent = GetComponent<Agent>();
             _agentInput = GetComponent<AgentInput>();
             _rb = GetComponent<Rigidbody>();
         }
@@ -32,20 +34,28 @@ namespace AgentLogic
             _fsm = new FSM<string>();
             
             IdleState<string> idleState = new IdleState<string>();
-            PatrolState<string> patrolState = new PatrolState<string>(_agentA);
-            ChaseState<string> chaseState = new ChaseState<string>(_agentA);
+            PatrolState<string> patrolState = new PatrolState<string>(_agent);
+            ChaseState<string> chaseState = new ChaseState<string>(_agent);
+            HideState<string> hideState = new HideState<string>(_agent);
 
             _fsm.InitializeFSM(idleState);
             
-            idleState.AddTransition("ChaseState", chaseState);   
+            idleState.AddTransition("Chase", chaseState);  
+            
             chaseState.AddTransition("Idle", idleState);
+            chaseState.AddTransition("Hide", hideState);
+            
+            hideState.AddTransition("Chase", chaseState);
+            
             
             ActionNode dead = new ActionNode(ChaseEnemy);
-            ActionNode isEnemyInRange = new ActionNode(_agentA.GetPower);
-            ActionNode spin = new ActionNode(_agentA.Spin);          
+            ActionNode isEnemyInRange = new ActionNode(_agent.GetPower);
+            ActionNode spin = new ActionNode(_agent.Spin);
+            ActionNode hide = new ActionNode(HideFromEnemy);
 
-            isInRange = new QuestionNode(_agentA.CheckPower, spin, isEnemyInRange);
-            hasLife = new QuestionNode(_agentA.CheckLife, isInRange, dead);  
+            isInRange = new QuestionNode(_agent.CheckPower, spin, isEnemyInRange);
+            dieOrHide = new QuestionNode(_agent.CheckLowLife, hide, isInRange);
+            hasLife = new QuestionNode(_agent.CheckLife, dieOrHide, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();
@@ -62,7 +72,7 @@ namespace AgentLogic
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _initTree.Execute();
-                _doTransition = true;
+                //_agent.DoTransition = true;
                 //_fsm.Transition("Walk");
             }    
         } 
@@ -74,7 +84,7 @@ namespace AgentLogic
 
         private bool CheckForChasing()
         {  
-            if (_agentA.CheckLife())
+            if (_agent.CheckLife())
             {
                 Debug.Log("Algo");
                 return true;
@@ -86,14 +96,26 @@ namespace AgentLogic
 
         private void ChaseEnemy()
         {
-            if (_doTransition)
+            if (_agent.DoTransition)
             {   
-                _fsm.Transition("ChaseState");
+                _fsm.Transition("Chase");
                 ChangeSteering(new PursuitSteering());
-                _doTransition = false;
+                _agent.DoTransition = false;
             }
             _steeringBehaviour.GetDirection();
-            _agentA.Pursuit();
+            _agent.Pursuit();
+        }
+        
+        private void HideFromEnemy()
+        {
+            if (_agent.DoTransition)
+            {   
+                _fsm.Transition("Hide");
+                ChangeSteering(new HideSteering());
+                _agent.DoTransition = false;
+            }
+            _steeringBehaviour.GetDirection();
+            _agent.Hide();
         }
 
     }

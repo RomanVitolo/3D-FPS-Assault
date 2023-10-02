@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AgentLogic
 {
-    public class HealthController : MonoBehaviour
+    public class AgentHealth : MonoBehaviour
     {
         [SerializeField] private AgentAttributes _agentAttributes;
 
