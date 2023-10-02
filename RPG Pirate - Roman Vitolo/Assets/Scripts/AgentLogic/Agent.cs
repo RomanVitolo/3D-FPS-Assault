@@ -14,12 +14,19 @@ namespace AgentLogic
         [SerializeField] private AgentAttributes _agentAttributes;
         [SerializeField] private AgentHealth _agentHealth; 
 
+        private ISteeringBehaviour _steeringBehaviour;
+        
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _agentHealth = GetComponent<AgentHealth>();
         }
 
+        public void ChangeSteering(ISteeringBehaviour steeringBehaviour)
+        {
+            _steeringBehaviour = steeringBehaviour;
+        }
+        
         public void Dead()
         {
              Debug.Log("Agent dead");
@@ -70,6 +77,7 @@ namespace AgentLogic
 
         public void Pursuit()
         {
+            _steeringBehaviour.GetDirection();
             Debug.Log("IAttack");
         }
 
@@ -79,7 +87,8 @@ namespace AgentLogic
         }
 
         public void Hide()
-        {
+        { 
+            _steeringBehaviour.GetDirection();
            Debug.Log("Hide Action");
         }
     }

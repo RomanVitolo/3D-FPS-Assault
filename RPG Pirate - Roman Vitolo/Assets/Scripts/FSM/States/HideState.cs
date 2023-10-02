@@ -18,7 +18,7 @@ namespace FSM
 
         public override void Tick()
         {
-            _entity.Move();
+            _entity.Hide();
         }
     }
 }

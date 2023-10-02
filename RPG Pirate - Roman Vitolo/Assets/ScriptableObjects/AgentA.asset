@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: a5c5cbdf-c6a7-4b87-92cb-29c8e2b5942e
   <IsLeader>k__BackingField: 0
-  <MaxAgentLife>k__BackingField: 20
-  <CurrentAgentLife>k__BackingField: 0
+  <MaxAgentLife>k__BackingField: 60
+  <CurrentAgentLife>k__BackingField: 40
   <Speed>k__BackingField: 0
   <HasBullet>k__BackingField: 0
   <InitialBullets>k__BackingField: 0
