@@ -1,9 +1,9 @@
 ﻿using Interfaces;
 using UnityEngine;
 
-namespace FSM
+namespace AIBehaviors
 {
-    public class ObstacleAvoidance : ISteeringBehaviour
+    public class EvadeSteering : ISteeringBehaviour
     {
         public Vector3 GetDirection()
         {

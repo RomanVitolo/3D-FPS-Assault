@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: a5c5cbdf-c6a7-4b87-92cb-29c8e2b5942e
   <IsLeader>k__BackingField: 0
-  <MaxAgentLife>k__BackingField: 60
-  <CurrentAgentLife>k__BackingField: 40
-  <Speed>k__BackingField: 0
+  <MaxAgentLife>k__BackingField: 20
+  <CurrentAgentLife>k__BackingField: 20
+  <AgentSpeed>k__BackingField: 8
+  <AgentTurnSpeed>k__BackingField: 2
   <HasBullet>k__BackingField: 0
   <InitialBullets>k__BackingField: 0
   <AmountOfBullets>k__BackingField: 0
   <FireRate>k__BackingField: 0
   <ReloadSpeed>k__BackingField: 0
-  <WeaponType>k__BackingField: []
+  <WeaponGO>k__BackingField:
+  - {fileID: 102804, guid: 29706bab6f351e64982fca9af5aa9851, type: 3}
+  - {fileID: 117022, guid: d279b87d89327b749b477d29b966fd39, type: 3}

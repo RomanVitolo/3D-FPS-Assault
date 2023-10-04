@@ -5,10 +5,25 @@ namespace AIBehaviours
 {
     public class PursuitSteering : ISteeringBehaviour
     {
-        public Vector3 GetDirection()
+        private Transform _agent;
+        private Transform _target;
+        private float _velocity;
+        private float _time;
+        
+        public PursuitSteering(Transform agent, Transform target, float velocity, float time)
         {
-            Debug.Log("GetDirection");
-            return new Vector3(0, 0, 0);
+            _agent = agent;
+            _target = target;
+            _velocity = velocity;
+            _time = time;
         }
+        
+        public Vector3 GetDirection()
+        {   
+            var direction = _target.position + _target.forward * (_velocity * _time);
+            var dir = (direction - _agent.position).normalized;   
+            Debug.Log($"Target position {dir}");
+            return dir;
+        }     
     }
 }

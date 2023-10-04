@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System; 
+using UnityEngine;    
 
 namespace AgentLogic
 {
@@ -12,18 +11,19 @@ namespace AgentLogic
        [field: SerializeField] public bool IsLeader { get; private set; }
        [field: SerializeField] public float MaxAgentLife { get; set; } 
        [field: SerializeField] public float CurrentAgentLife { get; set; } 
-       [field: SerializeField] public float Speed { get; set; }
+       [field: SerializeField] public float AgentSpeed { get; set; }
+       [field: SerializeField] public float AgentTurnSpeed { get; set; }
        [field: SerializeField] public bool HasBullet { get; set; } 
        [field: SerializeField] public bool InitialBullets { get; set; } 
        [field: SerializeField] public int AmountOfBullets { get; set; }  
        [field: SerializeField] public float FireRate { get; set; } 
-       [field: SerializeField] public float ReloadSpeed{ get; private set; }
-       [field: SerializeField] public List<string> WeaponType { get; set; } 
+       [field: SerializeField] public float ReloadSpeed { get; private set; }
+       [field: SerializeField] public GameObject[] WeaponGO { get; set; } 
 
-
-       public void InitializeWeaponType(string weaponType)
-       {
-           WeaponType = new List<string> {weaponType};
-       }
+       public void InitializeWeapon()
+       {   
+           WeaponGO[0].SetActive(true);
+       }   
+      
     }
 }

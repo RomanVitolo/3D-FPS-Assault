@@ -1,42 +1,38 @@
-﻿using AIBehaviours;
-using Interfaces;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using Interfaces;
+using UnityEngine;  
 
 namespace AgentLogic
 {
-    public class Agent : MonoBehaviour, IMove, IAttack
-    {
-        [field: SerializeField] public int Power { get; set; }
-        [field: SerializeField] public bool DoTransition { get; set; }
-        
-        [SerializeField] private Animator _animator;
+    public class Agent : MonoBehaviour, IMove, IAttack, IEntity
+    {            
         [SerializeField] private AgentAttributes _agentAttributes;
         [SerializeField] private AgentHealth _agentHealth; 
+        [SerializeField] private CharacterController _characterController; 
+        [SerializeField] private AgentAnimations _agentAnimations;
 
         private ISteeringBehaviour _steeringBehaviour;
         
         private void Awake()
-        {
-            _animator = GetComponent<Animator>();
+        { 
             _agentHealth = GetComponent<AgentHealth>();
+            _characterController = GetComponent<CharacterController>();
+            _agentAnimations = GetComponentInChildren<AgentAnimations>();  
         }
 
-        public void ChangeSteering(ISteeringBehaviour steeringBehaviour)
+        private void Start()
         {
-            _steeringBehaviour = steeringBehaviour;
-        }
+            _agentAttributes.InitializeWeapon();
+        }       
+        
+        public float GetVelocity()
+        {
+            return _agentAttributes.AgentSpeed;
+        }         
         
         public void Dead()
         {
              Debug.Log("Agent dead");
-        } 
-
-        public void GetPower()
-        {
-            Debug.Log("Get Power");
-            Power += 10;
-        }
+        }    
 
         public void Spin()
         {
@@ -44,46 +40,39 @@ namespace AgentLogic
         }
         
         public bool CheckLife()
-        {
-            DoTransition = true;
+        {         
             Debug.Log(_agentHealth.IsAlive());
             return _agentHealth.IsAlive();
         }
 
         public bool CheckLowLife()
-        {
-            DoTransition = true;
+        {     
             if (_agentHealth.GetCurrentLife() < 50 && _agentHealth.GetCurrentLife() > 0)
             {
                 return true;
             }            
             return false;
-        }
-
-        public bool CheckPower()
+        }   
+       
+        public void Move(Vector3 direction)
         {
-            return Power >= 5;
+            direction.y = 0;
+            var setDirection = direction * (GetVelocity() * Time.deltaTime);  
+            Quaternion rotation = Quaternion.LookRotation(setDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);  
+            _characterController.Move(setDirection);    
         }
-
-        public void Move()
-        {  
-            Debug.Log("Moving");            
-        }
+        
+        public void Pursuit() => Move(_steeringBehaviour.GetDirection());  
 
         public void Shoot()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void Pursuit()
-        {
-            _steeringBehaviour.GetDirection();
-            Debug.Log("IAttack");
-        }
+            
+        }       
 
         public void Reload()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Weapon Reload");
         }
 
         public void Hide()
@@ -91,5 +80,16 @@ namespace AgentLogic
             _steeringBehaviour.GetDirection();
            Debug.Log("Hide Action");
         }
-    }
+
+        public void SwitchWeapon()
+        {  
+            _agentAttributes.WeaponGO[0].SetActive(false);
+            _agentAttributes.WeaponGO[1].SetActive(true);  
+        }   
+        
+        public void ChangeSteering(ISteeringBehaviour steeringBehaviour)
+        {
+            _steeringBehaviour = steeringBehaviour;
+        }
+     }
 }

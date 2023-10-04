@@ -2,9 +2,8 @@
 using AIBehaviours;
 using DecisionTree;
 using FSM;
-using Interfaces;
-using UnityEngine;
-using UnityEngine.Serialization;
+using LineOfSight;
+using UnityEngine;     
 
 namespace AgentLogic
 {
@@ -12,11 +11,12 @@ namespace AgentLogic
     {
         [SerializeField] private Agent _agent;
         [SerializeField] private AgentInput _agentInput;
+        [SerializeField] private Transform _target;
+        [SerializeField] private LineOfSightConfigurationSO _agentSight;
 
         private INode _initTree;
         private FSM<string> _fsm;
-        private Rigidbody _rb;
-          
+        private Rigidbody _rb;     
 
         private QuestionNode hasLife;
         private QuestionNode isInRange;
@@ -32,7 +32,8 @@ namespace AgentLogic
         private void Start()
         {  
             _fsm = new FSM<string>();
-            
+
+            DeadState<string> deadState = new DeadState<string>(_agent);
             IdleState<string> idleState = new IdleState<string>();
             PatrolState<string> patrolState = new PatrolState<string>(_agent);
             ChaseState<string> chaseState = new ChaseState<string>(_agent);
@@ -42,21 +43,23 @@ namespace AgentLogic
             
             idleState.AddTransition("Chase", chaseState);  
             idleState.AddTransition("Hide", hideState);  
+            idleState.AddTransition("Dead", deadState);  
             
             chaseState.AddTransition("Idle", idleState);
             chaseState.AddTransition("Hide", hideState);
+            chaseState.AddTransition("Dead", deadState); 
             
             hideState.AddTransition("Chase", chaseState);
+            hideState.AddTransition("Dead", deadState);      
             
-            
-            ActionNode dead = new ActionNode(_agent.Dead);
-            ActionNode isEnemyInRange = new ActionNode(_agent.GetPower);
+            ActionNode dead = new ActionNode(AgentIsDead);
+            ActionNode isEnemyInRange = new ActionNode(EnemyIsInRange);
             ActionNode spin = new ActionNode(ChaseEnemy);
             ActionNode hide = new ActionNode(HideFromEnemy);
 
-            isInRange = new QuestionNode(_agent.CheckPower, spin, isEnemyInRange);
+            isInRange = new QuestionNode(CheckForChasing, spin, isEnemyInRange);
             dieOrHide = new QuestionNode(_agent.CheckLowLife, hide, isInRange);
-            hasLife = new QuestionNode(_agent.CheckLife, dieOrHide, dead);  
+            hasLife = new QuestionNode(_agent.CheckLife, spin, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();
@@ -72,10 +75,10 @@ namespace AgentLogic
              }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _initTree.Execute();
-                //_agent.DoTransition = true;
-                //_fsm.Transition("Walk");
-            }    
+                _initTree.Execute();  
+            }
+
+            EnemyIsInRange();    
         }         
 
         private bool CheckForChasing()
@@ -91,24 +94,23 @@ namespace AgentLogic
         }
 
         private void ChaseEnemy()
-        {
-            if (_agent.DoTransition)
-            {   
-                _fsm.Transition("Chase");
-                _agent.ChangeSteering(new PursuitSteering());
-                _agent.DoTransition = false;
-            }      
+        {  
+            _fsm.Transition("Chase");
+            _agent.ChangeSteering(new PursuitSteering(transform, _target, _agent.GetVelocity(), 1));    
         }
         
         private void HideFromEnemy()
-        {
-            if (_agent.DoTransition)
-            {   
-                _fsm.Transition("Hide");
-                _agent.ChangeSteering(new HideSteering());
-                _agent.DoTransition = false;
-            }   
+        { 
+            _fsm.Transition("Hide");
+            _agent.ChangeSteering(new HideSteering());  
         }
 
+        private void AgentIsDead() => _fsm.Transition("Dead");
+
+        private void EnemyIsInRange()
+        {
+            _agentSight.InSight = _agentSight.IsInSight(transform, _target, _agentSight.FOVRange,
+                _agentSight.FOVAngle, _agentSight.FOVLayerMask);
+        }
     }
 }

@@ -4,7 +4,7 @@ namespace Interfaces
 {
     public interface IMove
     {
-        void Move();
+        void Move(Vector3 direction);
         void Hide();
     }
 }
