@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbd02d233a44324bf118d0b01df2ff5, type: 3}
   m_Name: AgentSight
   m_EditorClassIdentifier: 
-  <InSight>k__BackingField: 0
+  <InSight>k__BackingField: 1
   <FOVRange>k__BackingField: 20
-  <FOVAngle>k__BackingField: 70
+  <FOVAngle>k__BackingField: 110
   <FOVLayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 128

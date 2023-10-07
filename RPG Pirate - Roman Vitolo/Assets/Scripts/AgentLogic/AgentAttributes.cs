@@ -22,7 +22,7 @@ namespace AgentLogic
 
        public void InitializeWeapon()
        {   
-           WeaponGO[0].SetActive(true);
+           //WeaponGO[0].SetActive(true);
        }   
       
     }
