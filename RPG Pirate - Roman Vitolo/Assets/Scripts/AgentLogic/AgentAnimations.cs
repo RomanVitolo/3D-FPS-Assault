@@ -4,16 +4,21 @@ namespace AgentLogic
 {
     public class AgentAnimations : MonoBehaviour
     {
-        [SerializeField] private Animator AgentAnimator;
+        [SerializeField] private Animator _agentAnimator;
 
         private void Awake()
         {
-            AgentAnimator = GetComponent<Animator>();
+            _agentAnimator = GetComponent<Animator>();
         }
 
         public void RunChaseAnimation()
         {
             
+        }
+
+        public void DoIdleAnimation()
+        {
+            //_agentAnimator.SetFloat("Idle");
         }
         
         

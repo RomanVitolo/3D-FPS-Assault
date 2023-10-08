@@ -109,6 +109,13 @@ MonoBehaviour:
   _agentInput: {fileID: 1363469799635006166}
   _target: {fileID: 0}
   _agentSight: {fileID: 11400000, guid: 969d39df10afdca42bf4d91f0c6a785b, type: 2}
+  _avoidanceParameters: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
+    type: 2}
+  _waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &5428339048710614614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69916e2a20c42db916c40a8849c73b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentAttributes: {fileID: 11400000, guid: b2c553db07a5f1842b75d8c59fc3042a, type: 2}
+  _agentHealth: {fileID: 11400000, guid: 8cdfb34f74cb79c4fb157aab48067481, type: 2}
 --- !u!114 &1363469799635006166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2152,7 +2159,7 @@ Animator:
   m_GameObject: {fileID: 1855189137819540}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0045ffb477e043a46950af7e617beb06, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f8f4ecb2402fd74428507ddeb24344e5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

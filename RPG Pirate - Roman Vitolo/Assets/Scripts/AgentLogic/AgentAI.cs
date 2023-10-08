@@ -17,7 +17,7 @@ namespace AgentLogic
         { 
             _agentHealth = GetComponent<AgentHealth>();
             _characterController = GetComponent<CharacterController>();
-            _agentAnimations = GetComponentInChildren<AgentAnimations>();  
+            _agentAnimations = GetComponent<AgentAnimations>();  
         }
 
         private void Start()
@@ -58,7 +58,7 @@ namespace AgentLogic
         public void Move(Vector3 direction)
         { 
             direction.y = 0;
-            var setDirection = direction * (GetVelocity() * Time.deltaTime);  
+            var setDirection = direction * (GetVelocity() * Time.deltaTime); 
             Quaternion rotation = Quaternion.LookRotation(setDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);  
             _characterController.Move(setDirection);    
@@ -77,9 +77,9 @@ namespace AgentLogic
         }
 
         public void Hide()
-        { 
-            _steeringBehaviour.GetDirection();
-           Debug.Log("Hide Action");
+        {
+            Move(_steeringBehaviour.GetDirection()); 
+            Debug.Log("Hide Action");
         }
 
         public void SwitchWeapon()
@@ -88,14 +88,7 @@ namespace AgentLogic
             _agentAttributes.WeaponGO[1].SetActive(true);  
         }   
         
-        public void ChangeSteering(ISteeringBehaviour steeringBehaviour)
-        {
-            _steeringBehaviour = steeringBehaviour;
-        }
-
-        public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance)
-        {
-            _obsAvoidance = obstacleAvoidance;
-        }
+        public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour;  
+        public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance) => _obsAvoidance = obstacleAvoidance;
      }
 }

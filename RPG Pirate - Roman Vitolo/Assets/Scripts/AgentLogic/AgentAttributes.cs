@@ -9,8 +9,6 @@ namespace AgentLogic
        public string Name = Guid.NewGuid().ToString();
        
        [field: SerializeField] public bool IsLeader { get; private set; }
-       [field: SerializeField] public float MaxAgentLife { get; set; } 
-       [field: SerializeField] public float CurrentAgentLife { get; set; } 
        [field: SerializeField] public float AgentSpeed { get; set; }
        [field: SerializeField] public float AgentTurnSpeed { get; set; }
        [field: SerializeField] public bool HasBullet { get; set; } 

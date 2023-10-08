@@ -1,4 +1,5 @@
-﻿using AIBehaviors;
+﻿using System.Collections.Generic;
+using AIBehaviors;
 using AIBehaviours;
 using DecisionTree;
 using FSM;
@@ -14,10 +15,12 @@ namespace AgentLogic
         [SerializeField] private Transform _target;
         [SerializeField] private LineOfSightConfigurationSO _agentSight;
         [SerializeField] private AvoidanceParameters _avoidanceParameters;
+        [SerializeField] private List<Transform> _waypoints = new List<Transform>();
 
         private INode _initTree;
         private FSM<string> _fsm;
-        private Rigidbody _rb;      
+        private Rigidbody _rb;
+        private Transform _nearestWeapon;
 
         private void Awake()
         {
@@ -57,7 +60,7 @@ namespace AgentLogic
             
             QuestionNode isInRange = new QuestionNode(EnemyIsInRange, canAttack, Patrol);
             QuestionNode dieOrHide = new QuestionNode(_agentAI.CheckLowLife, hide, isInRange);
-            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, spin, dead);  
+            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, dieOrHide, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();
@@ -85,13 +88,14 @@ namespace AgentLogic
         private void ChaseEnemy()
         {  
             _fsm.Transition("Chase");  
-            _agentAI.ChangeSteering(new PursuitSteering(transform, _target, _agentAI.GetVelocity(), 1));    
+            //_agentAI.ChangeSteering(new PursuitSteering(transform, _target, _agentAI.GetVelocity(), 1));    
         }
         
         private void HideFromEnemy()
         { 
             _fsm.Transition("Hide");
-            _agentAI.ChangeSteering(new HideSteering());  
+            _agentAI.ChangeSteering(new HideSteering(this.transform, _nearestWeapon, _target, 
+                _agentAI.GetVelocity(),_waypoints));  
         }
 
         private void AgentIsDead() => _fsm.Transition("Dead");

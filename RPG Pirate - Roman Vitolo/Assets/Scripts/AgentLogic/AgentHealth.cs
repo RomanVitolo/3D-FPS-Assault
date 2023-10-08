@@ -4,8 +4,8 @@ using UnityEngine;
 namespace AgentLogic
 {
     public class AgentHealth : MonoBehaviour
-    {
-        [SerializeField] private AgentAttributes _agentAttributes;
+    {      
+        [SerializeField] private AgentHealthSO _agentHealth;
 
         private void Awake()
         {
@@ -14,23 +14,23 @@ namespace AgentLogic
 
         private void SetCurrentLife()
         {
-             _agentAttributes.CurrentAgentLife = _agentAttributes.MaxAgentLife;
+            _agentHealth.CurrentAgentLife = _agentHealth.MaxAgentLife;
         }
 
         public float GetCurrentLife()
         {
-            return _agentAttributes.CurrentAgentLife;
+            return _agentHealth.CurrentAgentLife;
         }
         
         public float TakeDamage(float damage)
         {
-            var calculateDamage = _agentAttributes.CurrentAgentLife - damage;
+            var calculateDamage = _agentHealth.CurrentAgentLife - damage;
             return calculateDamage;
         }
 
         public bool IsAlive()
         {
-            if (_agentAttributes.CurrentAgentLife > 0)
+            if (_agentHealth.CurrentAgentLife > 0)
             {
                 return true;
             } 
