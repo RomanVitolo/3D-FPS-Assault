@@ -6,6 +6,6 @@ namespace AgentLogic
     public class AgentHealthSO : ScriptableObject
     {
         [field: SerializeField] public float MaxAgentLife { get; set; } 
-        public float CurrentAgentLife { get; set; } 
+        [field: SerializeField] public float CurrentAgentLife { get; set; } 
     }
 }

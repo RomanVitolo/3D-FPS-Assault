@@ -34,33 +34,39 @@ namespace AgentLogic
             _fsm = new FSM<string>();
 
             DeadState<string> deadState = new DeadState<string>(_agentAI);
-            IdleState<string> idleState = new IdleState<string>();
+            IdleState<string> idleState = new IdleState<string>(_agentAI);
             PatrolState<string> patrolState = new PatrolState<string>(_agentAI);
             ChaseState<string> chaseState = new ChaseState<string>(_agentAI);
             HideState<string> hideState = new HideState<string>(_agentAI);
+            ReloadState<string> reloadState = new ReloadState<string>(_agentAI);
 
             _fsm.InitializeFSM(idleState);
             
             idleState.AddTransition("Chase", chaseState);  
             idleState.AddTransition("Hide", hideState);  
             idleState.AddTransition("Dead", deadState);  
+            idleState.AddTransition("Reload", reloadState);  
             
             chaseState.AddTransition("Idle", idleState);
             chaseState.AddTransition("Hide", hideState);
             chaseState.AddTransition("Dead", deadState); 
             
             hideState.AddTransition("Chase", chaseState);
-            hideState.AddTransition("Dead", deadState);      
+            hideState.AddTransition("Dead", deadState); 
+            
+            reloadState.AddTransition("Idle", idleState);
             
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode spin = new ActionNode(ChaseEnemy);
             ActionNode hide = new ActionNode(HideFromEnemy);
             ActionNode canAttack = new ActionNode(HideFromEnemy);
             ActionNode Patrol = new ActionNode(HideFromEnemy);           
+            ActionNode reload = new ActionNode(ReloadState);           
+            ActionNode idle = new ActionNode(IdleState);           
             
             QuestionNode isInRange = new QuestionNode(EnemyIsInRange, canAttack, Patrol);
             QuestionNode dieOrHide = new QuestionNode(_agentAI.CheckLowLife, hide, isInRange);
-            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, dieOrHide, dead);  
+            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, reload, idle);  
 
             _initTree = hasLife;
             _initTree.Execute();
@@ -105,6 +111,16 @@ namespace AgentLogic
             _agentSight.InSight = _agentSight.IsInSight(transform, _target, _agentSight.FOVRange,
                 _agentSight.FOVAngle, _agentSight.FOVLayerMask);           
             return _agentSight.InSight;
+        }
+
+        private void ReloadState()
+        {
+            _fsm.Transition("Reload");
+        }
+
+        private void IdleState()
+        {
+            _fsm.Transition("Idle");
         }
 
 

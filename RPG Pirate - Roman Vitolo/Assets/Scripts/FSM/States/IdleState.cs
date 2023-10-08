@@ -1,28 +1,20 @@
-﻿using UnityEngine;
+﻿using Interfaces;
+using UnityEngine;
 
 namespace FSM
 {
     public class IdleState<T> : FSMState<T>
     {
-        public IdleState()
+        private IMove _agent;
+        public IdleState(IMove agent)
         {
-            
-        }
-        
-        public override void Enter()
-        {
-            base.Enter();
-            Debug.Log("Enter Idle State");
-        }
+            _agent = agent;
+        }   
 
         public override void Tick()
         {
-            base.Tick();
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-        }
+           _agent.Idle();
+        }   
+       
     }
 }

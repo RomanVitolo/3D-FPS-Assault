@@ -27,7 +27,7 @@ namespace AIBehaviors
           return SteerTowardsWaypoint(_nearestWaypoint.position);
         }
         
-        private void FindNearestWaypoint()
+        /*private void FindNearestWaypoint()
         {
             float minDistance = float.MaxValue;
 
@@ -35,6 +35,24 @@ namespace AIBehaviors
             {
                 float distance = Vector3.Distance(_agent.position, waypoint.position);
                 if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    _nearestWaypoint = waypoint;
+                }
+            }
+        }*/
+        
+        private void FindNearestWaypoint()
+        {
+            float minDistance = float.MaxValue;
+
+            foreach (Transform waypoint in _waypoints)
+            {
+                float distance = Vector3.Distance(_agent.position, waypoint.position);    
+                
+                float playerDistance = Vector3.Distance(_agent.position, _target.position);   
+                
+                if (playerDistance > 2.0f && distance < minDistance) 
                 {
                     minDistance = distance;
                     _nearestWaypoint = waypoint;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace AgentLogic
 {
@@ -18,9 +19,12 @@ namespace AgentLogic
 
         public void DoIdleAnimation()
         {
-            //_agentAnimator.SetFloat("Idle");
+            _agentAnimator.SetBool("Reload", false);
         }
-        
-        
+
+        public void ReloadAnimation(bool setAnimation)
+        {
+            _agentAnimator.SetBool("Reload", setAnimation);
+        }
     }
 }

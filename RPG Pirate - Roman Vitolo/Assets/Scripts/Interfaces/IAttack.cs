@@ -6,7 +6,7 @@ namespace Interfaces
     {
         void Shoot();
         void Pursuit();
-        void Reload();
+        void Reload(bool reload);
         void SwitchWeapon();
     }
 }

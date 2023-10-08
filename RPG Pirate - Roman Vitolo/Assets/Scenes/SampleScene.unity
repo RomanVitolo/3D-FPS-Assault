@@ -245,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 212845613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.14, y: 0.52, z: 20.07}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -509,7 +509,7 @@ Transform:
   m_GameObject: {fileID: 417597065}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.14, y: 0.52, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -526,6 +526,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_ToplessMale_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1014623955112378, guid: 97f7e6b749ccd1b4fbd20203ba928e47, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4830816832017178, guid: 97f7e6b749ccd1b4fbd20203ba928e47, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -540,7 +544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4830816832017178, guid: 97f7e6b749ccd1b4fbd20203ba928e47, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -152
+      value: -22.71
       objectReference: {fileID: 0}
     - target: {fileID: 4830816832017178, guid: 97f7e6b749ccd1b4fbd20203ba928e47, type: 3}
       propertyPath: m_LocalRotation.w
@@ -622,7 +626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4421512215773762, guid: 30c23f6bcd4f35648bbfc61c9f671e51, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -143.064
+      value: -13.773994
       objectReference: {fileID: 0}
     - target: {fileID: 4421512215773762, guid: 30c23f6bcd4f35648bbfc61c9f671e51, type: 3}
       propertyPath: m_LocalRotation.w
@@ -677,12 +681,6 @@ PrefabInstance:
       propertyPath: _waypoints.Array.data[3]
       value: 
       objectReference: {fileID: 1060452107}
-    - target: {fileID: 8524683101891878469, guid: 30c23f6bcd4f35648bbfc61c9f671e51,
-        type: 3}
-      propertyPath: _agentAnimations
-      value: 
-      objectReference: {fileID: 4097184380604985211, guid: 30c23f6bcd4f35648bbfc61c9f671e51,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30c23f6bcd4f35648bbfc61c9f671e51, type: 3}
 --- !u!4 &693844167 stripped
@@ -704,7 +702,6 @@ GameObject:
   - component: {fileID: 755210945}
   - component: {fileID: 755210944}
   - component: {fileID: 755210948}
-  - component: {fileID: 755210949}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -783,7 +780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755210943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 1.1765076, z: 48.95}
+  m_LocalPosition: {x: 0.6, y: 1.1765076, z: -28.07}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -805,27 +802,6 @@ MonoBehaviour:
   target: {fileID: 693844167}
   maxSpeed: 2
   predictionTime: 2
---- !u!114 &755210949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 755210943}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18006490ea650e74281e4f1658935f5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  hideThreshold: 0.5
-  moveSpeed: 2
-  waypoints:
-  - {fileID: 807138215}
-  - {fileID: 417597066}
-  - {fileID: 212845614}
-  - {fileID: 1060452107}
 --- !u!1 &807138214
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +827,7 @@ Transform:
   m_GameObject: {fileID: 807138214}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.9, y: 0.52, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -931,7 +907,7 @@ Transform:
   m_GameObject: {fileID: 1060452106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.66, y: 0.52, z: 20.07}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

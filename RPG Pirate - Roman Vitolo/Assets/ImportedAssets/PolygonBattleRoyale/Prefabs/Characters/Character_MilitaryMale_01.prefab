@@ -1647,13 +1647,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4421512215773762}
+  - component: {fileID: 693844169}
   - component: {fileID: 693844158}
   - component: {fileID: 693844157}
   - component: {fileID: 7365232588387714248}
   - component: {fileID: 8524683101891878469}
   - component: {fileID: 6768427623922912033}
   - component: {fileID: 3105436922369876285}
-  - component: {fileID: 693844169}
   - component: {fileID: 693844168}
   m_Layer: 0
   m_Name: Character_MilitaryMale_01
@@ -1679,6 +1679,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &693844169
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938837853794670}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0045ffb477e043a46950af7e617beb06, type: 3}
+  m_Controller: {fileID: 9100000, guid: f8f4ecb2402fd74428507ddeb24344e5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!143 &693844158
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1775,26 +1795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793a665002454b3698da403e73ca0c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &693844169
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938837853794670}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 0045ffb477e043a46950af7e617beb06, type: 3}
-  m_Controller: {fileID: 9100000, guid: f8f4ecb2402fd74428507ddeb24344e5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &693844168
 MonoBehaviour:
   m_ObjectHideFlags: 0

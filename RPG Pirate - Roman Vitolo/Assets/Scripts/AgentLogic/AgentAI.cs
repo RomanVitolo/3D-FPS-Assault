@@ -69,11 +69,17 @@ namespace AgentLogic
         public void Shoot()
         {
             
-        }       
+        }
 
-        public void Reload()
+        public void Idle()
         {
-            Debug.Log("Weapon Reload");
+            _agentAnimations.DoIdleAnimation();
+        }
+
+        public void Reload(bool reload)
+        {
+            _agentAnimations.ReloadAnimation(reload);  
+            Debug.Log("Weapon Reload");       
         }
 
         public void Hide()
