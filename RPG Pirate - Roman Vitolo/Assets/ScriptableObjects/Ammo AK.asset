@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b77e07b7fc84de5af22dc1580245839, type: 3}
   m_Name: Ammo AK
   m_EditorClassIdentifier: 
-  <BulletSpeed>k__BackingField: 3
-  <BulletLifeTime>k__BackingField: 3
+  <BulletSpeed>k__BackingField: 20
+  <BulletLifeTime>k__BackingField: 4
+  <BulletDamage>k__BackingField: 5

@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: a5c5cbdf-c6a7-4b87-92cb-29c8e2b5942e
   <IsLeader>k__BackingField: 0
   <AgentSpeed>k__BackingField: 3
-  <AgentTurnSpeed>k__BackingField: 2
+  <AgentTurnSpeed>k__BackingField: 10
   <HasBullet>k__BackingField: 0
   <InitialBullets>k__BackingField: 0
   <AmountOfBullets>k__BackingField: 0

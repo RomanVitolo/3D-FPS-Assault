@@ -26,6 +26,11 @@ namespace AgentLogic
         {
             _agentAnimator.SetBool("Reload", setAnimation);
         }
+        
+        public void ShootAnimation()
+        {
+              _agentAnimator.SetBool("Shoot", true);
+        }
 
         public void DeadAnimation()
         {
@@ -38,6 +43,7 @@ namespace AgentLogic
             yield return new WaitForSeconds(2.5f);
             _agentAnimator.SetBool("Dead", false);
             Destroy(this.gameObject);
-        }
+        }   
+        
     }
 }

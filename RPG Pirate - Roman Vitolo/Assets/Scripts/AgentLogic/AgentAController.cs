@@ -38,7 +38,7 @@ namespace AgentLogic
             ChaseState<string> chaseState = new ChaseState<string>(_agentAI);
             HideState<string> hideState = new HideState<string>(_agentAI);
             ReloadState<string> reloadState = new ReloadState<string>(_agentAI);
-            AttackState<string> shootState = new AttackState<string>(_agentAI);
+            ShootState<string> shootState = new ShootState<string>(_agentAI);
 
             _fsm.InitializeFSM(idleState);
             
@@ -85,7 +85,7 @@ namespace AgentLogic
       
         private void Update()
         {   
-             _fsm.OnTick();
+            _fsm.OnTick();
 
              if (_agentInput.GetHorizontalAxis() != 0 || _agentInput.GetVerticalAxis() != 0)
              {

@@ -1,6 +1,6 @@
-﻿using Interfaces;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using System;
+using Interfaces;
+using UnityEngine;   
 
 namespace AgentLogic
 {
@@ -11,17 +11,21 @@ namespace AgentLogic
         
         [SerializeField] private CharacterController _characterController; 
         [SerializeField] private AgentAnimations _agentAnimations;
-
-        public UnityEvent OnShoot;
-
+        
+        [SerializeField] private AgentWeapon _agentWeapon;
+        [SerializeField] private Transform _target;
+                               
         private ISteeringBehaviour _steeringBehaviour;
         private ISteeringBehaviour _obsAvoidance;
+
+        private float _lastShotTime = 1f;
         
         private void Awake()
         { 
             _agentHealth = GetComponent<AgentHealth>();
             _characterController = GetComponent<CharacterController>();
-            _agentAnimations = GetComponent<AgentAnimations>();  
+            _agentAnimations = GetComponent<AgentAnimations>();
+            _agentWeapon = GetComponentInChildren<AgentWeapon>();
         }
 
         private void Start()
@@ -86,20 +90,34 @@ namespace AgentLogic
         {
             Move(_steeringBehaviour.GetDirection()); 
             Debug.Log("Hide Action");
-        }
-
-        public void Shoot()
-        {
-            OnShoot?.Invoke(); 
-        }
+        }     
         
+        
+        public void Shoot()
+        {  
+            _agentAnimations.ShootAnimation();
+            Vector3 direction = _target.position - transform.position;
+            var rotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);  
+                  
+            if (Time.time - _lastShotTime >= 1 / _agentWeapon.WeaponFireRate())
+            {   
+                _agentWeapon.Shoot();  
+                _lastShotTime = Time.time;
+            }    
+        }      
 
         public void SwitchWeapon()
         {  
             _agentAttributes.WeaponGO[0].SetActive(false);
             _agentAttributes.WeaponGO[1].SetActive(true);  
-        }   
-        
+        }
+
+        public void DoDamage(int value)
+        {
+            _agentHealth.TakeDamage(value);
+        }
+
         public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour;  
         public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance) => _obsAvoidance = obstacleAvoidance;
      }  

@@ -1,13 +1,12 @@
 ﻿using Interfaces;
-using UnityEngine;
 
 namespace FSM
 {  
-    public class AttackState<T> : FSMState<T>
+    public class ShootState<T> : FSMState<T>
     {
         public IAttack _agentShoot;
 
-        public AttackState(IAttack agentShoot)
+        public ShootState(IAttack agentShoot)
         {
             _agentShoot = agentShoot;
         }

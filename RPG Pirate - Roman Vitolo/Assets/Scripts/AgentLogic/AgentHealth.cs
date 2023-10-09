@@ -17,12 +17,12 @@ namespace AgentLogic
             _agentHealth.CurrentAgentLife = _agentHealth.MaxAgentLife;
         }
 
-        public float GetCurrentLife()
+        public int GetCurrentLife()
         {
             return _agentHealth.CurrentAgentLife;
         }
         
-        public float TakeDamage(float damage)
+        public int TakeDamage(int damage)
         {
             var calculateDamage = _agentHealth.CurrentAgentLife - damage;
             return calculateDamage;
