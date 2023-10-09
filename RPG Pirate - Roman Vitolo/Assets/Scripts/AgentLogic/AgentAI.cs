@@ -1,5 +1,6 @@
 ﻿using Interfaces;
-using UnityEngine;  
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace AgentLogic
 {
@@ -7,8 +8,11 @@ namespace AgentLogic
     {            
         [SerializeField] private AgentAttributes _agentAttributes;
         [SerializeField] private AgentHealth _agentHealth; 
+        
         [SerializeField] private CharacterController _characterController; 
         [SerializeField] private AgentAnimations _agentAnimations;
+
+        public UnityEvent OnShoot;
 
         private ISteeringBehaviour _steeringBehaviour;
         private ISteeringBehaviour _obsAvoidance;
@@ -32,6 +36,7 @@ namespace AgentLogic
         
         public void Dead()
         {
+             _agentAnimations.DeadAnimation();
              Debug.Log("Agent dead");
         }    
 
@@ -64,12 +69,7 @@ namespace AgentLogic
             _characterController.Move(setDirection);    
         }     
           
-        public void Pursuit() => Move(_obsAvoidance.GetDirection());  
-
-        public void Shoot()
-        {
-            
-        }
+        public void Pursuit() => Move(_obsAvoidance.GetDirection());    
 
         public void Idle()
         {
@@ -88,6 +88,12 @@ namespace AgentLogic
             Debug.Log("Hide Action");
         }
 
+        public void Shoot()
+        {
+            OnShoot?.Invoke(); 
+        }
+        
+
         public void SwitchWeapon()
         {  
             _agentAttributes.WeaponGO[0].SetActive(false);
@@ -96,5 +102,6 @@ namespace AgentLogic
         
         public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour;  
         public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance) => _obsAvoidance = obstacleAvoidance;
-     }
+     }  
+   
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using AIBehaviors;
-using AIBehaviours;
+using AIBehaviors;  
 using DecisionTree;
 using FSM;
 using LineOfSight;
@@ -39,6 +38,7 @@ namespace AgentLogic
             ChaseState<string> chaseState = new ChaseState<string>(_agentAI);
             HideState<string> hideState = new HideState<string>(_agentAI);
             ReloadState<string> reloadState = new ReloadState<string>(_agentAI);
+            AttackState<string> shootState = new AttackState<string>(_agentAI);
 
             _fsm.InitializeFSM(idleState);
             
@@ -46,6 +46,7 @@ namespace AgentLogic
             idleState.AddTransition("Hide", hideState);  
             idleState.AddTransition("Dead", deadState);  
             idleState.AddTransition("Reload", reloadState);  
+            idleState.AddTransition("Shoot", shootState);  
             
             chaseState.AddTransition("Idle", idleState);
             chaseState.AddTransition("Hide", hideState);
@@ -56,24 +57,31 @@ namespace AgentLogic
             
             reloadState.AddTransition("Idle", idleState);
             
+            shootState.AddTransition("Idle", idleState);
+            
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode spin = new ActionNode(ChaseEnemy);
             ActionNode hide = new ActionNode(HideFromEnemy);
-            ActionNode canAttack = new ActionNode(HideFromEnemy);
+            ActionNode canAttack = new ActionNode(ShootState);
             ActionNode Patrol = new ActionNode(HideFromEnemy);           
             ActionNode reload = new ActionNode(ReloadState);           
             ActionNode idle = new ActionNode(IdleState);           
             
             QuestionNode isInRange = new QuestionNode(EnemyIsInRange, canAttack, Patrol);
             QuestionNode dieOrHide = new QuestionNode(_agentAI.CheckLowLife, hide, isInRange);
-            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, reload, idle);  
+            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, reload, canAttack);  
 
             _initTree = hasLife;
             _initTree.Execute();
             
             _agentAI.InitializeObsAvoidance(new ObstacleAvoidance(transform, _target, _avoidanceParameters.Radius,
                 _avoidanceParameters.ObstacleMask, _avoidanceParameters.AvoidWeight));
-        }   
+        }
+
+        private void ShootState()
+        {
+            _fsm.Transition("Shoot");
+        }
       
         private void Update()
         {   
