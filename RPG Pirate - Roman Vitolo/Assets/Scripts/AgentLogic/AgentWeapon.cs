@@ -16,6 +16,12 @@ namespace AgentLogic
 
             if (Physics.Raycast(ray, out hitInfo, _weaponStats.WeaponShootRange, _weaponStats.KillLayer))
             {
+                AgentHealth agentHealth = hitInfo.transform.GetComponent<AgentHealth>();
+                if (agentHealth != null)
+                {
+                    agentHealth.TakeDamage(_weaponStats.WeaponDamage);
+                    Debug.Log(agentHealth.GetCurrentLife());
+                }
                 Debug.Log("Hit Entity" + hitInfo.transform.name);
             }
         }

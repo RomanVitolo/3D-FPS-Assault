@@ -69,7 +69,7 @@ namespace AgentLogic
             
             QuestionNode isInRange = new QuestionNode(EnemyIsInRange, canAttack, Patrol);
             QuestionNode dieOrHide = new QuestionNode(_agentAI.CheckLowLife, hide, isInRange);
-            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, reload, canAttack);  
+            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, canAttack, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();
@@ -94,7 +94,7 @@ namespace AgentLogic
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _initTree.Execute();  
-            }
+            }     
 
             //EnemyIsInRange();    
         }           

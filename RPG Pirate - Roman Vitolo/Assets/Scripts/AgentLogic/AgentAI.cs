@@ -39,8 +39,13 @@ namespace AgentLogic
         }         
         
         public void Dead()
-        {
-             _agentAnimations.DeadAnimation();
+        {    
+             if (_agentHealth.IsAlive() == false)
+             {
+                 _agentAnimations.DeadAnimation();
+                 Destroy(this.gameObject, 2.5f);
+             }
+             
              Debug.Log("Agent dead");
         }    
 
@@ -90,12 +95,17 @@ namespace AgentLogic
         {
             Move(_steeringBehaviour.GetDirection()); 
             Debug.Log("Hide Action");
-        }     
-        
-        
+        }    
+            
         public void Shoot()
-        {  
-            _agentAnimations.ShootAnimation();
+        {
+            if (_target == null)
+            {
+                _agentAnimations.ShootAnimation(false);
+                return;
+            } 
+            
+            _agentAnimations.ShootAnimation(true);
             Vector3 direction = _target.position - transform.position;
             var rotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);  
@@ -104,7 +114,8 @@ namespace AgentLogic
             {   
                 _agentWeapon.Shoot();  
                 _lastShotTime = Time.time;
-            }    
+            }     
+              
         }      
 
         public void SwitchWeapon()
@@ -112,11 +123,7 @@ namespace AgentLogic
             _agentAttributes.WeaponGO[0].SetActive(false);
             _agentAttributes.WeaponGO[1].SetActive(true);  
         }
-
-        public void DoDamage(int value)
-        {
-            _agentHealth.TakeDamage(value);
-        }
+        
 
         public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour;  
         public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance) => _obsAvoidance = obstacleAvoidance;

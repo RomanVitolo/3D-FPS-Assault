@@ -22,10 +22,18 @@ namespace AgentLogic
             return _agentHealth.CurrentAgentLife;
         }
         
-        public int TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
-            var calculateDamage = _agentHealth.CurrentAgentLife - damage;
-            return calculateDamage;
+            if (_agentHealth.CurrentAgentLife < 0)
+            {
+                var calculateDamage = _agentHealth.CurrentAgentLife - damage;
+                _agentHealth.CurrentAgentLife = calculateDamage;
+            }
+            else
+            {
+                Destroy(this.gameObject, 2.5f);
+            }
+            
         }
 
         public bool IsAlive()

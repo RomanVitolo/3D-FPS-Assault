@@ -718,6 +718,7 @@ GameObject:
   - component: {fileID: 755210945}
   - component: {fileID: 755210944}
   - component: {fileID: 755210948}
+  - component: {fileID: 755210949}
   m_Layer: 8
   m_Name: Cube
   m_TagString: Target
@@ -818,6 +819,19 @@ MonoBehaviour:
   target: {fileID: 693844167}
   maxSpeed: 2
   predictionTime: 2
+--- !u!114 &755210949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755210943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69916e2a20c42db916c40a8849c73b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agentHealth: {fileID: 11400000, guid: 8cdfb34f74cb79c4fb157aab48067481, type: 2}
 --- !u!1 &807138214
 GameObject:
   m_ObjectHideFlags: 0
