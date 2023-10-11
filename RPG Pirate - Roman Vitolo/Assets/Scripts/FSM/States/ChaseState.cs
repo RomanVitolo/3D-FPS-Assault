@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using UnityEngine;
 
 namespace FSM
 {
@@ -9,6 +10,11 @@ namespace FSM
         public ChaseState(IAttack pursuitBehavior)
         {
             _pursuit = pursuitBehavior;
+        }
+
+        public override void Enter()
+        {
+            Debug.Log("Chase State");
         }
 
         public override void Tick()

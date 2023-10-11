@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 361b5d885e384203a57d14be3dd609e9, type: 3}
-  m_Name: AgentHealth
+  m_Name: AgentBHealth
   m_EditorClassIdentifier: 
   <MaxAgentLife>k__BackingField: 100
   <CurrentAgentLife>k__BackingField: 0

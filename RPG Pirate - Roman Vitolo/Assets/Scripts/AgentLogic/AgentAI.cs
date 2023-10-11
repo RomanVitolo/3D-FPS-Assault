@@ -120,6 +120,7 @@ namespace AgentLogic
 
         public void SwitchWeapon()
         {  
+            Debug.Log("Switch Weapon");
             _agentAttributes.WeaponGO[0].SetActive(false);
             _agentAttributes.WeaponGO[1].SetActive(true);  
         }

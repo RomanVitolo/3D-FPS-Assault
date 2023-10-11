@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AIBehaviors;  
 using DecisionTree;
+using DefaultNamespace;
 using FSM;
 using LineOfSight;
 using UnityEngine;           
@@ -17,19 +18,24 @@ namespace AgentLogic
         [SerializeField] private List<Transform> _waypoints = new List<Transform>();
 
         private INode _initTree;
-        private FSM<string> _fsm;
-        private Rigidbody _rb;
+        private FSM<string> _fsm;  
         private Transform _nearestWeapon;
+        private Roulette _roulette;
+        private Dictionary<string, int> _dic = new Dictionary<string, int>();
 
         private void Awake()
         {
             _agentAI = GetComponent<AgentAI>();
-            _agentInput = GetComponent<AgentInput>();
-            _rb = GetComponent<Rigidbody>();
+            _agentInput = GetComponent<AgentInput>(); 
         }
 
         private void Start()
         {  
+            _roulette = new Roulette();  
+            _dic.Add("Shoot", 20);
+            _dic.Add("Chase", 70);     // Asigno el valor del daño y sus probabilidad
+            _dic.Add("SwitchWeapon", 10);  
+            
             _fsm = new FSM<string>();
 
             DeadState<string> deadState = new DeadState<string>(_agentAI);
@@ -39,6 +45,7 @@ namespace AgentLogic
             HideState<string> hideState = new HideState<string>(_agentAI);
             ReloadState<string> reloadState = new ReloadState<string>(_agentAI);
             ShootState<string> shootState = new ShootState<string>(_agentAI);
+            SwitchWeaponState<string> switchWeaponState = new SwitchWeaponState<string>(_agentAI);
 
             _fsm.InitializeFSM(idleState);
             
@@ -51,13 +58,18 @@ namespace AgentLogic
             chaseState.AddTransition("Idle", idleState);
             chaseState.AddTransition("Hide", hideState);
             chaseState.AddTransition("Dead", deadState); 
+            chaseState.AddTransition("Shoot", shootState); 
             
+            hideState.AddTransition("Idle", idleState);
             hideState.AddTransition("Chase", chaseState);
             hideState.AddTransition("Dead", deadState); 
             
             reloadState.AddTransition("Idle", idleState);
+            reloadState.AddTransition("Shoot", shootState);
             
             shootState.AddTransition("Idle", idleState);
+            shootState.AddTransition("Chase", chaseState);
+            shootState.AddTransition("SwitchWeapon", switchWeaponState);
             
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode spin = new ActionNode(ChaseEnemy);
@@ -76,6 +88,7 @@ namespace AgentLogic
             
             _agentAI.InitializeObsAvoidance(new ObstacleAvoidance(transform, _target, _avoidanceParameters.Radius,
                 _avoidanceParameters.ObstacleMask, _avoidanceParameters.AvoidWeight));
+            
         }
 
         private void ShootState()
@@ -129,6 +142,12 @@ namespace AgentLogic
         private void IdleState()
         {
             _fsm.Transition("Idle");
+        }
+
+        [ContextMenu(nameof(MakeARandomDecision))]
+        private void MakeARandomDecision()
+        {
+            _fsm.Transition(_roulette.Run(_dic));       
         }
 
 

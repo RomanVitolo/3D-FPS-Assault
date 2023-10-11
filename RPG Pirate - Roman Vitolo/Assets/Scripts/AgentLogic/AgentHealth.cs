@@ -10,7 +10,7 @@ namespace AgentLogic
         private void Awake()
         {
             SetCurrentLife();
-        }
+        }                             
 
         private void SetCurrentLife()
         {
@@ -24,16 +24,11 @@ namespace AgentLogic
         
         public void TakeDamage(int damage)
         {
-            if (_agentHealth.CurrentAgentLife < 0)
+            if (_agentHealth.CurrentAgentLife > 0)
             {
                 var calculateDamage = _agentHealth.CurrentAgentLife - damage;
                 _agentHealth.CurrentAgentLife = calculateDamage;
-            }
-            else
-            {
-                Destroy(this.gameObject, 2.5f);
-            }
-            
+            }     
         }
 
         public bool IsAlive()

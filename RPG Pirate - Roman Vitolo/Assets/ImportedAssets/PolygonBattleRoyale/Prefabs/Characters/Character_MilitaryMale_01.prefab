@@ -1772,8 +1772,6 @@ MonoBehaviour:
   _agentAnimations: {fileID: 693844168}
   _agentWeapon: {fileID: 2002996314806189909}
   _target: {fileID: 0}
-  _fireRate: 1
-  _lastShotTime: 1
 --- !u!114 &6768427623922912033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1905,19 +1903,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4645375280533522, guid: be20da268d490c44c8460e91a7cd3a44, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.71143
+      value: -0.70044106
       objectReference: {fileID: 0}
     - target: {fileID: 4645375280533522, guid: be20da268d490c44c8460e91a7cd3a44, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.27682683
+      value: 0.29426178
       objectReference: {fileID: 0}
     - target: {fileID: 4645375280533522, guid: be20da268d490c44c8460e91a7cd3a44, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.4208907
+      value: -0.45722786
       objectReference: {fileID: 0}
     - target: {fileID: 4645375280533522, guid: be20da268d490c44c8460e91a7cd3a44, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.48998496
+      value: 0.46231484
       objectReference: {fileID: 0}
     - target: {fileID: 4645375280533522, guid: be20da268d490c44c8460e91a7cd3a44, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1957,7 +1955,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74371e1b9f374ca2958ed4cb3a71ee0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alcance: 40
-  iaLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  _weaponStats: {fileID: 11400000, guid: 8a421406538dcae45845b05393eebf7e, type: 2}

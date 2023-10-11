@@ -15,7 +15,7 @@ MonoBehaviour:
   <WeaponShootRange>k__BackingField: 50
   <KillLayer>k__BackingField:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   <WeaponDamage>k__BackingField: 2
   <FireRate>k__BackingField: 2.5
   <WeaponAmmo>k__BackingField: 30

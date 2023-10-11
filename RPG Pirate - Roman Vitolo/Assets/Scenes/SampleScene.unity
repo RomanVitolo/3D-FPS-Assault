@@ -526,10 +526,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_ToplessMale_01
       objectReference: {fileID: 0}
-    - target: {fileID: 1014623955112378, guid: 97f7e6b749ccd1b4fbd20203ba928e47, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4830816832017178, guid: 97f7e6b749ccd1b4fbd20203ba928e47, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -578,7 +574,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _target
       value: 
-      objectReference: {fileID: 755210947}
+      objectReference: {fileID: 693844167}
     - target: {fileID: 1087162091435180260, guid: 97f7e6b749ccd1b4fbd20203ba928e47,
         type: 3}
       propertyPath: _waypoints.Array.data[0]
@@ -601,9 +597,9 @@ PrefabInstance:
       objectReference: {fileID: 1060452107}
     - target: {fileID: 7769871606328466851, guid: 97f7e6b749ccd1b4fbd20203ba928e47,
         type: 3}
-      propertyPath: _agentAnimations
+      propertyPath: _target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 693844167}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97f7e6b749ccd1b4fbd20203ba928e47, type: 3}
 --- !u!1001 &693844155
@@ -661,17 +657,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2002996314806189909, guid: 30c23f6bcd4f35648bbfc61c9f671e51,
-        type: 3}
-      propertyPath: _weaponStats
-      value: 
-      objectReference: {fileID: 11400000, guid: 8a421406538dcae45845b05393eebf7e,
-        type: 2}
     - target: {fileID: 7365232588387714248, guid: 30c23f6bcd4f35648bbfc61c9f671e51,
         type: 3}
       propertyPath: _target
       value: 
-      objectReference: {fileID: 755210947}
+      objectReference: {fileID: 1568571042}
     - target: {fileID: 7365232588387714248, guid: 30c23f6bcd4f35648bbfc61c9f671e51,
         type: 3}
       propertyPath: _waypoints.Array.data[0]
@@ -696,7 +686,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _target
       value: 
-      objectReference: {fileID: 755210947}
+      objectReference: {fileID: 1568571042}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30c23f6bcd4f35648bbfc61c9f671e51, type: 3}
 --- !u!4 &693844167 stripped
@@ -831,7 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69916e2a20c42db916c40a8849c73b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentHealth: {fileID: 11400000, guid: 8cdfb34f74cb79c4fb157aab48067481, type: 2}
+  _agentHealth: {fileID: 0}
 --- !u!1 &807138214
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,3 +1031,9 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1568571042 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4830816832017178, guid: 97f7e6b749ccd1b4fbd20203ba928e47,
+    type: 3}
+  m_PrefabInstance: {fileID: 561543832}
+  m_PrefabAsset: {fileID: 0}
