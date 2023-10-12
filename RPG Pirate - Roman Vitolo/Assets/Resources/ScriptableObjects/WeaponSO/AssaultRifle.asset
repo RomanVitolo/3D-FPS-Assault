@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1b18afddf294edba176ed16e90c7f8e, type: 3}
-  m_Name: RifleAsstault
+  m_Name: AssaultRifle
   m_EditorClassIdentifier: 
   <WeaponShootRange>k__BackingField: 50
   <KillLayer>k__BackingField:

@@ -87,7 +87,8 @@ namespace AgentLogic
 
         public void Reload(bool reload)
         {
-            _agentAnimations.ReloadAnimation(reload);  
+            _agentAnimations.ReloadAnimation(reload); 
+            _agentWeapon.LoadReloadFX();
             Debug.Log("Weapon Reload");       
         }
 
@@ -114,9 +115,9 @@ namespace AgentLogic
             {   
                 _agentWeapon.Shoot();  
                 _lastShotTime = Time.time;
-            }     
-              
-        }      
+            }         
+        }   
+        
 
         public void SwitchWeapon()
         {  

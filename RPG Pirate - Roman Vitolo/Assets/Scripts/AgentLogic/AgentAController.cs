@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using AIBehaviors;  
 using DecisionTree;
 using DefaultNamespace;
@@ -21,7 +22,7 @@ namespace AgentLogic
         private FSM<string> _fsm;  
         private Transform _nearestWeapon;
         private Roulette _roulette;
-        private Dictionary<string, int> _dic = new Dictionary<string, int>();
+        private Dictionary<string, int> _RandomDecision = new Dictionary<string, int>();
 
         private void Awake()
         {
@@ -32,9 +33,9 @@ namespace AgentLogic
         private void Start()
         {  
             _roulette = new Roulette();  
-            _dic.Add("Shoot", 20);
-            _dic.Add("Chase", 70);     // Asigno el valor del daño y sus probabilidad
-            _dic.Add("SwitchWeapon", 10);  
+            _RandomDecision.Add("Shoot", 20);
+            _RandomDecision.Add("Chase", 70);     // Asigno el valor del daño y sus probabilidad
+            _RandomDecision.Add("SwitchWeapon", 10);  
             
             _fsm = new FSM<string>();
 
@@ -81,7 +82,7 @@ namespace AgentLogic
             
             QuestionNode isInRange = new QuestionNode(EnemyIsInRange, canAttack, Patrol);
             QuestionNode dieOrHide = new QuestionNode(_agentAI.CheckLowLife, hide, isInRange);
-            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, canAttack, dead);  
+            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, reload, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();
@@ -137,17 +138,25 @@ namespace AgentLogic
         private void ReloadState()
         {
             _fsm.Transition("Reload");
+            StartCoroutine(ExecuteTree());
         }
 
         private void IdleState()
         {
             _fsm.Transition("Idle");
+            StartCoroutine(ExecuteTree());
         }
 
         [ContextMenu(nameof(MakeARandomDecision))]
         private void MakeARandomDecision()
         {
-            _fsm.Transition(_roulette.Run(_dic));       
+            _fsm.Transition(_roulette.Run(_RandomDecision));       
+        }
+
+        IEnumerator ExecuteTree()
+        {
+            yield return new WaitForSeconds(2.5f);
+            _initTree.Execute();
         }
 
 

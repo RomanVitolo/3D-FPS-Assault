@@ -1,21 +1,36 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AgentLogic
 {   
     public class AgentWeapon : MonoBehaviour
     {
         [SerializeField] private WeaponStatsSO _weaponStats;
+        [SerializeField] private ParticleSystem _muzzleFlash;
+        [SerializeField] private AudioSource _weaponAudioFX;
+        [SerializeField] private WeaponSoundSO _weaponSounds;
 
-        public float WeaponFireRate() => _weaponStats.FireRate;     
+        public float WeaponFireRate() => _weaponStats.FireRate;
 
-         public void Shoot()
+        private void Awake()
         {
+            _muzzleFlash = GetComponentInChildren<ParticleSystem>();
+            _weaponAudioFX = GetComponentInChildren<AudioSource>();
+        }          
+
+        public void Shoot()
+        {
+            if (_weaponAudioFX.clip != _weaponSounds.ShootClip)  _weaponAudioFX.clip = _weaponSounds.ShootClip;  
+            else  
+                _weaponAudioFX.Play();        
+            
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hitInfo;
 
             if (Physics.Raycast(ray, out hitInfo, _weaponStats.WeaponShootRange, _weaponStats.KillLayer))
             {
+                _muzzleFlash.Play();
                 AgentHealth agentHealth = hitInfo.transform.GetComponent<AgentHealth>();
                 if (agentHealth != null)
                 {
@@ -24,8 +39,14 @@ namespace AgentLogic
                 }
                 Debug.Log("Hit Entity" + hitInfo.transform.name);
             }
-        }
+        }   
 
+        public void LoadReloadFX()
+        {
+            _weaponAudioFX.clip = _weaponSounds.ReloadSound;
+            _weaponAudioFX.Play();
+        }
+        
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;

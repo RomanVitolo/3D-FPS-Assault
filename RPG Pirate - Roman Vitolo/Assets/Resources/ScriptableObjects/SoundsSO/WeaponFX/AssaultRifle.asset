@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9592fe76fe2d4294a97d42c4cd092acb, type: 3}
+  m_Name: AssaultRifle
+  m_EditorClassIdentifier: 
+  <ShootClip>k__BackingField: {fileID: 8300000, guid: 9c1746d73c0035044be6d4caa15342e9,
+    type: 3}
+  <ReloadSound>k__BackingField: {fileID: 8300000, guid: dd17540cf60f8e143bbd31a19a739604,
+    type: 3}

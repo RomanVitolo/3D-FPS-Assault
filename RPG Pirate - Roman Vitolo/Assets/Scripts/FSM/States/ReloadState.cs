@@ -8,16 +8,10 @@ namespace FSM
         public ReloadState(IAttack attack)
         {
             _Attack = attack;
-        }
-
+        }       
         public override void Enter()
         {
             _Attack.Reload(true);
-        }
-
-        public override void Exit()
-        {
-            _Attack.Reload(false);
-        }
+        }                        
     }
 }

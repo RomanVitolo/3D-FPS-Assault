@@ -1929,8 +1929,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 291.316
       objectReference: {fileID: 0}
+    - target: {fileID: 7944361979168932348, guid: be20da268d490c44c8460e91a7cd3a44,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioSource
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be20da268d490c44c8460e91a7cd3a44, type: 3}
+--- !u!198 &4808448955586874979 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2829937301891816645, guid: be20da268d490c44c8460e91a7cd3a44,
+    type: 3}
+  m_PrefabInstance: {fileID: 7349591064731783846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7344947489252360884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4645375280533522, guid: be20da268d490c44c8460e91a7cd3a44,
@@ -1956,3 +1967,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponStats: {fileID: 11400000, guid: 8a421406538dcae45845b05393eebf7e, type: 2}
+  _muzzleFlash: {fileID: 4808448955586874979}
+  _weaponAudioFX: {fileID: 7541485271435014223}
+  _weaponSounds: {fileID: 11400000, guid: b314315a88fa00b4dbe5cba0e47f01d5, type: 2}
+--- !u!82 &7541485271435014223 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 961028996898775785, guid: be20da268d490c44c8460e91a7cd3a44,
+    type: 3}
+  m_PrefabInstance: {fileID: 7349591064731783846}
+  m_PrefabAsset: {fileID: 0}

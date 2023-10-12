@@ -2526,6 +2526,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be20da268d490c44c8460e91a7cd3a44, type: 3}
+--- !u!198 &540747985704089571 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2829937301891816645, guid: be20da268d490c44c8460e91a7cd3a44,
+    type: 3}
+  m_PrefabInstance: {fileID: 2361271138136746790}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2360010058376755412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1296539039355890, guid: be20da268d490c44c8460e91a7cd3a44,
@@ -2545,9 +2551,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponStats: {fileID: 11400000, guid: 8a421406538dcae45845b05393eebf7e, type: 2}
+  _muzzleFlash: {fileID: 540747985704089571}
+  _weaponAudioFX: {fileID: 3283873243731429839}
+  _weaponSounds: {fileID: 11400000, guid: b314315a88fa00b4dbe5cba0e47f01d5, type: 2}
 --- !u!4 &2365633795886168884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4645375280533522, guid: be20da268d490c44c8460e91a7cd3a44,
+    type: 3}
+  m_PrefabInstance: {fileID: 2361271138136746790}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &3283873243731429839 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 961028996898775785, guid: be20da268d490c44c8460e91a7cd3a44,
     type: 3}
   m_PrefabInstance: {fileID: 2361271138136746790}
   m_PrefabAsset: {fileID: 0}
