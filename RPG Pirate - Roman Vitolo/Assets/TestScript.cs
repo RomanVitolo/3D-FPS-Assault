@@ -1,19 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using DefaultNamespace;
 using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    public Transform target; // El objetivo a evadir
-    public float maxSpeed = 2.0f; // Velocidad máxima del objeto
-    public float predictionTime = 1.0f; // Tiempo de predicción (ajusta según sea necesario)
-
-    // Update is called once per frame
+    public Transform target; 
+    public float maxSpeed = 2.0f; 
+    public float predictionTime = 1.0f; 
+    
     void Update()
     {
-        /*var speedX = 0.01f;   
-        transform.position += new Vector3(0, 0, 5f * Time.deltaTime);   */  
-        
         Vector3 toTarget = target.position - transform.position;
         float distance = toTarget.magnitude;
         float speed = maxSpeed;
@@ -37,7 +33,5 @@ public class TestScript : MonoBehaviour
         transform.position += transform.forward * (maxSpeed * Time.deltaTime);
         transform.forward = steering.normalized;
         
-    }
-    
-    
+    }    
 }

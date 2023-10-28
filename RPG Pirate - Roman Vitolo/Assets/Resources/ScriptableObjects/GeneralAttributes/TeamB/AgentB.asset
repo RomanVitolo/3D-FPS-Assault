@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3db01252d58439db1c191636f4b4e52, type: 3}
-  m_Name: AgentA
+  m_Name: AgentB
   m_EditorClassIdentifier: 
-  Name: a5c5cbdf-c6a7-4b87-92cb-29c8e2b5942e
+  Name: 471b808d-16b5-4eba-ae09-cbcc9dc4115d
   <IsLeader>k__BackingField: 0
   <AgentSpeed>k__BackingField: 3
   <AgentTurnSpeed>k__BackingField: 10
@@ -21,4 +21,4 @@ MonoBehaviour:
   <AmountOfBullets>k__BackingField: 0
   <FireRate>k__BackingField: 0
   <ReloadSpeed>k__BackingField: 0
-  <WeaponGO>k__BackingField: []
+  <WaypointNameTag>k__BackingField: WaypointB

@@ -16,12 +16,6 @@ namespace AgentLogic
        [field: SerializeField] public int AmountOfBullets { get; set; }  
        [field: SerializeField] public float FireRate { get; set; } 
        [field: SerializeField] public float ReloadSpeed { get; private set; }
-       [field: SerializeField] public GameObject[] WeaponGO { get; set; } 
-
-       public void InitializeWeapon()
-       {   
-           //WeaponGO[0].SetActive(true);
-       }   
-      
+       [field: SerializeField] public string WaypointNameTag { get; private set; }
     }
 }

@@ -1,13 +1,19 @@
 ﻿using System;
+using DecisionTree;
+using DefaultNamespace;
 using Interfaces;
 using UnityEngine;   
 
 namespace AgentLogic
 {
     public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity
-    {            
+    {
+        [field: SerializeField] public bool CanMove { get; set;}
+        
         [SerializeField] private AgentAttributes _agentAttributes;
         [SerializeField] private AgentHealth _agentHealth; 
+        [SerializeField] private AgentAController _agentAController;  
+        [SerializeField] private AvoidanceParametersSO _avoidanceParameters;  
         
         [SerializeField] private CharacterController _characterController; 
         [SerializeField] private AgentAnimations _agentAnimations;
@@ -16,23 +22,24 @@ namespace AgentLogic
         [SerializeField] private Transform _target;
                                
         private ISteeringBehaviour _steeringBehaviour;
-        private ISteeringBehaviour _obsAvoidance;
-
+        private ISteeringBehaviour _obsAvoidance;      
+        
         private float _lastShotTime = 1f;
         
         private void Awake()
         { 
             _agentHealth = GetComponent<AgentHealth>();
             _characterController = GetComponent<CharacterController>();
+            _agentAController = GetComponent<AgentAController>();
             _agentAnimations = GetComponent<AgentAnimations>();
-            _agentWeapon = GetComponentInChildren<AgentWeapon>();
+            _agentWeapon = GetComponentInChildren<AgentWeapon>();   
         }
 
         private void Start()
-        {
-            _agentAttributes.InitializeWeapon();
-        }       
-        
+        {  
+            CanMove = true;
+        }     
+
         public float GetVelocity()
         {
             return _agentAttributes.AgentSpeed;
@@ -48,11 +55,6 @@ namespace AgentLogic
              
              Debug.Log("Agent dead");
         }    
-
-        public void Spin()
-        {
-            Debug.Log("Spin");
-        }
         
         public bool CheckLife()
         {         
@@ -74,16 +76,11 @@ namespace AgentLogic
             direction.y = 0;
             var setDirection = direction * (GetVelocity() * Time.deltaTime); 
             Quaternion rotation = Quaternion.LookRotation(setDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);  
-            _characterController.Move(setDirection);    
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);     
+            _characterController.Move(setDirection);              
         }     
           
-        public void Pursuit() => Move(_obsAvoidance.GetDirection());    
-
-        public void Idle()
-        {
-            _agentAnimations.DoIdleAnimation();
-        }
+        public void Pursuit() => Move(_obsAvoidance.GetDirection());         
 
         public void Reload(bool reload)
         {
@@ -93,11 +90,29 @@ namespace AgentLogic
         }
 
         public void Hide()
+        {  
+            if (CanMove)
+            {   
+                _agentAnimations.RunChaseAnimation(); 
+                SimpleAvoidance();
+                Move(_steeringBehaviour.GetDirection());  
+                Debug.Log("Hide Action"); 
+            }
+            else
+            {  
+                Debug.Log("Action");
+            }           
+        }
+        
+        public bool HideOrFlocking()
         {
-            Move(_steeringBehaviour.GetDirection()); 
-            Debug.Log("Hide Action");
-        }    
+            if (CanMove) return true;
             
+            return false;   
+        }               
+
+        public void Wander() => _agentAnimations.DoIdleAnimation();
+      
         public void Shoot()
         {
             if (_target == null)
@@ -115,20 +130,30 @@ namespace AgentLogic
             {   
                 _agentWeapon.Shoot();  
                 _lastShotTime = Time.time;
-            }         
-        }   
-        
-
-        public void SwitchWeapon()
-        {  
-            Debug.Log("Switch Weapon");
-            _agentAttributes.WeaponGO[0].SetActive(false);
-            _agentAttributes.WeaponGO[1].SetActive(true);  
-        }
-        
-
+            }        
+        }          
+                 
         public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour;  
-        public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance) => _obsAvoidance = obstacleAvoidance;
-     }  
-   
+        public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance) => _obsAvoidance = obstacleAvoidance;  
+        public string WaypointTag() => _agentAttributes.WaypointNameTag;
+                                                                                 
+        private void SimpleAvoidance()
+        {
+            Vector3 direction = transform.forward;      
+            
+            Vector3 actualDirection = transform.position + direction * _avoidanceParameters.Radius;   
+            
+            Collider[] obstacle = Physics.OverlapSphere(actualDirection, _avoidanceParameters.AvoidWeight, _avoidanceParameters.ObstacleMask);
+
+            if (obstacle.Length > 0)
+            {
+               
+                Vector3 evasion = Vector3.Cross(Vector3.up, direction);
+                direction += evasion;
+                                               
+                direction += Quaternion.Euler(0, 45, 0) * evasion;
+            }                              
+            transform.position += direction.normalized * (_agentAttributes.AgentSpeed * Time.deltaTime);      
+        }
+    }         
 }

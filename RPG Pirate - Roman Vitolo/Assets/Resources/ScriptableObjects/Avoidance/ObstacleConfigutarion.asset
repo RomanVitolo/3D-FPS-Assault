@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4735869a934d9885365ceeb303323a, type: 3}
   m_Name: ObstacleConfigutarion
   m_EditorClassIdentifier: 
-  <Radius>k__BackingField: 2.54
+  <Radius>k__BackingField: 2
   <ObstacleMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
-  <AvoidWeight>k__BackingField: 0.7
+  <AvoidWeight>k__BackingField: 1

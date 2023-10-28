@@ -14,7 +14,7 @@ namespace AgentLogic
 
         public void RunChaseAnimation()
         {
-            
+           _agentAnimator.SetFloat("AgentSpeed", 1);  
         }
 
         public void DoIdleAnimation()

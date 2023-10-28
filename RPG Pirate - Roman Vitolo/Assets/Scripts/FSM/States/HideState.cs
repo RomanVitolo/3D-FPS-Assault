@@ -6,9 +6,11 @@ namespace FSM
     public class HideState<T> : FSMState<T>
     {
         private IMove _entity;
-        public HideState(IMove agent)
+        private bool _canMove;
+        public HideState(IMove agent, bool canMove)
         {
-            _entity = agent; 
+            _entity = agent;
+            _canMove = canMove;
         }
 
         public override void Enter()
@@ -18,7 +20,10 @@ namespace FSM
 
         public override void Tick()
         {
-            _entity.Hide();
+            if (_canMove)
+            {
+                _entity.Hide();
+            }
         }
     }
 }
