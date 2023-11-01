@@ -16,4 +16,4 @@ MonoBehaviour:
   <ObstacleMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
-  <AvoidWeight>k__BackingField: 1
+  <AvoidWeight>k__BackingField: 0.7

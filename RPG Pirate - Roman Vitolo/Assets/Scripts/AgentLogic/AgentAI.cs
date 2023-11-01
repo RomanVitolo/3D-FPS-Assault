@@ -9,7 +9,9 @@ namespace AgentLogic
     public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity
     {
         [field: SerializeField] public bool CanMove { get; set;}
-        
+        [field: SerializeField] public bool NewQuestion { get; set;}
+
+        [SerializeField] private AgentInput _agentInput;
         [SerializeField] private AgentAttributes _agentAttributes;
         [SerializeField] private AgentHealth _agentHealth; 
         [SerializeField] private AgentAController _agentAController;  
@@ -27,7 +29,8 @@ namespace AgentLogic
         private float _lastShotTime = 1f;
         
         private void Awake()
-        { 
+        {
+            _agentInput = GetComponent<AgentInput>();
             _agentHealth = GetComponent<AgentHealth>();
             _characterController = GetComponent<CharacterController>();
             _agentAController = GetComponent<AgentAController>();
@@ -73,6 +76,7 @@ namespace AgentLogic
 
         public void Move(Vector3 direction)
         { 
+            SimpleAvoidance();
             direction.y = 0;
             var setDirection = direction * (GetVelocity() * Time.deltaTime); 
             Quaternion rotation = Quaternion.LookRotation(setDirection);
@@ -80,7 +84,7 @@ namespace AgentLogic
             _characterController.Move(setDirection);              
         }     
           
-        public void Pursuit() => Move(_obsAvoidance.GetDirection());         
+        public void Pursuit() => Move(_steeringBehaviour.GetDirection());         
 
         public void Reload(bool reload)
         {
@@ -90,21 +94,27 @@ namespace AgentLogic
         }
 
         public void Hide()
-        {  
-            if (CanMove)
-            {   
-                _agentAnimations.RunChaseAnimation(); 
-                SimpleAvoidance();
-                Move(_steeringBehaviour.GetDirection());  
-                Debug.Log("Hide Action"); 
-            }
-            else
-            {  
-                Debug.Log("Action");
-            }           
+        {        
+            Move(_steeringBehaviour.GetDirection());   
+            Debug.Log("Hide Action"); 
+            _agentAnimations.HideAnimation();
+
+            if (_steeringBehaviour.GetDirection() == Vector3.zero && _agentInput.GetHorizontalAxis() == 0 &&
+                _agentInput.GetVerticalAxis() == 0)
+            {
+                _agentAnimations.DoIdleAnimation();
+                Debug.Log("Doing Idle");
+                NewQuestion = true;
+                if (NewQuestion)
+                {
+                    CanMove = false;
+                    _agentAController.ExecuteTreeAgain();
+                    NewQuestion = false;
+                }
+            }     
         }
         
-        public bool HideOrFlocking()
+        public bool HideOrWander()
         {
             if (CanMove) return true;
             
@@ -146,12 +156,11 @@ namespace AgentLogic
             Collider[] obstacle = Physics.OverlapSphere(actualDirection, _avoidanceParameters.AvoidWeight, _avoidanceParameters.ObstacleMask);
 
             if (obstacle.Length > 0)
-            {
-               
+            {          
                 Vector3 evasion = Vector3.Cross(Vector3.up, direction);
                 direction += evasion;
                                                
-                direction += Quaternion.Euler(0, 45, 0) * evasion;
+                direction += Quaternion.Euler(1, 45, 1) * evasion;
             }                              
             transform.position += direction.normalized * (_agentAttributes.AgentSpeed * Time.deltaTime);      
         }

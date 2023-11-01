@@ -15,12 +15,18 @@ namespace AgentLogic
         public void RunChaseAnimation()
         {
            _agentAnimator.SetFloat("AgentSpeed", 1);  
-        }
+        }                               
 
         public void DoIdleAnimation()
         {
-            _agentAnimator.SetBool("Reload", false);
+            _agentAnimator.SetFloat("AgentSpeed", 0);
+            _agentAnimator.SetFloat("HideSpeed", 0);
         }
+        
+        public void HideAnimation()
+        {
+            _agentAnimator.SetFloat("HideSpeed", 1);  
+        }   
 
         public void ReloadAnimation(bool setAnimation)
         {

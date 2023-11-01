@@ -15,7 +15,7 @@ namespace AgentLogic
        [field: SerializeField] public bool InitialBullets { get; set; } 
        [field: SerializeField] public int AmountOfBullets { get; set; }  
        [field: SerializeField] public float FireRate { get; set; } 
-       [field: SerializeField] public float ReloadSpeed { get; private set; }
-       [field: SerializeField] public string WaypointNameTag { get; private set; }
+       [field: SerializeField] public float ReloadSpeed { get; private set; } 
+       [field: SerializeField] public string WaypointNameTag { get; private set; } 
     }
 }

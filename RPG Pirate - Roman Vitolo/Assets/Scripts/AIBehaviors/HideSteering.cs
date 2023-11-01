@@ -12,33 +12,32 @@ namespace AIBehaviors
         private float _moveSpeed;
         private List<Transform> _waypoints;
         private bool _canMove;
-        
-        private Vector3 _agentPosition = Vector3.zero;
 
-        public HideSteering(Transform agent, Transform nearestWaypoint, Transform target, float moveSpeed, List<Transform> waypoints, bool canMove)
+        private Vector3 steeringDirection;    
+
+        public HideSteering(Transform agent, Transform nearestWaypoint, Transform target, float moveSpeed, 
+            List<Transform> waypoints)
         {
             _agent = agent;
             _nearestWaypoint = nearestWaypoint;
             _target = target;
             _moveSpeed = moveSpeed;
-            _waypoints = waypoints;
-            _canMove = canMove;
+            _waypoints = waypoints;    
         }
         
         public Vector3 GetDirection()
         {
-            _agentPosition = _agent.position;
-            _agentPosition.y = 0;    
-            
-            if (_canMove == false) 
-                return Vector3.zero;
-           
-            FindNearestWaypoint();     
-            Vector3 steeringDirection = SteerTowardsWaypoint(_nearestWaypoint.position);
-            
-            if (Vector3.Distance(_agent.position, _nearestWaypoint.position) < 2f)    
-                _canMove = false;
-            
+            if (_agent.position != Vector3.zero)
+            {
+                FindNearestWaypoint(); 
+                
+                steeringDirection = SteerTowardsWaypoint(_nearestWaypoint.position);  
+                
+                if (Vector3.Distance(_agent.position, _nearestWaypoint.position) < 2f)
+                {             
+                    return Vector3.zero;
+                }      
+            }                                 
             return steeringDirection;
         }         
         
@@ -61,12 +60,12 @@ namespace AIBehaviors
         }
 
         private Vector3 SteerTowardsWaypoint(Vector3 waypointPosition)
-        {
+        {       
             Vector3 desiredDirection = waypointPosition - _agent.position;
             desiredDirection.Normalize();
             Vector3 desiredVelocity = desiredDirection * _moveSpeed;
             Vector3 steeringForce = desiredVelocity - _agent.forward;   
             return steeringForce;
-        }
+        }                           
     }
 }

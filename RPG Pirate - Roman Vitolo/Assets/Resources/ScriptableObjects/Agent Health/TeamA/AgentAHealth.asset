@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AgentAHealth
   m_EditorClassIdentifier: 
   <MaxAgentLife>k__BackingField: 10
-  <CurrentAgentLife>k__BackingField: 100
+  <CurrentAgentLife>k__BackingField: 10

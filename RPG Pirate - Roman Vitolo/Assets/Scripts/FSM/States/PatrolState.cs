@@ -10,11 +10,11 @@ namespace FSM
         public PatrolState(IMove agent)
         {
             _entity = agent;
-        }
+        }                            
 
-        public Vector3 GetDirection()
+        public override void Tick()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("PatrolState");
         }
     }
 }
