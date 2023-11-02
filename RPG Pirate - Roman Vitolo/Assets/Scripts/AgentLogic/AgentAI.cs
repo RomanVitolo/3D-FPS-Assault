@@ -102,11 +102,12 @@ namespace AgentLogic
             if (_steeringBehaviour.GetDirection() == Vector3.zero && _agentInput.GetHorizontalAxis() == 0 &&
                 _agentInput.GetVerticalAxis() == 0)
             {
-                _agentAnimations.DoIdleAnimation();
-                Debug.Log("Doing Idle");
+                _agentAnimations.DoIdleAnimation();   
                 NewQuestion = true;
+                
                 if (NewQuestion)
                 {
+                    Debug.Log("Doing Idle");
                     CanMove = false;
                     _agentAController.ExecuteTreeAgain();
                     NewQuestion = false;
