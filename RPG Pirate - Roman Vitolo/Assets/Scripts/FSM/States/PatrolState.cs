@@ -1,20 +1,30 @@
-﻿using Interfaces;
+﻿using System.Collections.Generic;
+using AgentLogic;
+using Interfaces;
 using UnityEngine;
 
 namespace FSM
 {
     public class PatrolState<T> : FSMState<T>
     {
-        private IMove _entity;
+        private IMove _agent;
+        private AgentPathfindingConfig _agentPathfinding;
         
-        public PatrolState(IMove agent)
+        public PatrolState(IMove agent, AgentPathfindingConfig agentPathfinding)
         {
-            _entity = agent;
-        }                            
+            _agent = agent;
+            _agentPathfinding = agentPathfinding;
+        }
+
+        public override void Enter()
+        {
+            _agentPathfinding.PathFindingAStar();
+        }
 
         public override void Tick()
         {
             Debug.Log("PatrolState");
-        }
+            _agent.Run();
+        }     
     }
 }

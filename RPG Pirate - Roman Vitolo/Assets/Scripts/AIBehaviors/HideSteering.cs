@@ -10,8 +10,7 @@ namespace AIBehaviors
         private Transform _nearestWaypoint;
         private Transform _target;
         private float _moveSpeed;
-        private List<Transform> _waypoints;
-        private bool _canMove;
+        private List<Transform> _waypoints;      
 
         private Vector3 steeringDirection;    
 
@@ -36,7 +35,7 @@ namespace AIBehaviors
                 if (Vector3.Distance(_agent.position, _nearestWaypoint.position) < 2f)
                 {             
                     return Vector3.zero;
-                }      
+                }       
             }                                 
             return steeringDirection;
         }         

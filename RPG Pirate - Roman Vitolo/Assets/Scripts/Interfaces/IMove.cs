@@ -7,5 +7,6 @@ namespace Interfaces
         void Move(Vector3 direction);
         void Hide();              
         void Wander();
+        void Run();
     }
 }

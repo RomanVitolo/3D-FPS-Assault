@@ -429,12 +429,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agentAI: {fileID: 7255117065195902027}
-  _agentInput: {fileID: 2132312621629438782}
   _target: {fileID: 6720253879095218965, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
   _agentSight: {fileID: 11400000, guid: 969d39df10afdca42bf4d91f0c6a785b, type: 2}
   _avoidanceParametersSo: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
     type: 2}
-  _waypoints: []
 --- !u!114 &7255117065195902027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,7 +446,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CanMove>k__BackingField: 0
-  _agentInput: {fileID: 0}
+  <NewQuestion>k__BackingField: 0
+  _agentInput: {fileID: 2132312621629438782}
   _agentAttributes: {fileID: 11400000, guid: 70bd070c99844d1448043f81ec035aff, type: 2}
   _agentHealth: {fileID: 4912914947907610558}
   _agentAController: {fileID: 30711209388509452}

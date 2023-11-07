@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DecisionTree;
 using DefaultNamespace;
 using Interfaces;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace AgentLogic
 {
-    public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity
+    public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity, IPoints
     {
         [field: SerializeField] public bool CanMove { get; set;}
         [field: SerializeField] public bool NewQuestion { get; set;}
@@ -108,9 +109,9 @@ namespace AgentLogic
                 if (NewQuestion)
                 {
                     Debug.Log("Doing Idle");
+                    NewQuestion = false;    
                     CanMove = false;
-                    _agentAController.ExecuteTreeAgain();
-                    NewQuestion = false;
+                    _agentAController.Wander();     
                 }
             }     
         }
@@ -165,5 +166,40 @@ namespace AgentLogic
             }                              
             transform.position += direction.normalized * (_agentAttributes.AgentSpeed * Time.deltaTime);      
         }
+        
+        
+        public List<Node> waypoints;
+        public bool readyToMove;
+        int _nextPoint = 0;
+        public void SetWayPoints(List<Node> newPoints)
+        {
+            _nextPoint = 0;
+            if (newPoints.Count == 0) return;   
+            waypoints = newPoints;
+            var pos = waypoints[_nextPoint].transform.position;
+            pos.y = transform.position.y;
+            transform.position = pos;
+            readyToMove = true;
+        }
+        
+        public void Run()
+        {
+            var point = waypoints[_nextPoint];
+            var posPoint = point.transform.position;
+            posPoint.y = transform.position.y;
+            Vector3 dir = posPoint - transform.position;
+            if (dir.magnitude < 0.2f)
+            {
+                if (_nextPoint + 1 < waypoints.Count)
+                    _nextPoint++;
+                else
+                {
+                    readyToMove = false;      
+                    return;
+                }
+            }
+            Move(dir.normalized);
+        }
+        
     }         
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using AIBehaviors;  
 using DecisionTree;
 using DefaultNamespace;
 using FSM;
 using LineOfSight;
-using UnityEngine;
+using UnityEngine;                    
 
 namespace AgentLogic
 {
@@ -16,6 +15,7 @@ namespace AgentLogic
         [SerializeField] private Transform _target;
         [SerializeField] private LineOfSightConfigurationSO _agentSight;
         [SerializeField] private AvoidanceParametersSO _avoidanceParametersSo;
+        [SerializeField] private AgentPathfindingConfig _agentPath;
         private List<Transform> _waypoints = new List<Transform>();
 
         private INode _initTree;
@@ -26,7 +26,8 @@ namespace AgentLogic
 
         private void Awake()
         {
-            _agentAI = GetComponent<AgentAI>();   
+            _agentAI = GetComponent<AgentAI>();
+            _agentPath = GetComponent<AgentPathfindingConfig>();
         }
 
         private void Start()
@@ -42,7 +43,7 @@ namespace AgentLogic
 
             DeadState<string> deadState = new DeadState<string>(_agentAI);
             WanderState<string> wanderState = new WanderState<string>(_agentAI);
-            PatrolState<string> patrolState = new PatrolState<string>(_agentAI);
+            PatrolState<string> patrolState = new PatrolState<string>(_agentAI, _agentPath);
             ChaseState<string> chaseState = new ChaseState<string>(_agentAI);
             HideState<string> hideState = new HideState<string>(_agentAI, _agentAI.CanMove);
             ReloadState<string> reloadState = new ReloadState<string>(_agentAI);
@@ -150,9 +151,9 @@ namespace AgentLogic
             StartCoroutine(ExecuteTree());
         }
 
-        public void Patrol()
+        private void Patrol()
         {
-            _fsm.Transition("Patrol");
+            _fsm.Transition("Patrol"); 
         }
 
         [ContextMenu(nameof(MakeARandomDecision))]
@@ -191,6 +192,7 @@ namespace AgentLogic
         public void ExecuteTreeAgain()
         {  
             _initTree.Execute();
-        }
+        }    
+               
     }
 }
