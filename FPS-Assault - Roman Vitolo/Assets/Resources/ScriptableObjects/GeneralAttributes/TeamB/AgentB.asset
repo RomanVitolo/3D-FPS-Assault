@@ -20,5 +20,4 @@ MonoBehaviour:
   <InitialBullets>k__BackingField: 0
   <AmountOfBullets>k__BackingField: 0
   <FireRate>k__BackingField: 0
-  <ReloadSpeed>k__BackingField: 0
   <WaypointNameTag>k__BackingField: WaypointB

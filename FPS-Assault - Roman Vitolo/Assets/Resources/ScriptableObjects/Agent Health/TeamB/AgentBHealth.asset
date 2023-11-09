@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361b5d885e384203a57d14be3dd609e9, type: 3}
   m_Name: AgentBHealth
   m_EditorClassIdentifier: 
-  <MaxAgentLife>k__BackingField: 10
-  <CurrentAgentLife>k__BackingField: 10
+  <MaxAgentLife>k__BackingField: 70
+  <CurrentAgentLife>k__BackingField: 20

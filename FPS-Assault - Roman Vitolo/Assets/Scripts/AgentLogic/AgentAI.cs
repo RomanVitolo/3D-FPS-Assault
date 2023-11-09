@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using DecisionTree;
-using DefaultNamespace;
+﻿using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;   
 
 namespace AgentLogic
 {
     public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity, IPoints
-    {
+    {        
+        public List<Node> waypoints;
+        public bool readyToMove;                
         [field: SerializeField] public bool CanMove { get; set;}
         [field: SerializeField] public bool NewQuestion { get; set;}
 
@@ -22,15 +21,15 @@ namespace AgentLogic
         [SerializeField] private AgentAnimations _agentAnimations;
         
         [SerializeField] private AgentWeapon _agentWeapon;
-        [SerializeField] private Transform _target;
+        [SerializeField] private Transform _target;        
                                
-        private ISteeringBehaviour _steeringBehaviour;
-        private ISteeringBehaviour _obsAvoidance;      
+        private ISteeringBehaviour _steeringBehaviour;  
         
         private float _lastShotTime = 1f;
+        private int _nextPoint;
         
         private void Awake()
-        {
+        {                
             _agentInput = GetComponent<AgentInput>();
             _agentHealth = GetComponent<AgentHealth>();
             _characterController = GetComponent<CharacterController>();
@@ -103,18 +102,18 @@ namespace AgentLogic
             if (_steeringBehaviour.GetDirection() == Vector3.zero && _agentInput.GetHorizontalAxis() == 0 &&
                 _agentInput.GetVerticalAxis() == 0)
             {
-                _agentAnimations.DoIdleAnimation();   
+                _agentAnimations.DoIdleAnimation();
                 NewQuestion = true;
                 
                 if (NewQuestion)
                 {
                     Debug.Log("Doing Idle");
-                    NewQuestion = false;    
+                    NewQuestion = false;
                     CanMove = false;
-                    _agentAController.Wander();     
-                }
-            }     
-        }
+                    _agentAController.ExecuteTreeAgain();
+                } 
+            } 
+        }         
         
         public bool HideOrWander()
         {
@@ -145,8 +144,8 @@ namespace AgentLogic
             }        
         }          
                  
-        public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour;  
-        public void InitializeObsAvoidance(ISteeringBehaviour obstacleAvoidance) => _obsAvoidance = obstacleAvoidance;  
+        public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour; 
+        
         public string WaypointTag() => _agentAttributes.WaypointNameTag;
                                                                                  
         private void SimpleAvoidance()
@@ -165,12 +164,8 @@ namespace AgentLogic
                 direction += Quaternion.Euler(1, 45, 1) * evasion;
             }                              
             transform.position += direction.normalized * (_agentAttributes.AgentSpeed * Time.deltaTime);      
-        }
+        }                                     
         
-        
-        public List<Node> waypoints;
-        public bool readyToMove;
-        int _nextPoint = 0;
         public void SetWayPoints(List<Node> newPoints)
         {
             _nextPoint = 0;
@@ -193,12 +188,28 @@ namespace AgentLogic
                 if (_nextPoint + 1 < waypoints.Count)
                     _nextPoint++;
                 else
-                {
-                    readyToMove = false;      
+                {   
+                    IdleState();   
+                    readyToMove = false;   
                     return;
                 }
-            }
+            }       
+            SimpleAvoidance();
             Move(dir.normalized);
+            _agentAnimations.RunChaseAnimation();
+        }
+
+        private void IdleState()
+        {
+            _agentAnimations.DoIdleAnimation();
+            NewQuestion = true;
+                
+            if (NewQuestion)
+            {
+                Debug.Log("Doing Idle");
+                NewQuestion = false;      
+                _agentAController.ExecuteTreeAgain();
+            }         
         }
         
     }         

@@ -50,7 +50,7 @@ namespace AIBehaviors
                 
                 float playerDistance = Vector3.Distance(_agent.position, _target.position);      
                 
-                if (playerDistance > 2.0f && distance < minDistance) 
+                if (playerDistance > 2f && distance < minDistance) 
                 {
                     minDistance = distance;
                     _nearestWaypoint = waypoint;   

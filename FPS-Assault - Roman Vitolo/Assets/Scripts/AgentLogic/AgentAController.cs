@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using AIBehaviors;  
 using DecisionTree;
 using DefaultNamespace;
 using FSM;
 using LineOfSight;
-using UnityEngine;                    
+using UnityEngine;
 
 namespace AgentLogic
 {
@@ -16,7 +17,7 @@ namespace AgentLogic
         [SerializeField] private LineOfSightConfigurationSO _agentSight;
         [SerializeField] private AvoidanceParametersSO _avoidanceParametersSo;
         [SerializeField] private AgentPathfindingConfig _agentPath;
-        private List<Transform> _waypoints = new List<Transform>();
+        public List<Transform> Waypoints;
 
         private INode _initTree;
         private FSM<string> _fsm;  
@@ -27,11 +28,11 @@ namespace AgentLogic
         private void Awake()
         {
             _agentAI = GetComponent<AgentAI>();
-            _agentPath = GetComponent<AgentPathfindingConfig>();
-        }
+            _agentPath = GetComponent<AgentPathfindingConfig>();   
+        }         
 
         private void Start()
-        {
+        {    
             FindWaypoints();
             
             _roulette = new Roulette();  
@@ -75,6 +76,8 @@ namespace AgentLogic
             shootState.AddTransition("Chase", chaseState);        
             
             patrolState.AddTransition("Wander", wanderState);
+            patrolState.AddTransition("Hide", hideState);
+            
             
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode chase = new ActionNode(ChaseEnemy);
@@ -93,11 +96,7 @@ namespace AgentLogic
             QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, hasLowLife, dead);  
 
             _initTree = hasLife;
-            _initTree.Execute();
-            
-            _agentAI.InitializeObsAvoidance(new ObstacleAvoidance(transform, _target, _avoidanceParametersSo.Radius,
-                _avoidanceParametersSo.ObstacleMask, _avoidanceParametersSo.AvoidWeight));
-            
+            StartCoroutine(ExecuteTreeCoroutine());           
         }
 
         private void ShootState()
@@ -127,7 +126,7 @@ namespace AgentLogic
         {      
             _fsm.Transition("Hide");    
             _agentAI.ChangeSteering(new HideSteering(this.transform, _nearestWeapon, _target, 
-                _agentAI.GetVelocity(),_waypoints));  
+                _agentAI.GetVelocity(),Waypoints));  
         }
 
         private void AgentIsDead() => _fsm.Transition("Dead");
@@ -142,13 +141,12 @@ namespace AgentLogic
         private void ReloadState()
         {
             _fsm.Transition("Reload");
-            StartCoroutine(ExecuteTree());
+            StartCoroutine(ExecuteTreeCoroutine());
         }          
 
         public void Wander()
         {
-            _fsm.Transition("Wander");
-            StartCoroutine(ExecuteTree());
+            _fsm.Transition("Wander");       
         }
 
         private void Patrol()
@@ -161,12 +159,17 @@ namespace AgentLogic
         {
             _fsm.Transition(_roulette.Run(_randomDecision));       
         }
+        
+        public void ExecuteTreeAgain()
+        {
+            StartCoroutine(ExecuteTreeCoroutine());
+        }   
 
-        IEnumerator ExecuteTree()
+        IEnumerator ExecuteTreeCoroutine()
         {
             yield return new WaitForSeconds(2.5f);
             _initTree.Execute();
-        }
+        }      
 
         private void FindWaypoints()
         {
@@ -174,7 +177,7 @@ namespace AgentLogic
 
             foreach (var waypoint in waypointObjects)
             {
-                _waypoints.Add(waypoint.transform);
+                Waypoints.Add(waypoint.transform);
             }
         }                   
 
@@ -187,12 +190,6 @@ namespace AgentLogic
                                                * transform.forward * _agentSight.FOVRange);
             Gizmos.DrawRay(transform.position, Quaternion.Euler(0, - _agentSight.FOVAngle / 2, 0)
                                                * transform.forward * _agentSight.FOVRange);
-        }
-
-        public void ExecuteTreeAgain()
-        {  
-            _initTree.Execute();
-        }    
-               
+        }          
     }
 }
