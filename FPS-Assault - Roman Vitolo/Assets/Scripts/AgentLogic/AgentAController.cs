@@ -57,7 +57,10 @@ namespace AgentLogic
             wanderState.AddTransition("Dead", deadState);  
             wanderState.AddTransition("Reload", reloadState);  
             wanderState.AddTransition("Shoot", shootState);  
-            wanderState.AddTransition("Patrol", patrolState);  
+            wanderState.AddTransition("Patrol", patrolState); 
+            
+            patrolState.AddTransition("Wander", wanderState);
+            patrolState.AddTransition("Hide", hideState);
             
             chaseState.AddTransition("Wander", wanderState);
             chaseState.AddTransition("Hide", hideState);
@@ -73,11 +76,7 @@ namespace AgentLogic
             reloadState.AddTransition("Shoot", shootState);
             
             shootState.AddTransition("Wander", wanderState);
-            shootState.AddTransition("Chase", chaseState);        
-            
-            patrolState.AddTransition("Wander", wanderState);
-            patrolState.AddTransition("Hide", hideState);
-            
+            shootState.AddTransition("Chase", chaseState);                  
             
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode chase = new ActionNode(ChaseEnemy);
