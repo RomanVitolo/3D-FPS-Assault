@@ -7,7 +7,6 @@ namespace AgentLogic
     public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity, IPoints
     {        
         public List<Node> waypoints;
-        public bool readyToMove;                
         [field: SerializeField] public bool CanMove { get; set;}
         [field: SerializeField] public bool NewQuestion { get; set;}
 
@@ -27,6 +26,7 @@ namespace AgentLogic
         
         private float _lastShotTime = 1f;
         private int _nextPoint;
+        private bool readyToMove;  
         
         private void Awake()
         {                

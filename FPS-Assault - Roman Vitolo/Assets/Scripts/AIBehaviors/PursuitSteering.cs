@@ -3,6 +3,14 @@ using UnityEngine;
 
 namespace AIBehaviours
 {
+    public abstract class PursuitParameters
+    {
+        public Transform _agent;
+        public Transform _target;
+        public float _velocity;
+        public float _time; 
+    }
+    
     public class PursuitSteering : ISteeringBehaviour
     {
         private Transform _agent;
@@ -10,12 +18,12 @@ namespace AIBehaviours
         private float _velocity;
         private float _time;
         
-        public PursuitSteering(Transform agent, Transform target, float velocity, float time)
+        public PursuitSteering(PursuitParameters pursuitParameters)
         {
-            _agent = agent;
-            _target = target;
-            _velocity = velocity;
-            _time = time;
+            _agent = pursuitParameters._agent;
+            _target = pursuitParameters._target;
+            _velocity = pursuitParameters._velocity;
+            _time = pursuitParameters._time;
         }
         
         public Vector3 GetDirection()

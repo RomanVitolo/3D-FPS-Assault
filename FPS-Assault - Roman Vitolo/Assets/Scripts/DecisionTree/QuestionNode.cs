@@ -1,6 +1,4 @@
-﻿using FSM;
-
-namespace DecisionTree
+﻿namespace DecisionTree
 {
     public delegate bool QuestionDelegate();
     
