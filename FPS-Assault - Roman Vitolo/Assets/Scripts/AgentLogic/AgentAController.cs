@@ -13,7 +13,6 @@ namespace AgentLogic
     public class AgentAController : MonoBehaviour
     {
         [SerializeField] private AgentAI _agentAI;
-        [SerializeField] private Transform _target;
         [SerializeField] private LineOfSightConfigurationSO _agentSight;
         [SerializeField] private AvoidanceParametersSO _avoidanceParametersSo;
         [SerializeField] private AgentPathfindingConfig _agentPath;
@@ -29,7 +28,17 @@ namespace AgentLogic
         {
             _agentAI = GetComponent<AgentAI>();
             _agentPath = GetComponent<AgentPathfindingConfig>();   
-        }         
+        }
+
+        private void OnEnable()
+        {
+            _agentAI.OnRaiseTree += ExecuteTreeAgain;
+        }
+
+        private void OnDestroy()
+        {
+            _agentAI.OnRaiseTree -= ExecuteTreeAgain;
+        }
 
         private void Start()
         {    
@@ -43,39 +52,40 @@ namespace AgentLogic
             _fsm = new FSM<string>();
 
             DeadState<string> deadState = new DeadState<string>(_agentAI);
-            WanderState<string> wanderState = new WanderState<string>(_agentAI);
+            IdleState<string> idleState = new IdleState<string>(_agentAI);
             PatrolState<string> patrolState = new PatrolState<string>(_agentAI, _agentPath);
             ChaseState<string> chaseState = new ChaseState<string>(_agentAI);
             HideState<string> hideState = new HideState<string>(_agentAI, _agentAI.CanMove);
             ReloadState<string> reloadState = new ReloadState<string>(_agentAI);
             ShootState<string> shootState = new ShootState<string>(_agentAI);    
 
-            _fsm.InitializeFSM(wanderState);
+            _fsm.InitializeFSM(idleState);
             
-            wanderState.AddTransition("Chase", chaseState);  
-            wanderState.AddTransition("Hide", hideState);  
-            wanderState.AddTransition("Dead", deadState);  
-            wanderState.AddTransition("Reload", reloadState);  
-            wanderState.AddTransition("Shoot", shootState);  
-            wanderState.AddTransition("Patrol", patrolState); 
+            idleState.AddTransition("Chase", chaseState);  
+            idleState.AddTransition("Hide", hideState);  
+            idleState.AddTransition("Dead", deadState);  
+            idleState.AddTransition("Reload", reloadState);  
+            idleState.AddTransition("Shoot", shootState);  
+            idleState.AddTransition("Patrol", patrolState); 
             
-            patrolState.AddTransition("Wander", wanderState);
-            patrolState.AddTransition("Hide", hideState);
+            patrolState.AddTransition("Idle", idleState);
+            patrolState.AddTransition("Hide", hideState);   
+            patrolState.AddTransition("Shoot", shootState);   
             
-            chaseState.AddTransition("Wander", wanderState);
+            chaseState.AddTransition("Idle", idleState);
             chaseState.AddTransition("Hide", hideState);
             chaseState.AddTransition("Dead", deadState); 
             chaseState.AddTransition("Shoot", shootState); 
             
-            hideState.AddTransition("Wander", wanderState);
+            hideState.AddTransition("Idle", idleState);
             hideState.AddTransition("Chase", chaseState);
             hideState.AddTransition("Dead", deadState); 
             hideState.AddTransition("Patrol", patrolState); 
             
-            reloadState.AddTransition("Wander", wanderState);
+            reloadState.AddTransition("Idle", idleState);
             reloadState.AddTransition("Shoot", shootState);
             
-            shootState.AddTransition("Wander", wanderState);
+            shootState.AddTransition("Idle", idleState);
             shootState.AddTransition("Chase", chaseState);                  
             
             ActionNode dead = new ActionNode(AgentIsDead); 
@@ -84,18 +94,18 @@ namespace AgentLogic
             ActionNode attack = new ActionNode(ShootState);
             ActionNode patrol = new ActionNode(Patrol);           
             ActionNode reload = new ActionNode(ReloadState);           
-            ActionNode wander = new ActionNode(Wander);          
+            ActionNode idle = new ActionNode(DoIdle);          
                                                          
             QuestionNode hasAmmo = new QuestionNode(EnemyIsInRange, attack, reload);    
-            QuestionNode isInRange = new QuestionNode(EnemyIsInRange, hasAmmo, wander);
-            QuestionNode canChase = new QuestionNode(EnemyIsInRange, hasAmmo, wander);
-            QuestionNode canWander = new QuestionNode(EnemyIsInRange, chase, patrol);
-            QuestionNode hidePath = new QuestionNode(_agentAI.HideOrWander, hide, canWander);
+            QuestionNode isInRange = new QuestionNode(EnemyIsInRange, hasAmmo, idle);
+            QuestionNode canChase = new QuestionNode(EnemyIsInRange, hasAmmo, idle);
+            QuestionNode canWander = new QuestionNode(EnemyIsInRange, canChase, patrol);
+            QuestionNode hidePath = new QuestionNode(_agentAI.HideOrIdle, hide, canWander);
             QuestionNode hasLowLife = new QuestionNode(_agentAI.CheckLowLife, hidePath, canWander);
             QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, hasLowLife, dead);  
 
             _initTree = hasLife;
-            StartCoroutine(ExecuteTreeCoroutine());           
+            _initTree.Execute();            
         }
 
         private void ShootState()
@@ -109,7 +119,7 @@ namespace AgentLogic
              
             if (Input.GetKeyDown(KeyCode.Space))
             {
-               //_initTree.Execute();   
+               _initTree.Execute();   
             }     
 
             //EnemyIsInRange();    
@@ -124,7 +134,7 @@ namespace AgentLogic
         private void HideFromEnemy()
         {      
             _fsm.Transition("Hide");    
-            _agentAI.ChangeSteering(new HideSteering(this.transform, _nearestWeapon, _target, 
+            _agentAI.ChangeSteering(new HideSteering(this.transform, _nearestWeapon, _agentAI.Target, 
                 _agentAI.GetVelocity(),Waypoints));  
         }
 
@@ -132,7 +142,7 @@ namespace AgentLogic
 
         private bool EnemyIsInRange()
         {
-            _agentSight.InSight = _agentSight.IsInSight(transform, _target, _agentSight.FOVRange,
+            _agentSight.InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
                 _agentSight.FOVAngle, _agentSight.FOVLayerMask);           
             return _agentSight.InSight;
         }
@@ -140,16 +150,17 @@ namespace AgentLogic
         private void ReloadState()
         {
             _fsm.Transition("Reload");
-            StartCoroutine(ExecuteTreeCoroutine());
+            _initTree.Execute(); 
         }          
 
-        public void Wander()
+        private void DoIdle()
         {
-            _fsm.Transition("Wander");       
+            _fsm.Transition("Idle");       
         }
 
         private void Patrol()
         {
+            _agentAI.OnRaiseTree += ExecuteTreeAgain;
             _fsm.Transition("Patrol"); 
         }
 
@@ -161,14 +172,14 @@ namespace AgentLogic
         
         public void ExecuteTreeAgain()
         {
-            StartCoroutine(ExecuteTreeCoroutine());
-        }   
+            StartCoroutine(WaitForNewQuestion());
+        }
 
-        IEnumerator ExecuteTreeCoroutine()
+        IEnumerator WaitForNewQuestion()
         {
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSecondsRealtime(2f);
             _initTree.Execute();
-        }      
+        }
 
         private void FindWaypoints()
         {

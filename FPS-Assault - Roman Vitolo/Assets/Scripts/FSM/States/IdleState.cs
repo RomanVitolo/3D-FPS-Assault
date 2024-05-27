@@ -2,10 +2,10 @@
 
 namespace FSM
 {
-    public class WanderState<T> : FSMState<T>
+    public class IdleState<T> : FSMState<T>
     {
         private IMove _agent;
-        public WanderState(IMove agent)
+        public IdleState(IMove agent)
         {
             _agent = agent;
         }
@@ -17,7 +17,7 @@ namespace FSM
 
         public override void Tick()
         {
-            _agent.Wander();
+            _agent.Idle();
         }
     }
 }

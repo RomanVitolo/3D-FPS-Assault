@@ -1,39 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;   
 
 namespace AgentLogic
 {
     public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity, IPoints
-    {        
-        public List<Node> waypoints;
+    {    
+        public event Action OnRaiseTree;               
+        public List<Node> waypoints;        
+        [field: SerializeField] public Transform Target { get; set;}  
         [field: SerializeField] public bool CanMove { get; set;}
         [field: SerializeField] public bool NewQuestion { get; set;}
 
         [SerializeField] private AgentInput _agentInput;
         [SerializeField] private AgentAttributes _agentAttributes;
-        [SerializeField] private AgentHealth _agentHealth; 
-        [SerializeField] private AgentAController _agentAController;  
+        [SerializeField] private AgentHealth _agentHealth;
         [SerializeField] private AvoidanceParametersSO _avoidanceParameters;  
         
         [SerializeField] private CharacterController _characterController; 
         [SerializeField] private AgentAnimations _agentAnimations;
         
-        [SerializeField] private AgentWeapon _agentWeapon;
-        [SerializeField] private Transform _target;        
-                               
+        [SerializeField] private AgentWeapon _agentWeapon;      
+        
         private ISteeringBehaviour _steeringBehaviour;  
         
         private float _lastShotTime = 1f;
-        private int _nextPoint;
-        private bool readyToMove;  
+        private int _nextPoint;     
         
         private void Awake()
         {                
             _agentInput = GetComponent<AgentInput>();
             _agentHealth = GetComponent<AgentHealth>();
-            _characterController = GetComponent<CharacterController>();
-            _agentAController = GetComponent<AgentAController>();
+            _characterController = GetComponent<CharacterController>();     
             _agentAnimations = GetComponent<AgentAnimations>();
             _agentWeapon = GetComponentInChildren<AgentWeapon>();   
         }
@@ -82,7 +81,7 @@ namespace AgentLogic
             Quaternion rotation = Quaternion.LookRotation(setDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);     
             _characterController.Move(setDirection);              
-        }     
+        }    
           
         public void Pursuit() => Move(_steeringBehaviour.GetDirection());         
 
@@ -104,36 +103,29 @@ namespace AgentLogic
             {
                 _agentAnimations.DoIdleAnimation();
                 NewQuestion = true;
-                
-                if (NewQuestion)
-                {
-                    Debug.Log("Doing Idle");
-                    NewQuestion = false;
-                    CanMove = false;
-                    _agentAController.ExecuteTreeAgain();
-                } 
+                OnRaiseTree?.Invoke();   
             } 
         }         
         
-        public bool HideOrWander()
+        public bool HideOrIdle()
         {
             if (CanMove) return true;
             
             return false;   
         }               
 
-        public void Wander() => _agentAnimations.DoIdleAnimation();
+        public void Idle() => _agentAnimations.DoIdleAnimation();
       
         public void Shoot()
         {
-            if (_target == null)
+            if (Target == null)
             {
                 _agentAnimations.ShootAnimation(false);
                 return;
             } 
             
             _agentAnimations.ShootAnimation(true);
-            Vector3 direction = _target.position - transform.position;
+            Vector3 direction = Target.position - transform.position;
             var rotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);  
                   
@@ -173,8 +165,7 @@ namespace AgentLogic
             waypoints = newPoints;
             var pos = waypoints[_nextPoint].transform.position;
             pos.y = transform.position.y;
-            transform.position = pos;
-            readyToMove = true;
+            transform.position = pos;  
         }
         
         public void Run()
@@ -189,28 +180,18 @@ namespace AgentLogic
                     _nextPoint++;
                 else
                 {   
-                    IdleState();   
-                    readyToMove = false;   
+                    IdleState();     
                     return;
                 }
             }       
             SimpleAvoidance();
             Move(dir.normalized);
             _agentAnimations.RunChaseAnimation();
-        }
+        }     
 
         private void IdleState()
         {
-            _agentAnimations.DoIdleAnimation();
-            NewQuestion = true;
-                
-            if (NewQuestion)
-            {
-                Debug.Log("Doing Idle");
-                NewQuestion = false;      
-                _agentAController.ExecuteTreeAgain();
-            }         
-        }
-        
+            _agentAnimations.DoIdleAnimation();    
+        }             
     }         
 }

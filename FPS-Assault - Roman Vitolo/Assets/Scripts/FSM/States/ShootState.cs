@@ -4,7 +4,7 @@ namespace FSM
 {  
     public class ShootState<T> : FSMState<T>
     {
-        public IAttack _agentShoot;
+        public IAttack _agentShoot;             
 
         public ShootState(IAttack agentShoot)
         {

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9592fe76fe2d4294a97d42c4cd092acb, type: 3}
-  m_Name: AssaultRifle
+  m_Name: AssaultRifleClip
   m_EditorClassIdentifier: 
   <ShootClip>k__BackingField: {fileID: 8300000, guid: 9c1746d73c0035044be6d4caa15342e9,
     type: 3}

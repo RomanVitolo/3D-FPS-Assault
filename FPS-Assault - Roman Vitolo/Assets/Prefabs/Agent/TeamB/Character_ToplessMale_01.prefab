@@ -333,7 +333,6 @@ GameObject:
   - component: {fileID: 1110790542981405426}
   - component: {fileID: 6483987760728630727}
   - component: {fileID: 4701183769608011271}
-  - component: {fileID: 2658978276756955380}
   - component: {fileID: 30711209388509452}
   - component: {fileID: 7255117065195902027}
   - component: {fileID: 4912914947907610558}
@@ -403,20 +402,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.98, z: 0}
---- !u!136 &2658978276756955380
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114888627178346578}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.9051377
-  m_Direction: 0
-  m_Center: {x: 0, y: 0.8841612, z: 0}
 --- !u!114 &30711209388509452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +419,8 @@ MonoBehaviour:
   _agentSight: {fileID: 11400000, guid: 969d39df10afdca42bf4d91f0c6a785b, type: 2}
   _avoidanceParametersSo: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
     type: 2}
-  _agentPath: {fileID: 0}
+  _agentPath: {fileID: 1004007433}
+  Waypoints: []
 --- !u!114 &7255117065195902027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,20 +433,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7548ad3c984b90b11885a61c03a57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   <CanMove>k__BackingField: 0
   <NewQuestion>k__BackingField: 0
   _agentInput: {fileID: 2132312621629438782}
   _agentAttributes: {fileID: 11400000, guid: 70bd070c99844d1448043f81ec035aff, type: 2}
   _agentHealth: {fileID: 4912914947907610558}
-  _agentAController: {fileID: 30711209388509452}
   _avoidanceParameters: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
     type: 2}
   _characterController: {fileID: 4701183769608011271}
   _agentAnimations: {fileID: 3215023657271472486}
   _agentWeapon: {fileID: 1115621152673918926}
   _target: {fileID: 6720253879095218965, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
-  waypoints: []
-  readyToMove: 0
 --- !u!114 &4912914947907610558
 MonoBehaviour:
   m_ObjectHideFlags: 0

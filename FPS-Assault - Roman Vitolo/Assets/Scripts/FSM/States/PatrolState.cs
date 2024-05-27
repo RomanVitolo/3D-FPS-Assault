@@ -18,13 +18,13 @@ namespace FSM
 
         public override void Enter()
         {
-            _agentPathfinding.PathFindingAStar();
+            _agentPathfinding.PathFindingAStar();       
         }
 
         public override void Tick()
         {
             Debug.Log("PatrolState");
             _agent.Run();
-        }     
+        }    
     }
 }

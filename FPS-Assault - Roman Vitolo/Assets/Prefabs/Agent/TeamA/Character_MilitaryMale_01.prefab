@@ -1268,7 +1268,6 @@ GameObject:
   - component: {fileID: 6720253879095218965}
   - component: {fileID: 6722913388853176734}
   - component: {fileID: 6722913388853176809}
-  - component: {fileID: 6722913388853176810}
   - component: {fileID: 4285744728058598815}
   - component: {fileID: 3098850404027256594}
   - component: {fileID: 45844187060984438}
@@ -1337,20 +1336,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.97, z: 0}
---- !u!136 &6722913388853176810
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6722314343663919161}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.9228349
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9199617, z: 0}
 --- !u!114 &4285744728058598815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,14 +1373,12 @@ MonoBehaviour:
   _agentInput: {fileID: 8526488883346124906}
   _agentAttributes: {fileID: 11400000, guid: b2c553db07a5f1842b75d8c59fc3042a, type: 2}
   _agentHealth: {fileID: 45844187060984438}
-  _agentAController: {fileID: 4285744728058598815}
   _avoidanceParameters: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
     type: 2}
   _characterController: {fileID: 6722913388853176809}
   _agentAnimations: {fileID: 6722913388853176735}
   _agentWeapon: {fileID: 5080206144713321986}
   _target: {fileID: 1110790542981405426, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
-  readyToMove: 0
 --- !u!114 &45844187060984438
 MonoBehaviour:
   m_ObjectHideFlags: 0

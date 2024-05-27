@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 471b808d-16b5-4eba-ae09-cbcc9dc4115d
   <IsLeader>k__BackingField: 0
-  <AgentSpeed>k__BackingField: 3
+  <AgentSpeed>k__BackingField: 7
   <AgentTurnSpeed>k__BackingField: 10
   <HasBullet>k__BackingField: 0
   <InitialBullets>k__BackingField: 0
