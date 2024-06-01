@@ -1,46 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using GameEngineClasses;
 using Interfaces;
-using UnityEngine;   
+using LineOfSight;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AgentLogic
 {
     public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity, IPoints
     {    
-        public event Action OnRaiseTree;               
-        public List<Node> waypoints;        
-        [field: SerializeField] public Transform Target { get; set;}  
+        public List<Node> Waypoints;   
+        public AgentWeapon AgentWeapon;
+        public List<Transform> Targets = new List<Transform>();
+        public Transform Target;
         [field: SerializeField] public bool CanMove { get; set;}
-        [field: SerializeField] public bool NewQuestion { get; set;}
 
+
+        [SerializeField] private GameEngine _gameEngine;
         [SerializeField] private AgentInput _agentInput;
         [SerializeField] private AgentAttributes _agentAttributes;
         [SerializeField] private AgentHealth _agentHealth;
-        [SerializeField] private AvoidanceParametersSO _avoidanceParameters;  
-        
+        [SerializeField] private AvoidanceParametersSO _avoidanceParameters;
+        [SerializeField] private IgnoreAgentsCollisionUtilitiesSO _agentsCollision;
         [SerializeField] private CharacterController _characterController; 
-        [SerializeField] private AgentAnimations _agentAnimations;
-        
-        [SerializeField] private AgentWeapon _agentWeapon;      
+        [SerializeField] private AgentAnimations _agentAnimations;  
         
         private ISteeringBehaviour _steeringBehaviour;  
         
         private float _lastShotTime = 1f;
         private int _nextPoint;     
         
-        private void Awake()
-        {                
+        private void Awake() => InitComponents();       
+        
+        private void InitComponents()
+        {
+            _gameEngine = FindObjectOfType<GameEngine>();
             _agentInput = GetComponent<AgentInput>();
             _agentHealth = GetComponent<AgentHealth>();
             _characterController = GetComponent<CharacterController>();     
             _agentAnimations = GetComponent<AgentAnimations>();
-            _agentWeapon = GetComponentInChildren<AgentWeapon>();   
+            AgentWeapon = GetComponentInChildren<AgentWeapon>();    
         }
-
+               
         private void Start()
         {  
-            CanMove = true;
-        }     
+            CanMove = true;     
+            IgnoreFriendlyCollision();
+            LoadTargets();
+        }
+
+        private Transform LoadTargets()
+        {    
+            switch (_agentAttributes.TeamName)
+            {
+                case "TeamA":
+                {
+                    foreach (var agent in _gameEngine.TeamBAgents)
+                    {
+                        var obtainAgents = agent.transform;
+                        Targets.Add(obtainAgents);
+                        Target = Targets.FirstOrDefault(t => t.transform);
+                    }     
+                    break;
+                }
+                case "TeamB":
+                {
+                    foreach (var agent in _gameEngine.TeamAAgents)
+                    {
+                        var obtainAgents = agent.transform;
+                        Targets.Add(obtainAgents);
+                        Target = Targets.FirstOrDefault(t => t.transform);
+                    }               
+                    break;
+                }
+            }
+            return Target; 
+        }
+
+        public Transform FindNearestTarget(float agentVisionDistance)
+        {
+            Target = null;
+            foreach (var target in Targets)
+            {
+                var enemyDistance = Vector3.Distance(transform.position, target.position);
+                if (enemyDistance < agentVisionDistance)
+                {      
+                    Target = target;
+                }        
+            }        
+            return Target;
+        }
+
+        private void IgnoreFriendlyCollision()
+        {
+            _agentsCollision.FindColliders();   
+            _agentsCollision.IgnoreCollision(_characterController);
+        }
 
         public float GetVelocity()
         {
@@ -88,7 +145,7 @@ namespace AgentLogic
         public void Reload(bool reload)
         {
             _agentAnimations.ReloadAnimation(reload); 
-            _agentWeapon.LoadReloadFX();
+            AgentWeapon.LoadReloadFX();
             Debug.Log("Weapon Reload");       
         }
 
@@ -101,9 +158,7 @@ namespace AgentLogic
             if (_steeringBehaviour.GetDirection() == Vector3.zero && _agentInput.GetHorizontalAxis() == 0 &&
                 _agentInput.GetVerticalAxis() == 0)
             {
-                _agentAnimations.DoIdleAnimation();
-                NewQuestion = true;
-                OnRaiseTree?.Invoke();   
+                _agentAnimations.DoIdleAnimation();   
             } 
         }         
         
@@ -115,25 +170,35 @@ namespace AgentLogic
         }               
 
         public void Idle() => _agentAnimations.DoIdleAnimation();
+
       
         public void Shoot()
         {
-            if (Target == null)
+            if (Targets == null)
             {
                 _agentAnimations.ShootAnimation(false);
                 return;
-            } 
-            
-            _agentAnimations.ShootAnimation(true);
-            Vector3 direction = Target.position - transform.position;
-            var rotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _agentAttributes.AgentTurnSpeed * Time.deltaTime);  
-                  
-            if (Time.time - _lastShotTime >= 1 / _agentWeapon.WeaponFireRate())
-            {   
-                _agentWeapon.Shoot();  
-                _lastShotTime = Time.time;
-            }        
+            }
+
+            if (AgentWeapon.CheckForEnoughAmmo())
+            {
+                _agentAnimations.ShootAnimation(true);
+                Vector3 direction = Target.position - transform.position;
+                var rotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
+                    _agentAttributes.AgentTurnSpeed * Time.deltaTime);
+
+                if (Time.time - _lastShotTime >= 1 / AgentWeapon.WeaponFireRate())
+                {
+                    AgentWeapon.Shoot();
+                    _lastShotTime = Time.time;
+                }
+            }      
+            else
+            {
+                Idle();
+                Debug.Log("Please Reload");  
+            }
         }          
                  
         public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour; 
@@ -162,21 +227,21 @@ namespace AgentLogic
         {
             _nextPoint = 0;
             if (newPoints.Count == 0) return;   
-            waypoints = newPoints;
-            var pos = waypoints[_nextPoint].transform.position;
+            Waypoints = newPoints;
+            var pos = Waypoints[_nextPoint].transform.position;
             pos.y = transform.position.y;
             transform.position = pos;  
         }
         
         public void Run()
         {
-            var point = waypoints[_nextPoint];
+            var point = Waypoints[_nextPoint];
             var posPoint = point.transform.position;
             posPoint.y = transform.position.y;
             Vector3 dir = posPoint - transform.position;
             if (dir.magnitude < 0.2f)
             {
-                if (_nextPoint + 1 < waypoints.Count)
+                if (_nextPoint + 1 < Waypoints.Count)
                     _nextPoint++;
                 else
                 {   

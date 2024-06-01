@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3db01252d58439db1c191636f4b4e52, type: 3}
-  m_Name: AgentA
+  m_Script: {fileID: 11500000, guid: 35285fe61428b274b862c89526ec7f7d, type: 3}
+  m_Name: TeamBCollisions
   m_EditorClassIdentifier: 
-  NameTag: AgentA
-  TeamName: TeamA
-  <IsLeader>k__BackingField: 0
-  <AgentSpeed>k__BackingField: 7
-  <AgentTurnSpeed>k__BackingField: 10
-  <WaypointNameTag>k__BackingField: WaypointA
+  <TeamColliders>k__BackingField:
+  - {fileID: 4701183769608011271, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}

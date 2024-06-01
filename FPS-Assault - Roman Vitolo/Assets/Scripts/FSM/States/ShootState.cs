@@ -1,4 +1,4 @@
-﻿using Interfaces;
+﻿using Interfaces;   
 
 namespace FSM
 {  
@@ -10,10 +10,11 @@ namespace FSM
         {
             _agentShoot = agentShoot;
         }
-
+                   
         public override void Tick()
         {
+            
             _agentShoot.Shoot();
-        }
+        }                                   
     }
 }

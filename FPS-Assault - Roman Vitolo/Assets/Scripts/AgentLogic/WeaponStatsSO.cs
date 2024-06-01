@@ -7,8 +7,10 @@ namespace AgentLogic
     {
         [field: SerializeField] public float WeaponShootRange { get; private set; }
         [field: SerializeField] public LayerMask KillLayer { get; private set; }
-        [field: SerializeField] public int WeaponDamage { get; private set; }
-        [field: SerializeField] public float FireRate { get; private set; }
-        [field: SerializeField] public float WeaponAmmo { get; set; }
+        [field: SerializeField] public int WeaponDamage { get; private set; }          
+        [field: SerializeField] public int InitialWeaponAmmo { get;  set; }    
+        [field: SerializeField] public int CurrentAmmo { get; set; } 
+        [field: SerializeField] public float FireRate { get; private set; }                 
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using UnityEngine;
 
 namespace FSM
 {
@@ -12,6 +13,7 @@ namespace FSM
         public override void Enter()
         {
             _Attack.Reload(true);
+            Debug.Log("Reloading");
         }                        
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Interfaces
 {
@@ -6,6 +7,6 @@ namespace Interfaces
     {
         void Shoot();
         void Pursuit();
-        void Reload(bool reload);        
+        void Reload(bool reload);  
     }
 }

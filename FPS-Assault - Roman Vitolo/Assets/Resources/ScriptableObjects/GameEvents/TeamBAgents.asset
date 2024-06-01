@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5552644d9d304b1f96612de19c8310e7, type: 3}
+  m_Name: TeamBAgents
+  m_EditorClassIdentifier: 
+  <Agents>k__BackingField:
+  - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  <Boss>k__BackingField: {fileID: 2207905084113894901, guid: e0f5e1841ee0ce9469a174442150b782,
+    type: 3}

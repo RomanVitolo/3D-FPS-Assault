@@ -12,12 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3db01252d58439db1c191636f4b4e52, type: 3}
   m_Name: AgentB
   m_EditorClassIdentifier: 
-  Name: 471b808d-16b5-4eba-ae09-cbcc9dc4115d
+  NameTag: AgentB
+  TeamName: TeamB
   <IsLeader>k__BackingField: 0
   <AgentSpeed>k__BackingField: 7
   <AgentTurnSpeed>k__BackingField: 10
-  <HasBullet>k__BackingField: 0
-  <InitialBullets>k__BackingField: 0
-  <AmountOfBullets>k__BackingField: 0
-  <FireRate>k__BackingField: 0
   <WaypointNameTag>k__BackingField: WaypointB

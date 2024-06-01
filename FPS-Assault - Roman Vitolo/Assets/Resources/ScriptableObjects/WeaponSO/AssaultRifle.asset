@@ -17,5 +17,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 257
   <WeaponDamage>k__BackingField: 2
+  <InitialWeaponAmmo>k__BackingField: 30
+  <CurrentAmmo>k__BackingField: 0
   <FireRate>k__BackingField: 2.5
-  <WeaponAmmo>k__BackingField: 30

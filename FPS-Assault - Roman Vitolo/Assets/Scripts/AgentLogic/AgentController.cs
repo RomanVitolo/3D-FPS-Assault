@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using AIBehaviors;  
 using DecisionTree;
 using DefaultNamespace;
 using FSM;
 using LineOfSight;
-using UnityEngine;
+using UnityEngine;      
 
 namespace AgentLogic
 {
-    public class AgentAController : MonoBehaviour
+    public class AgentController : MonoBehaviour
     {
         [SerializeField] private AgentAI _agentAI;
         [SerializeField] private LineOfSightConfigurationSO _agentSight;
@@ -27,21 +26,11 @@ namespace AgentLogic
         private void Awake()
         {
             _agentAI = GetComponent<AgentAI>();
-            _agentPath = GetComponent<AgentPathfindingConfig>();   
-        }
-
-        private void OnEnable()
-        {
-            _agentAI.OnRaiseTree += ExecuteTreeAgain;
-        }
-
-        private void OnDestroy()
-        {
-            _agentAI.OnRaiseTree -= ExecuteTreeAgain;
-        }
+            _agentPath = GetComponent<AgentPathfindingConfig>(); 
+        }       
 
         private void Start()
-        {    
+        {      
             FindWaypoints();
             
             _roulette = new Roulette();  
@@ -87,6 +76,7 @@ namespace AgentLogic
             
             shootState.AddTransition("Idle", idleState);
             shootState.AddTransition("Chase", chaseState);                  
+            shootState.AddTransition("Reload", reloadState);                  
             
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode chase = new ActionNode(ChaseEnemy);
@@ -96,39 +86,37 @@ namespace AgentLogic
             ActionNode reload = new ActionNode(ReloadState);           
             ActionNode idle = new ActionNode(DoIdle);          
                                                          
-            QuestionNode hasAmmo = new QuestionNode(EnemyIsInRange, attack, reload);    
-            QuestionNode isInRange = new QuestionNode(EnemyIsInRange, hasAmmo, idle);
+            QuestionNode hasAmmo = new QuestionNode(_agentAI.AgentWeapon.CheckForEnoughAmmo, attack, reload);
             QuestionNode canChase = new QuestionNode(EnemyIsInRange, hasAmmo, idle);
-            QuestionNode canWander = new QuestionNode(EnemyIsInRange, canChase, patrol);
+            QuestionNode isInRange = new QuestionNode(EnemyIsInRange, canChase, idle);
+            QuestionNode canWander = new QuestionNode(EnemyIsInRange, isInRange, patrol);
             QuestionNode hidePath = new QuestionNode(_agentAI.HideOrIdle, hide, canWander);
             QuestionNode hasLowLife = new QuestionNode(_agentAI.CheckLowLife, hidePath, canWander);
             QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, hasLowLife, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();            
-        }
+        }  
 
         private void ShootState()
         {
+            _agentAI.FindNearestTarget(_agentSight.FOVAngle);
             _fsm.Transition("Shoot");
         }
       
         private void Update()
         {   
-            _fsm.OnTick();  
+            _fsm.OnTick();     
              
             if (Input.GetKeyDown(KeyCode.Space))
             {
                _initTree.Execute();   
-            }     
-
-            //EnemyIsInRange();    
+            }         
         }           
                            
         private void ChaseEnemy()
         {  
-            _fsm.Transition("Chase");  
-            //_agentAI.ChangeSteering(new PursuitSteering(transform, _target, _agentAI.GetVelocity(), 1));    
+            _fsm.Transition("Chase");     
         }
         
         private void HideFromEnemy()
@@ -141,7 +129,7 @@ namespace AgentLogic
         private void AgentIsDead() => _fsm.Transition("Dead");
 
         private bool EnemyIsInRange()
-        {
+        {    
             _agentSight.InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
                 _agentSight.FOVAngle, _agentSight.FOVLayerMask);           
             return _agentSight.InSight;
@@ -158,9 +146,8 @@ namespace AgentLogic
             _fsm.Transition("Idle");       
         }
 
-        private void Patrol()
-        {
-            _agentAI.OnRaiseTree += ExecuteTreeAgain;
+        private void Patrol()   
+        {                                        
             _fsm.Transition("Patrol"); 
         }
 
@@ -172,13 +159,16 @@ namespace AgentLogic
         
         public void ExecuteTreeAgain()
         {
-            StartCoroutine(WaitForNewQuestion());
+            _initTree.Execute();
+            Debug.Log("New Question");
+           //StartCoroutine(WaitForNewQuestion());
         }
 
         IEnumerator WaitForNewQuestion()
         {
-            yield return new WaitForSecondsRealtime(2f);
+            yield return new WaitForSecondsRealtime(0.5f);
             _initTree.Execute();
+            Debug.Log("New Question");
         }
 
         private void FindWaypoints()
@@ -189,7 +179,7 @@ namespace AgentLogic
             {
                 Waypoints.Add(waypoint.transform);
             }
-        }                   
+        }             
 
         private void OnDrawGizmosSelected()
         {
@@ -202,4 +192,4 @@ namespace AgentLogic
                                                * transform.forward * _agentSight.FOVRange);
         }          
     }
-}
+}     

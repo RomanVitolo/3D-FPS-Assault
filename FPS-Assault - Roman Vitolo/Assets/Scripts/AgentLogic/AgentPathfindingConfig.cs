@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AgentLogic
 {
     public class AgentPathfindingConfig : MonoBehaviour
-    {             
+    {
+        [SerializeField] private List<Node> RandomInitNode = new List<Node>();
+        [SerializeField] private List<Node> RandomFinitNode = new List<Node>();
+        
+        
+        
+        public string WaypointTag; 
+        
         public float radius;
         public Vector3 offset;
         public Node init;
@@ -18,6 +27,32 @@ namespace AgentLogic
         private void Awake()
         {
             _agent = GetComponent<AgentAI>();
+        }
+
+        private void OnEnable()
+        {
+            FindInitNode();
+        }
+
+        private void FindInitNode()
+        {
+            var waypoints = GameObject.FindGameObjectsWithTag(WaypointTag);
+            foreach (var waypoint in waypoints)
+            {
+                var getComponent = waypoint.GetComponent<Node>();
+                if (getComponent.CanBeInitialNode && getComponent.CanBeEndNode == false)
+                {
+                    RandomInitNode.Add(getComponent);
+                    var randomInitWaypoint = Random.Range(0, RandomInitNode.Count);
+                    init = RandomInitNode[randomInitWaypoint];
+                }
+                else if (getComponent.CanBeInitialNode == false && getComponent.CanBeEndNode)
+                {
+                    RandomFinitNode.Add(getComponent);
+                    var randomFinitNode = Random.Range(0, RandomFinitNode.Count);
+                    finit = RandomFinitNode[randomFinitNode];
+                } 
+            }                   
         }
 
         public void PathFindingAStar()
