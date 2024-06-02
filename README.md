@@ -1,1 +1,1 @@
-# 3D-AI PROTOTYPE. ALL WITHOUT UNITY NAVMEASH
+# 3D-AI PROTOTYPE. All whithout Unity Navmeash Componenet.
