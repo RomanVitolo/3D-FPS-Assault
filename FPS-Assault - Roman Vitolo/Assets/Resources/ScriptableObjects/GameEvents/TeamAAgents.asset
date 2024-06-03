@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TeamAAgents
   m_EditorClassIdentifier: 
   <Agents>k__BackingField:
+  - {fileID: 1434544434307545340, guid: 2d37ca12f42617543b3900cd1503f7a8, type: 3}
   - {fileID: 6722314343663919161, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
   - {fileID: 6722314343663919161, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
   - {fileID: 6722314343663919161, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
@@ -20,5 +21,4 @@ MonoBehaviour:
   - {fileID: 6722314343663919161, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
   - {fileID: 6722314343663919161, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
   - {fileID: 6722314343663919161, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
-  <Boss>k__BackingField: {fileID: 1434544434307545340, guid: 2d37ca12f42617543b3900cd1503f7a8,
-    type: 3}
+  <TeamName>k__BackingField: TeamA

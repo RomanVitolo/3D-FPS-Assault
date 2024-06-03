@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Create IgnoreAgentsCollisionUtilities", fileName = "IgnoreAgentsCollisionUtilities", order = 0)]
+[CreateAssetMenu(menuName = "Utilities/Create IgnoreAgentsCollisionUtilities", fileName = "IgnoreAgentsCollisionUtilities", order = 0)]
 public class IgnoreAgentsCollisionUtilitiesSO : ScriptableObject
 {    
     [field: SerializeField] public CharacterController[] TeamColliders { get;  set; }

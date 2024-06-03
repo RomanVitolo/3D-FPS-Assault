@@ -10,7 +10,6 @@ namespace AgentLogic
         [field: SerializeField] public int WeaponDamage { get; private set; }          
         [field: SerializeField] public int InitialWeaponAmmo { get;  set; }    
         [field: SerializeField] public int CurrentAmmo { get; set; } 
-        [field: SerializeField] public float FireRate { get; private set; }                 
-        
+        [field: SerializeField] public float FireRate { get; private set; }                
     }
 }

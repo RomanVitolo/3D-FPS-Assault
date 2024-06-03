@@ -2,7 +2,7 @@
 
 namespace AgentLogic
 {
-    [CreateAssetMenu(menuName = "Entity/ObstacleAvoidanceSO", fileName = "Custom Obstacle Avoidance")]
+    [CreateAssetMenu(menuName = "Entity/ObstacleAvoidance", fileName = "Custom Obstacle Avoidance")]
     public class AvoidanceParametersSO : ScriptableObject
     {  
         [field: SerializeField] public float Radius { get; private set; } 

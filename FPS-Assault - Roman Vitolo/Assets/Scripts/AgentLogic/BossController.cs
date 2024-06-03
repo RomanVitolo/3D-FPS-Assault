@@ -154,7 +154,7 @@ namespace AgentLogic
         [ContextMenu(nameof(MakeARandomDecision))]
         private void MakeARandomDecision()
         {
-            _fsm.Transition(_roulette.Run(_randomDecision));       
+            _fsm.Transition(_roulette.ExecuteRoulette(_randomDecision));       
         }
         
         public void ExecuteTreeAgain()

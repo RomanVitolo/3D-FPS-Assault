@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using GameEngineClasses;
-using Interfaces;
-using LineOfSight;
-using UnityEngine;
-using UnityEngine.Serialization;
+using System.Linq;         
+using Interfaces;              
+using UnityEngine;               
 
 namespace AgentLogic
 {
@@ -15,9 +12,8 @@ namespace AgentLogic
         public AgentWeapon AgentWeapon;
         public List<Transform> Targets = new List<Transform>();
         public Transform Target;
-        [field: SerializeField] public bool CanMove { get; set;}
-
-
+        [field: SerializeField] public bool CanMove { get; set;}          
+        
         [SerializeField] private GameEngine _gameEngine;
         [SerializeField] private AgentInput _agentInput;
         [SerializeField] private AgentAttributes _agentAttributes;
@@ -30,7 +26,7 @@ namespace AgentLogic
         private ISteeringBehaviour _steeringBehaviour;  
         
         private float _lastShotTime = 1f;
-        private int _nextPoint;     
+        private int _nextPoint;    
         
         private void Awake() => InitComponents();       
         
@@ -49,35 +45,24 @@ namespace AgentLogic
             CanMove = true;     
             IgnoreFriendlyCollision();
             LoadTargets();
-        }
+        }         
 
-        private Transform LoadTargets()
-        {    
-            switch (_agentAttributes.TeamName)
+        private void LoadTargets()
+        {   
+            foreach (var agent in _gameEngine.TeamAgentsPosition)
             {
-                case "TeamA":
+                if (agent.Key == _agentAttributes.TeamName)
                 {
-                    foreach (var agent in _gameEngine.TeamBAgents)
+                    var assignAgentsToCorrectTeam = agent.Value;   
+                    foreach (var transform in assignAgentsToCorrectTeam)
                     {
-                        var obtainAgents = agent.transform;
-                        Targets.Add(obtainAgents);
-                        Target = Targets.FirstOrDefault(t => t.transform);
-                    }     
-                    break;
+                        Targets.Add(transform);
+                    }  
+                    Target = Targets.FirstOrDefault();
                 }
-                case "TeamB":
-                {
-                    foreach (var agent in _gameEngine.TeamAAgents)
-                    {
-                        var obtainAgents = agent.transform;
-                        Targets.Add(obtainAgents);
-                        Target = Targets.FirstOrDefault(t => t.transform);
-                    }               
-                    break;
-                }
-            }
-            return Target; 
-        }
+            }  
+        }         
+              
 
         public Transform FindNearestTarget(float agentVisionDistance)
         {
@@ -88,7 +73,7 @@ namespace AgentLogic
                 if (enemyDistance < agentVisionDistance)
                 {      
                     Target = target;
-                }        
+                }                                    
             }        
             return Target;
         }
@@ -199,8 +184,8 @@ namespace AgentLogic
                 Idle();
                 Debug.Log("Please Reload");  
             }
-        }          
-                 
+        }     
+        
         public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour; 
         
         public string WaypointTag() => _agentAttributes.WaypointNameTag;

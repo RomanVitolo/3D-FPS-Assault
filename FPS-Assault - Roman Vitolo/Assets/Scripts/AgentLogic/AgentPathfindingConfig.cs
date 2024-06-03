@@ -8,13 +8,7 @@ namespace AgentLogic
 {
     public class AgentPathfindingConfig : MonoBehaviour
     {
-        [SerializeField] private List<Node> RandomInitNode = new List<Node>();
-        [SerializeField] private List<Node> RandomFinitNode = new List<Node>();
-        
-        
-        
         public string WaypointTag; 
-        
         public float radius;
         public Vector3 offset;
         public Node init;
@@ -23,6 +17,10 @@ namespace AgentLogic
         private List<Node> _list;
         private List<Vector3> _listVector;    
         private AStar<Node> _aStar = new AStar<Node>();
+        
+        [SerializeField] private List<Node> RandomInitNode = new List<Node>();
+        [SerializeField] private List<Node> RandomFinitNode = new List<Node>();  
+        
 
         private void Awake()
         {

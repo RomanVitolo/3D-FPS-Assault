@@ -4,13 +4,12 @@ using UnityEngine;
 
 
 public class GameEngine : MonoBehaviour
-{                                         
-     [field: SerializeField] public List<Transform> TeamAAgents { get; private set; } = new List<Transform>();
-     [field: SerializeField] public List<Transform> TeamBAgents { get; private set; }= new List<Transform>();
+{                                        
+     public Dictionary<string, List<Transform>> TeamAgentsPosition { get; set; } = new Dictionary<string, List<Transform>>();
+     public Dictionary<string, List<GameObject>> TeamAgents { get; set; } = new Dictionary<string, List<GameObject>>();
      
-     [SerializeField] private GameEngineEventsSO _gameEngineEvents;
-     [SerializeField] private InstantiateEntitiesSO _instantiateTeamAAgents;
-     [SerializeField] private InstantiateEntitiesSO _instantiateTeamBAgents;
+     [SerializeField] private GameEngineEventsSO _gameEngineEvents; 
+     [SerializeField] private InstantiateEntitiesSO[] _instantiateAgents;
      
      private void Awake()
      {
@@ -23,8 +22,10 @@ public class GameEngine : MonoBehaviour
      }          
      
      private void SpawnAgents()
-     {
-          _instantiateTeamBAgents.InstantiateAgents(TeamBAgents);
-          _instantiateTeamAAgents.InstantiateAgents(TeamAAgents);   
+     {       
+          foreach (var agents in _instantiateAgents)
+          {
+               agents.InstantiateAgents(TeamAgents, TeamAgentsPosition);
+          }
      }    
 }

@@ -1459,6 +1459,7 @@ GameObject:
   - component: {fileID: 885964193230511769}
   - component: {fileID: 4414339409601696961}
   - component: {fileID: 1287163856940062126}
+  - component: {fileID: 4292137581230085039}
   m_Layer: 11
   m_Name: Boss_TeamB
   m_TagString: AgentB
@@ -1546,7 +1547,6 @@ MonoBehaviour:
   _avoidanceParameters: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
     type: 2}
   _agentsCollision: {fileID: 11400000, guid: c14d595351483f748a3d953ec6fc806e, type: 2}
-  _agentVision: {fileID: 11400000, guid: 969d39df10afdca42bf4d91f0c6a785b, type: 2}
   _characterController: {fileID: 5827966942662925216}
   _agentAnimations: {fileID: 4414339409601696961}
 --- !u!114 &1275071868370169003
@@ -1617,14 +1617,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2c637e802aa6b41a13d8d0417b0d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RandomInitNode: []
-  RandomFinitNode: []
   WaypointTag: WaypointB
   radius: 0.66
   offset: {x: 0, y: 1.44, z: 0}
   init: {fileID: 0}
   finit: {fileID: 0}
   _agent: {fileID: 8463308499572879852}
+  RandomInitNode: []
+  RandomFinitNode: []
+--- !u!114 &4292137581230085039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2207905084113894901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5d7c92920a841c69c2c86424f0046c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEngine: {fileID: 0}
+  _agentAttributes: {fileID: 11400000, guid: 444d60d60004a6549a5edf46d33dd3f2, type: 2}
+  Agents: []
 --- !u!1 &2207928041189579645
 GameObject:
   m_ObjectHideFlags: 0

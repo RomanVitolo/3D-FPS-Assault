@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using System.Collections.Generic;    
 
 namespace Interfaces
 {
@@ -8,5 +7,6 @@ namespace Interfaces
         void Shoot();
         void Pursuit();
         void Reload(bool reload);  
+        //Queue<bool> NewQuestion();
     }
 }

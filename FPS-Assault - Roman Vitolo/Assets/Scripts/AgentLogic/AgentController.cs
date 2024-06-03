@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using AIBehaviors;  
 using DecisionTree;
@@ -21,7 +22,7 @@ namespace AgentLogic
         private FSM<string> _fsm;  
         private Transform _nearestWeapon;
         private Roulette _roulette;
-        private Dictionary<string, int> _randomDecision = new Dictionary<string, int>();     
+        private readonly Dictionary<string, int> _randomDecision = new Dictionary<string, int>();     
 
         private void Awake()
         {
@@ -102,8 +103,8 @@ namespace AgentLogic
         {
             _agentAI.FindNearestTarget(_agentSight.FOVAngle);
             _fsm.Transition("Shoot");
-        }
-      
+        }    
+        
         private void Update()
         {   
             _fsm.OnTick();     
@@ -112,8 +113,9 @@ namespace AgentLogic
             {
                _initTree.Execute();   
             }         
-        }           
-                           
+            
+        }     
+                    
         private void ChaseEnemy()
         {  
             _fsm.Transition("Chase");     
@@ -154,7 +156,7 @@ namespace AgentLogic
         [ContextMenu(nameof(MakeARandomDecision))]
         private void MakeARandomDecision()
         {
-            _fsm.Transition(_roulette.Run(_randomDecision));       
+            _fsm.Transition(_roulette.ExecuteRoulette(_randomDecision));       
         }
         
         public void ExecuteTreeAgain()

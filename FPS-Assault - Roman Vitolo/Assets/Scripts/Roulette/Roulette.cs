@@ -5,7 +5,7 @@ namespace DefaultNamespace
 {
     public class Roulette
     {
-        public T Run<T>(Dictionary<T, int> dic)
+        public T ExecuteRoulette<T>(Dictionary<T, int> dic)
         {
             float total = 0;
             foreach (var item in dic)

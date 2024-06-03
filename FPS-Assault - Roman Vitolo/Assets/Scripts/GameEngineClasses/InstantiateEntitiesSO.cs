@@ -3,22 +3,29 @@ using UnityEngine;
 
 namespace GameEngineClasses
 {
-    [CreateAssetMenu(menuName = "InstantiateEntities/Agents", fileName = "Agent", order = 0)]
+    [CreateAssetMenu(menuName = "Game Engine/InstantiateEntities/Agents", fileName = "Agent", order = 0)]
     public class InstantiateEntitiesSO : ScriptableObject
     {
-        [field: SerializeField] public GameObject[] Agents { get; private set; }           
-        [field: SerializeField] public GameObject Boss { get; private set; }
+        [field: SerializeField] public GameObject[] Agents { get; private set; }       
+        [field: SerializeField] public string TeamName { get; private set; }    
         
-        public void InstantiateAgents(List<Transform> saveAgents)
-        {
+        public void InstantiateAgents(Dictionary<string, List<GameObject>> teamAgents, Dictionary<string, List<Transform>> saveAgentsPosition)
+        {     
             foreach (var agent in Agents)
             {
-                GameObject instantiateAgentsPrefabs = Instantiate(agent, agent.transform.position, Quaternion.identity) as GameObject;
-                saveAgents.Add(instantiateAgentsPrefabs.transform);
-            }                 
-            
-            GameObject bossPrefab = Instantiate(Boss, Boss.transform.position, Quaternion.identity);
-            saveAgents.Add(bossPrefab.transform);      
+                GameObject instantiateAgentsPrefabs = Instantiate(agent, agent.transform.position, Quaternion.identity);
+                if (teamAgents.ContainsKey(TeamName) && saveAgentsPosition.ContainsKey(TeamName))
+                {
+                    teamAgents[TeamName].Add(instantiateAgentsPrefabs);
+                    saveAgentsPosition[TeamName].Add(instantiateAgentsPrefabs.transform);    
+                }                   
+                else
+                {
+                    teamAgents[TeamName] = new List<GameObject> {instantiateAgentsPrefabs};
+                    saveAgentsPosition[TeamName] = new List<Transform> { instantiateAgentsPrefabs.transform }; 
+                }  
+                          
+            }                     
         }
     }
 }

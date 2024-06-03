@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace GameEngineClasses
 {
-    [CreateAssetMenu(menuName = "GameEngine Events", fileName = "New Custom Event")]
+    [CreateAssetMenu(menuName = "Game Engine/GameEngine Events", fileName = "New Custom Event")]
     public class GameEngineEventsSO : ScriptableObject
     { 
        [field: SerializeField] public UnityEvent StartGame { get; set; }
