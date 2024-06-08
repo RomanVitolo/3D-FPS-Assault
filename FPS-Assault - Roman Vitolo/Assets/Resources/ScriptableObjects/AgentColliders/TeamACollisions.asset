@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TeamACollisions
   m_EditorClassIdentifier: 
   <TeamColliders>k__BackingField:
-  - {fileID: 6722913388853176809, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
+  - {fileID: 2342929198847590977, guid: 2f724097f86f9794384ee8c63edd3981, type: 3}
   - {fileID: 1436197288253616428, guid: 2d37ca12f42617543b3900cd1503f7a8, type: 3}

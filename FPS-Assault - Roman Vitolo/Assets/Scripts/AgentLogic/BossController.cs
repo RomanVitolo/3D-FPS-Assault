@@ -11,6 +11,7 @@ namespace AgentLogic
 {
     public class BossController: MonoBehaviour
     {
+        public bool InSight;
         public List<Transform> Waypoints;
         
         [SerializeField] private AgentAI _agentAI;
@@ -31,7 +32,8 @@ namespace AgentLogic
         }          
 
         private void Start()
-        {    
+        {
+            InSight = false;
             FindWaypoints();
             
             _roulette = new Roulette();  
@@ -130,15 +132,14 @@ namespace AgentLogic
 
         private bool EnemyIsInRange()
         {
-            _agentSight.InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
+            InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
                 _agentSight.FOVAngle, _agentSight.FOVLayerMask);           
-            return _agentSight.InSight;
+            return InSight;
         }
 
         private void ReloadState()
         {
-            _fsm.Transition("Reload");
-            _initTree.Execute(); 
+            _fsm.Transition("Reload");  
         }          
 
         private void DoIdle()

@@ -1,4 +1,5 @@
-﻿using System; 
+﻿using System;
+using Interfaces;
 using UnityEngine;    
 
 namespace AgentLogic
@@ -12,6 +13,6 @@ namespace AgentLogic
        [field: SerializeField] public bool IsLeader { get; private set; }
        [field: SerializeField] public float AgentSpeed { get; set; }
        [field: SerializeField] public float AgentTurnSpeed { get; set; }
-       [field: SerializeField] public string WaypointNameTag { get; private set; } 
+       [field: SerializeField] public string WaypointNameTag { get; private set; }
     }
 }

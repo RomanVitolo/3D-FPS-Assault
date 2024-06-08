@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TeamColliders>k__BackingField:
   - {fileID: 4701183769608011271, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
+  - {fileID: 5827966942662925216, guid: e0f5e1841ee0ce9469a174442150b782, type: 3}

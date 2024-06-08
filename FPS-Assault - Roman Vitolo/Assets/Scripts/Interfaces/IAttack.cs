@@ -6,7 +6,6 @@ namespace Interfaces
     {
         void Shoot();
         void Pursuit();
-        void Reload(bool reload);  
-        //Queue<bool> NewQuestion();
+        void Reload(bool reload);    
     }
 }

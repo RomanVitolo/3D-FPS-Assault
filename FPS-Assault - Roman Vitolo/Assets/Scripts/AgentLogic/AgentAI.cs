@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;         
 using Interfaces;              
 using UnityEngine;               
@@ -7,7 +6,7 @@ using UnityEngine;
 namespace AgentLogic
 {
     public class AgentAI : MonoBehaviour, IMove, IAttack, IEntity, IPoints
-    {    
+    {   
         public List<Node> Waypoints;   
         public AgentWeapon AgentWeapon;
         public List<Transform> Targets = new List<Transform>();
@@ -42,16 +41,16 @@ namespace AgentLogic
                
         private void Start()
         {  
-            CanMove = true;     
-            IgnoreFriendlyCollision();
+            CanMove = true; 
             LoadTargets();
+            IgnoreFriendlyCollision();
         }         
 
         private void LoadTargets()
         {   
             foreach (var agent in _gameEngine.TeamAgentsPosition)
             {
-                if (agent.Key == _agentAttributes.TeamName)
+                if (agent.Key != _agentAttributes.TeamName)
                 {
                     var assignAgentsToCorrectTeam = agent.Value;   
                     foreach (var transform in assignAgentsToCorrectTeam)
@@ -62,7 +61,6 @@ namespace AgentLogic
                 }
             }  
         }         
-              
 
         public Transform FindNearestTarget(float agentVisionDistance)
         {
@@ -86,6 +84,8 @@ namespace AgentLogic
 
         public float GetVelocity()
         {
+            /*var randomSpeed = Random.Range(2, _agentAttributes.AgentSpeed);
+            return randomSpeed;*/
             return _agentAttributes.AgentSpeed;
         }         
         
@@ -132,7 +132,7 @@ namespace AgentLogic
             _agentAnimations.ReloadAnimation(reload); 
             AgentWeapon.LoadReloadFX();
             Debug.Log("Weapon Reload");       
-        }
+        }     
 
         public void Hide()
         {        
@@ -181,7 +181,7 @@ namespace AgentLogic
             }      
             else
             {
-                Idle();
+                Idle();    
                 Debug.Log("Please Reload");  
             }
         }     
@@ -242,6 +242,6 @@ namespace AgentLogic
         private void IdleState()
         {
             _agentAnimations.DoIdleAnimation();    
-        }             
+        }     
     }         
 }

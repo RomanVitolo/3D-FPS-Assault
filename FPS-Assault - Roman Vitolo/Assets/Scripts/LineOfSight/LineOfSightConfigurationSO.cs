@@ -5,13 +5,10 @@ namespace LineOfSight
 {
     [CreateAssetMenu(menuName = "Entity/Line Of Sight", fileName = "Custom Line Of Sight")]
     public class LineOfSightConfigurationSO : ScriptableObject
-    {
-        [field: SerializeField] public bool InSight { get; set; }
+    {   
         [field: SerializeField] public float FOVRange { get; private set; } 
         [field: SerializeField] public float FOVAngle{ get; private set; }
-        [field: SerializeField] public LayerMask FOVLayerMask{ get; private set; }
-
-        private void Awake() => InSight = false;   
+        [field: SerializeField] public LayerMask FOVLayerMask{ get; private set; }    
 
         public bool IsInSight(Transform agent, Transform target, float range, float angle, LayerMask layerMask)
         {

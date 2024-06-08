@@ -5,19 +5,23 @@ using AIBehaviors;
 using DecisionTree;
 using DefaultNamespace;
 using FSM;
+using Interfaces;
 using LineOfSight;
 using UnityEngine;      
 
 namespace AgentLogic
 {
-    public class AgentController : MonoBehaviour
+    public class AgentController : MonoBehaviour, IReady
     {
+        public bool InSight;
+        public bool NewQuestion;
+        public List<Transform> Waypoints;
+
         [SerializeField] private AgentAI _agentAI;
         [SerializeField] private LineOfSightConfigurationSO _agentSight;
         [SerializeField] private AvoidanceParametersSO _avoidanceParametersSo;
         [SerializeField] private AgentPathfindingConfig _agentPath;
-        public List<Transform> Waypoints;
-
+        
         private INode _initTree;
         private FSM<string> _fsm;  
         private Transform _nearestWeapon;
@@ -28,10 +32,11 @@ namespace AgentLogic
         {
             _agentAI = GetComponent<AgentAI>();
             _agentPath = GetComponent<AgentPathfindingConfig>(); 
-        }       
+        }     
 
         private void Start()
-        {      
+        {
+            NewQuestion = false;
             FindWaypoints();
             
             _roulette = new Roulette();  
@@ -100,8 +105,7 @@ namespace AgentLogic
         }  
 
         private void ShootState()
-        {
-            _agentAI.FindNearestTarget(_agentSight.FOVAngle);
+        {  
             _fsm.Transition("Shoot");
         }    
         
@@ -113,8 +117,24 @@ namespace AgentLogic
             {
                _initTree.Execute();   
             }         
-            
-        }     
+        }
+
+        private void CheckQuestion()
+        {
+            if (NewQuestion)
+            {
+                ExecuteTreeAgain();
+                CanDoANewQuestion(false);
+            }
+            else return;
+        }
+
+        
+        public bool CanDoANewQuestion(bool agentReady)
+        {
+            NewQuestion = agentReady;
+            return NewQuestion;
+        }
                     
         private void ChaseEnemy()
         {  
@@ -131,16 +151,18 @@ namespace AgentLogic
         private void AgentIsDead() => _fsm.Transition("Dead");
 
         private bool EnemyIsInRange()
-        {    
-            _agentSight.InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
+        {
+            _agentAI.FindNearestTarget(_agentSight.FOVRange);
+
+            if (_agentAI.Target == null) return false;
+            InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
                 _agentSight.FOVAngle, _agentSight.FOVLayerMask);           
-            return _agentSight.InSight;
+            return InSight;
         }
 
         private void ReloadState()
         {
-            _fsm.Transition("Reload");
-            _initTree.Execute(); 
+            _fsm.Transition("Reload");      
         }          
 
         private void DoIdle()
@@ -161,14 +183,13 @@ namespace AgentLogic
         
         public void ExecuteTreeAgain()
         {
-            _initTree.Execute();
-            Debug.Log("New Question");
-           //StartCoroutine(WaitForNewQuestion());
+            //_initTree.Execute();   
+           StartCoroutine(WaitForNewQuestion());
         }
 
         IEnumerator WaitForNewQuestion()
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(1f);
             _initTree.Execute();
             Debug.Log("New Question");
         }

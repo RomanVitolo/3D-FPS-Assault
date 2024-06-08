@@ -1459,7 +1459,6 @@ GameObject:
   - component: {fileID: 885964193230511769}
   - component: {fileID: 4414339409601696961}
   - component: {fileID: 1287163856940062126}
-  - component: {fileID: 4292137581230085039}
   m_Layer: 11
   m_Name: Boss_TeamB
   m_TagString: AgentB
@@ -1535,6 +1534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7548ad3c984b90b11885a61c03a57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentReady: 0
   Waypoints: []
   AgentWeapon: {fileID: 0}
   Targets: []
@@ -1561,12 +1561,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1839bb1d755f46cea925cad0886a5793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _agentNotify: {fileID: 11400000, guid: d8d9744dfc0d43148a58aa27d83ff5d3, type: 2}
+  Waypoints: []
   _agentAI: {fileID: 8463308499572879852}
   _agentSight: {fileID: 11400000, guid: 969d39df10afdca42bf4d91f0c6a785b, type: 2}
   _avoidanceParametersSo: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
     type: 2}
   _agentPath: {fileID: 1287163856940062126}
-  Waypoints: []
 --- !u!114 &6193226468672717337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1625,21 +1626,6 @@ MonoBehaviour:
   _agent: {fileID: 8463308499572879852}
   RandomInitNode: []
   RandomFinitNode: []
---- !u!114 &4292137581230085039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2207905084113894901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5d7c92920a841c69c2c86424f0046c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameEngine: {fileID: 0}
-  _agentAttributes: {fileID: 11400000, guid: 444d60d60004a6549a5edf46d33dd3f2, type: 2}
-  Agents: []
 --- !u!1 &2207928041189579645
 GameObject:
   m_ObjectHideFlags: 0

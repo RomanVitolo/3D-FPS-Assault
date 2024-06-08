@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cbd02d233a44324bf118d0b01df2ff5, type: 3}
-  m_Name: AgentSight
+  m_Script: {fileID: 11500000, guid: c6b25eaa356a44cd9427d318ac759f7a, type: 3}
+  m_Name: AgentNotify
   m_EditorClassIdentifier: 
-  <FOVRange>k__BackingField: 40
-  <FOVAngle>k__BackingField: 180
-  <FOVLayerMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 128

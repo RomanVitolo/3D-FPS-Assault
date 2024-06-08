@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 28629043}
   - component: {fileID: 28629042}
   - component: {fileID: 28629045}
-  - component: {fileID: 28629044}
+  - component: {fileID: 28629046}
   m_Layer: 9
   m_Name: Waypoint (30)
   m_TagString: WaypointB
@@ -174,7 +174,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neightbourds:
   - {fileID: 1100727204}
-  - {fileID: 1461842296}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
 --- !u!23 &28629042
@@ -227,19 +226,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28629039}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &28629044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28629039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
 --- !u!65 &28629045
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -253,6 +239,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &28629046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28629039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &37072048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,6 +1575,8 @@ GameObject:
   - component: {fileID: 384624415}
   - component: {fileID: 384624417}
   - component: {fileID: 384624416}
+  - component: {fileID: 384624420}
+  - component: {fileID: 384624419}
   m_Layer: 9
   m_Name: EndWaypointTeamA_0
   m_TagString: WaypointA
@@ -1597,7 +1597,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Neightbourds:
-  - {fileID: 1721938592}
   - {fileID: 99180488}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
@@ -1666,6 +1665,31 @@ Transform:
   m_Father: {fileID: 687303721}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &384624419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384624414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &384624420
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384624414}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.0000019073486, y: 0, z: 0.000015258789}
 --- !u!1 &386366786
 GameObject:
   m_ObjectHideFlags: 0
@@ -2529,7 +2553,7 @@ GameObject:
   - component: {fileID: 667784132}
   - component: {fileID: 667784131}
   - component: {fileID: 667784130}
-  - component: {fileID: 667784129}
+  - component: {fileID: 667784134}
   m_Layer: 9
   m_Name: Waypoint (30)_4
   m_TagString: WaypointB
@@ -2552,19 +2576,6 @@ Transform:
   m_Father: {fileID: 150245497}
   m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &667784129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667784127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
 --- !u!65 &667784130
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2644,6 +2655,18 @@ MonoBehaviour:
   - {fileID: 37072052}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
+--- !u!114 &667784134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667784127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &687303720
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,8 +3228,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791460653}
-  m_LocalRotation: {x: -0.43920815, y: -0.64993775, z: 0.43350887, w: -0.44356197}
-  m_LocalPosition: {x: 65.7, y: 40.9, z: 330.6}
+  m_LocalRotation: {x: 0.5251534, y: 0.53136206, z: -0.32231048, w: 0.58136415}
+  m_LocalPosition: {x: 58.4, y: 18, z: 323.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3258,6 +3281,8 @@ GameObject:
   - component: {fileID: 800309783}
   - component: {fileID: 800309785}
   - component: {fileID: 800309784}
+  - component: {fileID: 800309788}
+  - component: {fileID: 800309787}
   m_Layer: 9
   m_Name: EndWaypointTeamA_2
   m_TagString: WaypointA
@@ -3279,7 +3304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neightbourds:
   - {fileID: 386366787}
-  - {fileID: 1721938592}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
 --- !u!23 &800309784
@@ -3347,6 +3371,31 @@ Transform:
   m_Father: {fileID: 687303721}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &800309787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800309782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &800309788
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800309782}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: -0.0000038146973, y: 0, z: 0}
 --- !u!1 &817921760
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,7 +3409,7 @@ GameObject:
   - component: {fileID: 817921765}
   - component: {fileID: 817921764}
   - component: {fileID: 817921763}
-  - component: {fileID: 817921762}
+  - component: {fileID: 817921767}
   m_Layer: 9
   m_Name: LeadEndWaypoint
   m_TagString: WaypointB
@@ -3383,19 +3432,6 @@ Transform:
   m_Father: {fileID: 150245497}
   m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &817921762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817921760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
 --- !u!65 &817921763
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3476,6 +3512,18 @@ MonoBehaviour:
   - {fileID: 1461842296}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 0
+--- !u!114 &817921767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817921760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &836100689
 GameObject:
   m_ObjectHideFlags: 0
@@ -4718,7 +4766,7 @@ GameObject:
   - component: {fileID: 1131229994}
   - component: {fileID: 1131229993}
   - component: {fileID: 1131229992}
-  - component: {fileID: 1131229991}
+  - component: {fileID: 1131229996}
   m_Layer: 9
   m_Name: Waypoint (30)_1
   m_TagString: WaypointB
@@ -4741,19 +4789,6 @@ Transform:
   m_Father: {fileID: 150245497}
   m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1131229991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1131229989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
 --- !u!65 &1131229992
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4831,9 +4866,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neightbourds:
   - {fileID: 2028556427}
-  - {fileID: 28629041}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
+--- !u!114 &1131229996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131229989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1134198962
 GameObject:
   m_ObjectHideFlags: 0
@@ -5254,7 +5300,7 @@ GameObject:
   - component: {fileID: 1461842295}
   - component: {fileID: 1461842294}
   - component: {fileID: 1461842293}
-  - component: {fileID: 1461842292}
+  - component: {fileID: 1461842297}
   m_Layer: 9
   m_Name: Waypoint (30)_2
   m_TagString: WaypointB
@@ -5277,19 +5323,6 @@ Transform:
   m_Father: {fileID: 150245497}
   m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1461842292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461842290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
 --- !u!65 &1461842293
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5369,6 +5402,18 @@ MonoBehaviour:
   - {fileID: 1940510751}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
+--- !u!114 &1461842297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461842290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1475051142
 GameObject:
   m_ObjectHideFlags: 0
@@ -5794,6 +5839,8 @@ GameObject:
   - component: {fileID: 1555217748}
   - component: {fileID: 1555217752}
   - component: {fileID: 1555217751}
+  - component: {fileID: 1555217754}
+  - component: {fileID: 1555217753}
   m_Layer: 9
   m_Name: LeadEndWaypoint
   m_TagString: WaypointA
@@ -5894,7 +5941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
 --- !u!65 &1555217752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5908,6 +5954,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 1, z: 1.0000001}
   m_Center: {x: 0.000009536743, y: 0, z: 0.0000009536743}
+--- !u!114 &1555217753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555217746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1555217754
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555217746}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: -0.0000076293945, y: 0, z: 0}
 --- !u!1 &1593891066
 GameObject:
   m_ObjectHideFlags: 0
@@ -6125,6 +6196,8 @@ GameObject:
   - component: {fileID: 1721938592}
   - component: {fileID: 1721938594}
   - component: {fileID: 1721938593}
+  - component: {fileID: 1721938597}
+  - component: {fileID: 1721938596}
   m_Layer: 9
   m_Name: EndWaypointTeamA_1
   m_TagString: WaypointA
@@ -6146,8 +6219,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neightbourds:
   - {fileID: 1491013379}
-  - {fileID: 800309783}
-  - {fileID: 384624415}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
 --- !u!23 &1721938593
@@ -6215,6 +6286,31 @@ Transform:
   m_Father: {fileID: 687303721}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1721938596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721938591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1721938597
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721938591}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.0000038146973, y: 0, z: 0.000015258789}
 --- !u!1 &1775093117
 GameObject:
   m_ObjectHideFlags: 0
@@ -6330,7 +6426,7 @@ GameObject:
   - component: {fileID: 1818710636}
   - component: {fileID: 1818710635}
   - component: {fileID: 1818710634}
-  - component: {fileID: 1818710633}
+  - component: {fileID: 1818710638}
   m_Layer: 9
   m_Name: Waypoint (30)_3
   m_TagString: WaypointB
@@ -6353,19 +6449,6 @@ Transform:
   m_Father: {fileID: 150245497}
   m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1818710633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1818710631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
 --- !u!65 &1818710634
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6445,6 +6528,18 @@ MonoBehaviour:
   - {fileID: 1593891070}
   <CanBeInitialNode>k__BackingField: 0
   <CanBeEndNode>k__BackingField: 1
+--- !u!114 &1818710638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818710631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e24ffd633a842e7a78e7f562b7676d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1834546449
 GameObject:
   m_ObjectHideFlags: 0
