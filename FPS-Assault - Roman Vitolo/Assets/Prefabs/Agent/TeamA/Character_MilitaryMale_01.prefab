@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 836398341575515074}
   - component: {fileID: 2342929198847590967}
   - component: {fileID: 7156232751405860283}
+  - component: {fileID: 60903296729554715}
   m_Layer: 10
   m_Name: Character_MilitaryMale_01
   m_TagString: AgentA
@@ -469,6 +470,20 @@ MonoBehaviour:
   _agent: {fileID: 6254940972977939642}
   RandomInitNode: []
   RandomFinitNode: []
+--- !u!114 &60903296729554715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343317584900115345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b92154cbf544cd5be7a6ad4c4250806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AgentController: {fileID: 0}
+  _agentAI: {fileID: 0}
 --- !u!1 &2343322907590073131
 GameObject:
   m_ObjectHideFlags: 0

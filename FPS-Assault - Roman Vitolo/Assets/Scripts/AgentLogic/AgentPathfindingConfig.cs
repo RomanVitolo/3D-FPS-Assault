@@ -40,7 +40,7 @@ namespace AgentLogic
                 var getComponent = waypoint.GetComponent<Node>();
                 if (getComponent.CanBeInitialNode && getComponent.CanBeEndNode == false)
                 {
-                    RandomInitNode.Add(getComponent);
+                    RandomInitNode.Add(getComponent); 
                     var randomInitWaypoint = Random.Range(0, RandomInitNode.Count);
                     init = RandomInitNode[randomInitWaypoint];
                 }

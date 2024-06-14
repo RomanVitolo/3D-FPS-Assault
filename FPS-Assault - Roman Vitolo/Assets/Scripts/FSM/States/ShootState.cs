@@ -1,4 +1,5 @@
-﻿using Interfaces;   
+﻿using Interfaces;
+using UnityEngine;
 
 namespace FSM
 {  
@@ -13,8 +14,8 @@ namespace FSM
                    
         public override void Tick()
         {
-            
-            _agentShoot.Shoot();
+           _agentShoot.Shoot();
+           Debug.Log("ShootState");
         }                                   
     }
 }

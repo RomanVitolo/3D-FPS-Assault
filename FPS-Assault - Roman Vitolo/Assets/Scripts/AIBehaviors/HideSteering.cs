@@ -25,18 +25,15 @@ namespace AIBehaviors
         }
         
         public Vector3 GetDirection()
-        {
-            if (_agent.position != Vector3.zero)
-            {
-                FindNearestWaypoint(); 
+        {   
+            FindNearestWaypoint(); 
                 
-                steeringDirection = SteerTowardsWaypoint(_nearestWaypoint.position);  
+            steeringDirection = SteerTowardsWaypoint(_nearestWaypoint.position);  
                 
-                if (Vector3.Distance(_agent.position, _nearestWaypoint.position) < 2f)
-                {             
-                    return Vector3.zero;
-                }       
-            }                                 
+            if (Vector3.Distance(_agent.position, _nearestWaypoint.position) < 1.2f)
+            {             
+                return Vector3.zero;
+            }    
             return steeringDirection;
         }         
         
@@ -53,10 +50,10 @@ namespace AIBehaviors
                 if (playerDistance > 2f && distance < minDistance) 
                 {
                     minDistance = distance;
-                    _nearestWaypoint = waypoint;   
+                    _nearestWaypoint = waypoint; 
                 }           
             }
-        }
+        }             
 
         private Vector3 SteerTowardsWaypoint(Vector3 waypointPosition)
         {       

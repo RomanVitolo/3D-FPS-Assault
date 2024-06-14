@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 2132312621629438782}
   - component: {fileID: 3215023657271472486}
   - component: {fileID: 1004007433}
+  - component: {fileID: 8058209448677504203}
   m_Layer: 11
   m_Name: Character_ToplessMale_01
   m_TagString: AgentB
@@ -414,7 +415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7548ad3c984b90b11885a61c03a57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentReady: 0
   Waypoints: []
   AgentWeapon: {fileID: 0}
   Targets: []
@@ -441,7 +441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1839bb1d755f46cea925cad0886a5793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentNotify: {fileID: 11400000, guid: d8d9744dfc0d43148a58aa27d83ff5d3, type: 2}
+  InSight: 0
+  NewQuestion: 0
   Waypoints: []
   _agentAI: {fileID: 7255117065195902027}
   _agentSight: {fileID: 11400000, guid: 969d39df10afdca42bf4d91f0c6a785b, type: 2}
@@ -506,6 +507,20 @@ MonoBehaviour:
   _agent: {fileID: 7255117065195902027}
   RandomInitNode: []
   RandomFinitNode: []
+--- !u!114 &8058209448677504203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114888627178346578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b92154cbf544cd5be7a6ad4c4250806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AgentController: {fileID: 0}
+  _agentAI: {fileID: 0}
 --- !u!1 &1114892649026717242
 GameObject:
   m_ObjectHideFlags: 0

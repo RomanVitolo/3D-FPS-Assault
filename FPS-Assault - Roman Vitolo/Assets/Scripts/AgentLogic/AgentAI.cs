@@ -9,7 +9,7 @@ namespace AgentLogic
     {   
         public List<Node> Waypoints;   
         public AgentWeapon AgentWeapon;
-        public List<Transform> Targets = new List<Transform>();
+        public List<Transform>Targets = new List<Transform>();
         public Transform Target;
         [field: SerializeField] public bool CanMove { get; set;}          
         
@@ -24,7 +24,7 @@ namespace AgentLogic
         
         private ISteeringBehaviour _steeringBehaviour;  
         
-        private float _lastShotTime = 1f;
+        private float _lastShotTime = 2f;
         private int _nextPoint;    
         
         private void Awake() => InitComponents();       
@@ -43,37 +43,41 @@ namespace AgentLogic
         {  
             CanMove = true; 
             LoadTargets();
-            IgnoreFriendlyCollision();
+            Target = Targets.FirstOrDefault();
+            //IgnoreFriendlyCollision();
         }         
 
         private void LoadTargets()
-        {   
+        {  
             foreach (var agent in _gameEngine.TeamAgentsPosition)
-            {
+            {   
                 if (agent.Key != _agentAttributes.TeamName)
                 {
                     var assignAgentsToCorrectTeam = agent.Value;   
                     foreach (var transform in assignAgentsToCorrectTeam)
                     {
                         Targets.Add(transform);
-                    }  
-                    Target = Targets.FirstOrDefault();
+                    }     
                 }
             }  
         }         
 
-        public Transform FindNearestTarget(float agentVisionDistance)
+        public void FindNearestTarget(float agentVisionDistance)
         {
+            Targets.Clear();
+            LoadTargets();
             Target = null;
-            foreach (var target in Targets)
+            if (Targets != null)
             {
-                var enemyDistance = Vector3.Distance(transform.position, target.position);
-                if (enemyDistance < agentVisionDistance)
-                {      
-                    Target = target;
-                }                                    
+                foreach (var target in Targets)
+                {
+                    var enemyDistance = Vector3.Distance(transform.position, target.position);
+                    if (enemyDistance < agentVisionDistance)
+                    {      
+                        Target = target;
+                    }                                    
+                }  
             }        
-            return Target;
         }
 
         private void IgnoreFriendlyCollision()
@@ -84,23 +88,21 @@ namespace AgentLogic
 
         public float GetVelocity()
         {
-            /*var randomSpeed = Random.Range(2, _agentAttributes.AgentSpeed);
-            return randomSpeed;*/
-            return _agentAttributes.AgentSpeed;
+            var randomSpeed = Random.Range(6.5f, _agentAttributes.AgentSpeed);
+            return randomSpeed;
+            //return _agentAttributes.AgentSpeed;
         }         
         
         public void Dead()
         {    
-             if (_agentHealth.IsAlive() == false)
+             if (!_agentHealth.IsAlive())
              {
                  _agentAnimations.DeadAnimation();
                  Destroy(this.gameObject, 2.5f);
-             }
-             
-             Debug.Log("Agent dead");
+             }    
         }    
         
-        public bool CheckLife()
+        public bool CheckIfPlayerIsAlive()
         {         
             Debug.Log(_agentHealth.IsAlive());
             return _agentHealth.IsAlive();
@@ -136,14 +138,13 @@ namespace AgentLogic
 
         public void Hide()
         {        
-            Move(_steeringBehaviour.GetDirection());   
-            Debug.Log("Hide Action"); 
+            Move(_steeringBehaviour.GetDirection());         
             _agentAnimations.HideAnimation();
 
             if (_steeringBehaviour.GetDirection() == Vector3.zero && _agentInput.GetHorizontalAxis() == 0 &&
                 _agentInput.GetVerticalAxis() == 0)
             {
-                _agentAnimations.DoIdleAnimation();   
+                _agentAnimations.RunChaseAnimation();   
             } 
         }         
         
@@ -159,31 +160,35 @@ namespace AgentLogic
       
         public void Shoot()
         {
-            if (Targets == null)
+            if (Target != null)
             {
-                _agentAnimations.ShootAnimation(false);
-                return;
-            }
-
-            if (AgentWeapon.CheckForEnoughAmmo())
-            {
-                _agentAnimations.ShootAnimation(true);
-                Vector3 direction = Target.position - transform.position;
-                var rotation = Quaternion.LookRotation(direction, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
-                    _agentAttributes.AgentTurnSpeed * Time.deltaTime);
-
-                if (Time.time - _lastShotTime >= 1 / AgentWeapon.WeaponFireRate())
+                if (AgentWeapon.CheckForEnoughAmmo())
                 {
-                    AgentWeapon.Shoot();
-                    _lastShotTime = Time.time;
-                }
-            }      
+                    _agentAnimations.ShootAnimation(true);
+                    Vector3 direction = Target.position - transform.position;
+                    var rotation = Quaternion.LookRotation(direction, Vector3.up);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
+                        _agentAttributes.AgentTurnSpeed * Time.deltaTime);
+
+                    if (Time.time - _lastShotTime >= 1 / AgentWeapon.WeaponFireRate())
+                    {
+                        AgentWeapon.Shoot();
+                        _lastShotTime = Time.time;
+                    }
+                }      
+                else
+                {
+                    _agentAnimations.ShootAnimation(false);
+                    Idle();    
+                    Debug.Log("Please Reload");  
+                }  
+            }
             else
             {
+                _agentAnimations.ShootAnimation(false);
                 Idle();    
-                Debug.Log("Please Reload");  
             }
+             
         }     
         
         public void ChangeSteering(ISteeringBehaviour steeringBehaviour) => _steeringBehaviour = steeringBehaviour; 

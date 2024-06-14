@@ -9,6 +9,7 @@ TagManager:
   - WaypointA
   - AgentA
   - AgentB
+  - HideWaypoint
   layers:
   - Default
   - TransparentFX

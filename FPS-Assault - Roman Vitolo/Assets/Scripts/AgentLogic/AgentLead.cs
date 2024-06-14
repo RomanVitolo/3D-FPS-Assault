@@ -1,5 +1,4 @@
-﻿/*
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,13 +11,19 @@ namespace AgentLogic
 
         public List<GameObject> Agents = new List<GameObject>();
 
-        private List<AgentController> _agentControllers = new List<AgentController>();
+        private readonly List<AgentController> _agentControllers = new List<AgentController>();
         private void Awake()
         {
             _gameEngine = FindObjectOfType<GameEngine>();
         }
 
         private void Start()
+        {
+            GetTeamAgents();
+            StartCoroutine(CommandAgent());
+        }
+
+        private void GetTeamAgents()
         {
             foreach (var agent in _gameEngine.TeamAgents)
             {
@@ -35,23 +40,23 @@ namespace AgentLogic
             foreach (var teamAgents in Agents)
             {
                 _agentControllers.Add(teamAgents.GetComponent<AgentController>()); 
-            }    
-            
-            StartCoroutine(TimerCoroutine());
+            }
         }
-        
 
-        private IEnumerator TimerCoroutine()
+
+        private IEnumerator CommandAgent()
         {
             while (true)
             {   
-                yield return new WaitForSeconds(5f);  
+                yield return new WaitForSeconds(15f);  
                 foreach (var agentController in _agentControllers)
                 {
-                    agentController.ExecuteTreeAgain();
+                    if (agentController == null)  
+                        _agentControllers.Remove(agentController); 
+                    else 
+                        agentController.ExecuteTreeAgain();   
                 }
             }
         }
     }
 }
-*/

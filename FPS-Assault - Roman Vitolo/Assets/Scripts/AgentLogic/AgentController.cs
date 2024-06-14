@@ -76,13 +76,16 @@ namespace AgentLogic
             hideState.AddTransition("Chase", chaseState);
             hideState.AddTransition("Dead", deadState); 
             hideState.AddTransition("Patrol", patrolState); 
+            hideState.AddTransition("Shoot", shootState); 
             
             reloadState.AddTransition("Idle", idleState);
             reloadState.AddTransition("Shoot", shootState);
+            reloadState.AddTransition("Dead", deadState);
             
             shootState.AddTransition("Idle", idleState);
             shootState.AddTransition("Chase", chaseState);                  
             shootState.AddTransition("Reload", reloadState);                  
+            shootState.AddTransition("Dead", deadState); 
             
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode chase = new ActionNode(ChaseEnemy);
@@ -98,7 +101,7 @@ namespace AgentLogic
             QuestionNode canWander = new QuestionNode(EnemyIsInRange, isInRange, patrol);
             QuestionNode hidePath = new QuestionNode(_agentAI.HideOrIdle, hide, canWander);
             QuestionNode hasLowLife = new QuestionNode(_agentAI.CheckLowLife, hidePath, canWander);
-            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, hasLowLife, dead);  
+            QuestionNode hasLife = new QuestionNode(_agentAI.CheckIfPlayerIsAlive, hasLowLife, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();            
@@ -116,17 +119,16 @@ namespace AgentLogic
             if (Input.GetKeyDown(KeyCode.Space))
             {
                _initTree.Execute();   
-            }         
+            }        
+            
+            CheckQuestion();
         }
 
         private void CheckQuestion()
         {
-            if (NewQuestion)
-            {
-                ExecuteTreeAgain();
-                CanDoANewQuestion(false);
-            }
-            else return;
+            if (!NewQuestion) return;     
+            CanDoANewQuestion(false);
+            ExecuteTreeAgain();     
         }
 
         
@@ -142,19 +144,27 @@ namespace AgentLogic
         }
         
         private void HideFromEnemy()
-        {      
+        {    
+            _agentAI.FindNearestTarget(_agentSight.FOVRange);
             _fsm.Transition("Hide");    
             _agentAI.ChangeSteering(new HideSteering(this.transform, _nearestWeapon, _agentAI.Target, 
-                _agentAI.GetVelocity(),Waypoints));  
+                _agentAI.GetVelocity(),Waypoints));       
         }
 
-        private void AgentIsDead() => _fsm.Transition("Dead");
+        private void AgentIsDead()
+        {
+            _fsm.Transition("Dead");   
+        } 
 
         private bool EnemyIsInRange()
-        {
+        {    
             _agentAI.FindNearestTarget(_agentSight.FOVRange);
 
-            if (_agentAI.Target == null) return false;
+            if (_agentAI.Target == null)
+            {
+                DoIdle();
+                return false;
+            }
             InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
                 _agentSight.FOVAngle, _agentSight.FOVLayerMask);           
             return InSight;
@@ -182,27 +192,27 @@ namespace AgentLogic
         }
         
         public void ExecuteTreeAgain()
-        {
-            //_initTree.Execute();   
+        { 
            StartCoroutine(WaitForNewQuestion());
         }
 
         IEnumerator WaitForNewQuestion()
         {
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(2f);
             _initTree.Execute();
             Debug.Log("New Question");
         }
 
         private void FindWaypoints()
         {
-            GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag(_agentAI.WaypointTag());
+            //GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag(_agentAI.WaypointTag());
+            GameObject[] waypointObjects = GameObject.FindGameObjectsWithTag("HideWaypoint");
 
             foreach (var waypoint in waypointObjects)
             {
                 Waypoints.Add(waypoint.transform);
             }
-        }             
+        }            
 
         private void OnDrawGizmosSelected()
         {
@@ -212,7 +222,7 @@ namespace AgentLogic
             Gizmos.DrawRay(transform.position, Quaternion.Euler(0, _agentSight.FOVAngle / 2, 0)
                                                * transform.forward * _agentSight.FOVRange);
             Gizmos.DrawRay(transform.position, Quaternion.Euler(0, - _agentSight.FOVAngle / 2, 0)
-                                               * transform.forward * _agentSight.FOVRange);
+                                               * transform.forward * _agentSight.FOVRange);      
         }          
     }
 }     

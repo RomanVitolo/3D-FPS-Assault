@@ -73,13 +73,16 @@ namespace AgentLogic
             hideState.AddTransition("Chase", chaseState);
             hideState.AddTransition("Dead", deadState); 
             hideState.AddTransition("Patrol", patrolState); 
+            hideState.AddTransition("Shoot", shootState); 
             
             reloadState.AddTransition("Idle", idleState);
             reloadState.AddTransition("Shoot", shootState);
+            reloadState.AddTransition("Dead", deadState);
             
             shootState.AddTransition("Idle", idleState);
             shootState.AddTransition("Chase", chaseState);                  
             shootState.AddTransition("Reload", reloadState);                  
+            shootState.AddTransition("Dead", deadState);                  
             
             ActionNode dead = new ActionNode(AgentIsDead); 
             ActionNode chase = new ActionNode(ChaseEnemy);
@@ -95,7 +98,7 @@ namespace AgentLogic
             QuestionNode canWander = new QuestionNode(EnemyIsInRange, isInRange, patrol);
             QuestionNode hidePath = new QuestionNode(_agentAI.HideOrIdle, hide, canWander);
             QuestionNode hasLowLife = new QuestionNode(_agentAI.CheckLowLife, hidePath, canWander);
-            QuestionNode hasLife = new QuestionNode(_agentAI.CheckLife, hasLowLife, dead);  
+            QuestionNode hasLife = new QuestionNode(_agentAI.CheckIfPlayerIsAlive, hasLowLife, dead);  
 
             _initTree = hasLife;
             _initTree.Execute();            

@@ -23,9 +23,8 @@ namespace AgentLogic
         {
             if (_weaponStats.CurrentAmmo > 0) return true;
             return false;
-        }
+        }     
         
-
         public void Shoot()
         {
             if (_weaponAudioFX.clip != _weaponSounds.ShootClip)  _weaponAudioFX.clip = _weaponSounds.ShootClip;  
@@ -42,9 +41,9 @@ namespace AgentLogic
                 if (agentHealth != null)
                 {
                     agentHealth.TakeDamage(_weaponStats.WeaponDamage);
-                    Debug.Log(agentHealth.GetCurrentLife());  
+                    //Debug.Log(agentHealth.GetCurrentLife());  
                 }
-                Debug.Log("Hit Entity" + hitInfo.transform.name);
+                //Debug.Log("Hit Entity" + hitInfo.transform.name);
             }   
             _weaponStats.CurrentAmmo--;
         }   

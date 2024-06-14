@@ -1454,11 +1454,13 @@ GameObject:
   - component: {fileID: 5199172908236161120}
   - component: {fileID: 5827966942662925216}
   - component: {fileID: 8463308499572879852}
-  - component: {fileID: 1275071868370169003}
+  - component: {fileID: 2589462225097907264}
   - component: {fileID: 6193226468672717337}
   - component: {fileID: 885964193230511769}
   - component: {fileID: 4414339409601696961}
   - component: {fileID: 1287163856940062126}
+  - component: {fileID: 6752227484555192478}
+  - component: {fileID: 2278442209559120314}
   m_Layer: 11
   m_Name: Boss_TeamB
   m_TagString: AgentB
@@ -1534,7 +1536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7548ad3c984b90b11885a61c03a57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentReady: 0
   Waypoints: []
   AgentWeapon: {fileID: 0}
   Targets: []
@@ -1549,7 +1550,7 @@ MonoBehaviour:
   _agentsCollision: {fileID: 11400000, guid: c14d595351483f748a3d953ec6fc806e, type: 2}
   _characterController: {fileID: 5827966942662925216}
   _agentAnimations: {fileID: 4414339409601696961}
---- !u!114 &1275071868370169003
+--- !u!114 &2589462225097907264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1558,10 +1559,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2207905084113894901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1839bb1d755f46cea925cad0886a5793, type: 3}
+  m_Script: {fileID: 11500000, guid: 51a8443dff9b4b2fabd8b64ca8166de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentNotify: {fileID: 11400000, guid: d8d9744dfc0d43148a58aa27d83ff5d3, type: 2}
+  InSight: 0
   Waypoints: []
   _agentAI: {fileID: 8463308499572879852}
   _agentSight: {fileID: 11400000, guid: 969d39df10afdca42bf4d91f0c6a785b, type: 2}
@@ -1626,6 +1627,35 @@ MonoBehaviour:
   _agent: {fileID: 8463308499572879852}
   RandomInitNode: []
   RandomFinitNode: []
+--- !u!114 &6752227484555192478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2207905084113894901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b92154cbf544cd5be7a6ad4c4250806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AgentController: {fileID: 0}
+  _agentAI: {fileID: 0}
+--- !u!114 &2278442209559120314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2207905084113894901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5d7c92920a841c69c2c86424f0046c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEngine: {fileID: 0}
+  _agentAttributes: {fileID: 11400000, guid: 444d60d60004a6549a5edf46d33dd3f2, type: 2}
+  Agents: []
 --- !u!1 &2207928041189579645
 GameObject:
   m_ObjectHideFlags: 0

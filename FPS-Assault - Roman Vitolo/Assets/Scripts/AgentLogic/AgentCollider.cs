@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;   
 
 namespace AgentLogic
 {
@@ -17,15 +15,37 @@ namespace AgentLogic
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other != null)
+            NotifyPlayerHealth(other);
+        }
+
+        private void NotifyPlayerHealth(Collider other)
+        {
+            if (other == null) return;
+            PlayerIsDead(); 
+            CheckPlayerLife();
+        }
+
+        private void CheckPlayerLife()
+        {
+            if (_agentAI.CheckLowLife())
             {
-                var checkAgentLife = _agentAI.CheckLowLife();
-                if (checkAgentLife)
-                {
-                    Debug.Log("New Tree Question");
-                    _AgentController.ExecuteTreeAgain(); 
-                }     
+                _agentAI.CanMove = true;
+                ExecuteNewQuestion();
             }
+        }
+
+        private void PlayerIsDead()
+        {
+            if (!_agentAI.CheckIfPlayerIsAlive())
+            {
+                ExecuteNewQuestion();
+            }
+        }
+
+        private void ExecuteNewQuestion()
+        {
+            Debug.Log("New Tree Question");
+            _AgentController.ExecuteTreeAgain();
         }
     }
 }

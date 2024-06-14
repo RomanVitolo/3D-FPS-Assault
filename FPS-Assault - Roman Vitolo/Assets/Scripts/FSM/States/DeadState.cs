@@ -16,10 +16,5 @@ namespace FSM
             Debug.Log("Player is Dead");
             _entity.Dead();
         }
-
-        public override void Tick()
-        {
-            Debug.Log("Player is Dead");
-        }
     }
 }
