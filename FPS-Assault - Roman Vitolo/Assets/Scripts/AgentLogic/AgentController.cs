@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using AIBehaviors;  
 using DecisionTree;
@@ -7,14 +6,15 @@ using DefaultNamespace;
 using FSM;
 using Interfaces;
 using LineOfSight;
-using UnityEngine;      
+using UnityEngine;        
+
 
 namespace AgentLogic
 {
     public class AgentController : MonoBehaviour, IReady
     {
         public bool InSight;
-        public bool NewQuestion;
+        public bool AgentIsReadyNewQuestion;
         public List<Transform> Waypoints;
 
         [SerializeField] private AgentAI _agentAI;
@@ -36,7 +36,7 @@ namespace AgentLogic
 
         private void Start()
         {
-            NewQuestion = false;
+            AgentIsReadyNewQuestion = false;
             FindWaypoints();
             
             _roulette = new Roulette();  
@@ -121,12 +121,12 @@ namespace AgentLogic
                _initTree.Execute();   
             }        
             
-            CheckQuestion();
+            //CheckQuestion();
         }
 
         private void CheckQuestion()
         {
-            if (!NewQuestion) return;     
+            if (!AgentIsReadyNewQuestion) return;     
             CanDoANewQuestion(false);
             ExecuteTreeAgain();     
         }
@@ -134,8 +134,8 @@ namespace AgentLogic
         
         public bool CanDoANewQuestion(bool agentReady)
         {
-            NewQuestion = agentReady;
-            return NewQuestion;
+            AgentIsReadyNewQuestion = agentReady;
+            return AgentIsReadyNewQuestion;
         }
                     
         private void ChaseEnemy()

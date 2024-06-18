@@ -12,8 +12,8 @@ namespace FSM
         
         public PatrolState(IMove agent, AgentPathfindingConfig agentPathfinding)
         {
-            _agent = agent;
             _agentPathfinding = agentPathfinding;
+            _agent = agent;  
         }
 
         public override void Enter()

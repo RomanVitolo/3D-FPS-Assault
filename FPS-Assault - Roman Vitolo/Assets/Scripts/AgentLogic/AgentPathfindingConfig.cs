@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;    
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,6 +6,9 @@ namespace AgentLogic
 {
     public class AgentPathfindingConfig : MonoBehaviour
     {
+        [SerializeField] private List<Node> RandomInitNode = new List<Node>();
+        [SerializeField] private List<Node> RandomFinitNode = new List<Node>();
+        
         public string WaypointTag; 
         public float radius;
         public Vector3 offset;
@@ -16,23 +17,15 @@ namespace AgentLogic
         public AgentAI _agent;   
         private List<Node> _list;
         private List<Vector3> _listVector;    
-        private AStar<Node> _aStar = new AStar<Node>();
-        
-        [SerializeField] private List<Node> RandomInitNode = new List<Node>();
-        [SerializeField] private List<Node> RandomFinitNode = new List<Node>();  
-        
+        private AStar<Node> _aStar = new AStar<Node>();              
 
         private void Awake()
-        {
+        {  
             _agent = GetComponent<AgentAI>();
-        }
-
-        private void OnEnable()
-        {
-            FindInitNode();
-        }
-
-        private void FindInitNode()
+            FindInitAndLastNode();
+        }   
+        
+        private void FindInitAndLastNode()
         {
             var waypoints = GameObject.FindGameObjectsWithTag(WaypointTag);
             foreach (var waypoint in waypoints)
@@ -43,6 +36,7 @@ namespace AgentLogic
                     RandomInitNode.Add(getComponent); 
                     var randomInitWaypoint = Random.Range(0, RandomInitNode.Count);
                     init = RandomInitNode[randomInitWaypoint];
+                    Debug.Log(randomInitWaypoint + " " + gameObject.name);
                 }
                 else if (getComponent.CanBeInitialNode == false && getComponent.CanBeEndNode)
                 {

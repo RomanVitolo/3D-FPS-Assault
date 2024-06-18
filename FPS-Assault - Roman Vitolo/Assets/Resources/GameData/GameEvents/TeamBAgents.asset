@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TeamBAgents
   m_EditorClassIdentifier: 
   <Agents>k__BackingField:
+  - {fileID: 2207905084113894901, guid: e0f5e1841ee0ce9469a174442150b782, type: 3}
   - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
   - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}
   - {fileID: 1114888627178346578, guid: 0fa2ed9381d4ac9458bcd6022cbb15ed, type: 3}

@@ -1543,7 +1543,7 @@ MonoBehaviour:
   <CanMove>k__BackingField: 0
   _gameEngine: {fileID: 0}
   _agentInput: {fileID: 885964193230511769}
-  _agentAttributes: {fileID: 11400000, guid: a1873ed6503b83041bdbda6a1f58633f, type: 2}
+  _agentAttributes: {fileID: 11400000, guid: 444d60d60004a6549a5edf46d33dd3f2, type: 2}
   _agentHealth: {fileID: 6193226468672717337}
   _avoidanceParameters: {fileID: 11400000, guid: 9799f7b0f6fb64346a6660017c5539b8,
     type: 2}
@@ -1619,14 +1619,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2c637e802aa6b41a13d8d0417b0d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RandomInitNode: []
+  RandomFinitNode: []
   WaypointTag: WaypointB
   radius: 0.66
   offset: {x: 0, y: 1.44, z: 0}
   init: {fileID: 0}
   finit: {fileID: 0}
   _agent: {fileID: 8463308499572879852}
-  RandomInitNode: []
-  RandomFinitNode: []
 --- !u!114 &6752227484555192478
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ namespace Utilities
         private void OnTriggerEnter(Collider other)
         {
             if (other != null) ;
-            Debug.Log("Ready to execute new Tree");
+            Debug.Log("Agent is Ready");
             var agentReady = other.GetComponent<IReady>();
             agentReady.CanDoANewQuestion(true);
         }     

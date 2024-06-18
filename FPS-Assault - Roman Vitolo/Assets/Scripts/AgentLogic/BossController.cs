@@ -4,12 +4,13 @@ using AIBehaviors;
 using DecisionTree;
 using DefaultNamespace;
 using FSM;
+using Interfaces;
 using LineOfSight;
 using UnityEngine;     
 
 namespace AgentLogic
 {
-    public class BossController: MonoBehaviour
+    public class BossController: MonoBehaviour, IReady
     {
         public bool InSight;
         public List<Transform> Waypoints;
@@ -33,6 +34,7 @@ namespace AgentLogic
 
         private void Start()
         {
+            CanDoANewQuestion(false);
             InSight = false;
             FindWaypoints();
             
@@ -125,7 +127,8 @@ namespace AgentLogic
         }
         
         private void HideFromEnemy()
-        {      
+        {    
+            _agentAI.FindNearestTarget(_agentSight.FOVRange);  
             _fsm.Transition("Hide");    
             _agentAI.ChangeSteering(new HideSteering(this.transform, _nearestWeapon, _agentAI.Target, 
                 _agentAI.GetVelocity(),Waypoints));  
@@ -135,6 +138,13 @@ namespace AgentLogic
 
         private bool EnemyIsInRange()
         {
+            _agentAI.FindNearestTarget(_agentSight.FOVRange);
+
+            if (_agentAI.Target == null)
+            {
+                DoIdle();
+                return false;
+            }
             InSight = _agentSight.IsInSight(transform, _agentAI.Target, _agentSight.FOVRange,
                 _agentSight.FOVAngle, _agentSight.FOVLayerMask);           
             return InSight;
@@ -192,6 +202,12 @@ namespace AgentLogic
                                                * transform.forward * _agentSight.FOVRange);
             Gizmos.DrawRay(transform.position, Quaternion.Euler(0, - _agentSight.FOVAngle / 2, 0)
                                                * transform.forward * _agentSight.FOVRange);
-        }          
+        }
+
+        public bool CanDoANewQuestion(bool agentReady)
+        {
+            return agentReady;
+        }
+        
     }
 }

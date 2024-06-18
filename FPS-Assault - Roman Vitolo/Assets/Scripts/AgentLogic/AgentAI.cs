@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;         
 using Interfaces;              
-using UnityEngine;               
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AgentLogic
 {
@@ -20,7 +21,9 @@ namespace AgentLogic
         [SerializeField] private AvoidanceParametersSO _avoidanceParameters;
         [SerializeField] private IgnoreAgentsCollisionUtilitiesSO _agentsCollision;
         [SerializeField] private CharacterController _characterController; 
-        [SerializeField] private AgentAnimations _agentAnimations;  
+        [SerializeField] private AgentAnimations _agentAnimations;
+
+        private Collider _adjustAgentCollider;
         
         private ISteeringBehaviour _steeringBehaviour;  
         
@@ -44,8 +47,15 @@ namespace AgentLogic
             CanMove = true; 
             LoadTargets();
             Target = Targets.FirstOrDefault();
-            //IgnoreFriendlyCollision();
-        }         
+            IgnoreFriendlyCollision();
+        }
+
+        private void Update()
+        {
+            var center = _characterController.center;
+            center.y = transform.localPosition.y;
+            _characterController.center = center;
+        }
 
         private void LoadTargets()
         {  

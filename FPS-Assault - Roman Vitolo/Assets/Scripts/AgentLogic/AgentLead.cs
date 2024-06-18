@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,16 +13,19 @@ namespace AgentLogic
         public List<GameObject> Agents = new List<GameObject>();
 
         private readonly List<AgentController> _agentControllers = new List<AgentController>();
+        private BossController _myController;
+
         private void Awake()
         {
             _gameEngine = FindObjectOfType<GameEngine>();
+            _myController = GetComponent<BossController>();
         }
 
         private void Start()
         {
             GetTeamAgents();
-            StartCoroutine(CommandAgent());
-        }
+            //StartCoroutine(CommandAgent());
+        }           
 
         private void GetTeamAgents()
         {
@@ -52,9 +56,13 @@ namespace AgentLogic
                 foreach (var agentController in _agentControllers)
                 {
                     if (agentController == null)  
-                        _agentControllers.Remove(agentController); 
-                    else 
-                        agentController.ExecuteTreeAgain();   
+                        _agentControllers.Remove(agentController);
+                    else if(agentController.CanDoANewQuestion(true))
+                    {
+                        Debug.Log("pip");
+                        agentController.ExecuteTreeAgain();
+                        agentController.CanDoANewQuestion(false); 
+                    }       
                 }
             }
         }
