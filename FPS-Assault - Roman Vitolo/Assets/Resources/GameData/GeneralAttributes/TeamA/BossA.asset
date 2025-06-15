@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameTag: BossA
   TeamName: TeamA
-  <IsLeader>k__BackingField: 0
+  <IsLeader>k__BackingField: 1
   <AgentSpeed>k__BackingField: 7
   <AgentTurnSpeed>k__BackingField: 10
   <WaypointNameTag>k__BackingField: WaypointA
